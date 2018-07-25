@@ -13,7 +13,7 @@ namespace IBAstore.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201807242353476_DataMigration1"; }
+            get { return "201807251517057_DataMigration1"; }
         }
         
         string IMigrationMetadata.Source

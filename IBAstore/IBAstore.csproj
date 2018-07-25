@@ -183,13 +183,25 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201807242212099_DataMigration.cs" />
-    <Compile Include="Migrations\201807242212099_DataMigration.Designer.cs">
-      <DependentUpon>201807242212099_DataMigration.cs</DependentUpon>
+    <Compile Include="Migrations\201807251504522_DataMigration.cs" />
+    <Compile Include="Migrations\201807251504522_DataMigration.Designer.cs">
+      <DependentUpon>201807251504522_DataMigration.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201807242353476_DataMigration1.cs" />
-    <Compile Include="Migrations\201807242353476_DataMigration1.Designer.cs">
-      <DependentUpon>201807242353476_DataMigration1.cs</DependentUpon>
+    <Compile Include="Migrations\201807251517057_DataMigration1.cs" />
+    <Compile Include="Migrations\201807251517057_DataMigration1.Designer.cs">
+      <DependentUpon>201807251517057_DataMigration1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201807252042309_DataMigration2.cs" />
+    <Compile Include="Migrations\201807252042309_DataMigration2.Designer.cs">
+      <DependentUpon>201807252042309_DataMigration2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201807252105596_DataMigration3.cs" />
+    <Compile Include="Migrations\201807252105596_DataMigration3.Designer.cs">
+      <DependentUpon>201807252105596_DataMigration3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201807252107265_DataMigration4.cs" />
+    <Compile Include="Migrations\201807252107265_DataMigration4.Designer.cs">
+      <DependentUpon>201807252107265_DataMigration4.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Cart.cs" />
@@ -269,11 +281,20 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201807242212099_DataMigration.resx">
-      <DependentUpon>201807242212099_DataMigration.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201807251504522_DataMigration.resx">
+      <DependentUpon>201807251504522_DataMigration.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201807242353476_DataMigration1.resx">
-      <DependentUpon>201807242353476_DataMigration1.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201807251517057_DataMigration1.resx">
+      <DependentUpon>201807251517057_DataMigration1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201807252042309_DataMigration2.resx">
+      <DependentUpon>201807252042309_DataMigration2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201807252105596_DataMigration3.resx">
+      <DependentUpon>201807252105596_DataMigration3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201807252107265_DataMigration4.resx">
+      <DependentUpon>201807252107265_DataMigration4.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -14,6 +14,7 @@ namespace IBAstore.Controllers
 {
     public class AccountController : Controller
     {
+        StoreContext db = new StoreContext();
         private ApplicationUserManager UserManager
         {
             get
@@ -28,7 +29,13 @@ namespace IBAstore.Controllers
                 return HttpContext.GetOwinContext().Authentication;
             }
         }
-
+        //private ApplicationRoleManager RoleManager
+        //{
+        //    get
+        //    {
+        //        return HttpContext.GetOwinContext().GetUserManager<ApplicationRoleManager>();
+        //    }
+        //}
         public ActionResult Register()
         {
             return View();
@@ -39,10 +46,17 @@ namespace IBAstore.Controllers
         {
             if (ModelState.IsValid)
             {
-                ApplicationUser user = new ApplicationUser { UserName = model.Login, Email = model.Email};
+                ApplicationUser user = new ApplicationUser { UserName = model.Login, Email = model.Email };
                 IdentityResult result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
+                    await this.UserManager.AddToRoleAsync(user.Id, "User");
+                    Cart cart = new Cart
+                    {
+                        UserId = user.Id,
+                    };
+                    db.Carts.Add(cart);
+                    await db.SaveChangesAsync();
                     return RedirectToAction("Login", "Account");
                 }
                 else
@@ -81,20 +95,19 @@ namespace IBAstore.Controllers
                     AuthenticationManager.SignIn(new AuthenticationProperties
                     {
                         IsPersistent = true
-                    }, claim);
+                    }, claim);                   
                     if (String.IsNullOrEmpty(returnUrl))
                         return RedirectToAction("Index", "Home");
                     return Redirect(returnUrl);
                 }
             }
             ViewBag.returnUrl = returnUrl;
-            return View(model);
+            return View(model);        
         }
         public ActionResult Logout()
         {
             AuthenticationManager.SignOut();
             return RedirectToAction("Login");
-        }
-
+        }        
     }
 }

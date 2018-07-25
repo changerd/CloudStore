@@ -11,23 +11,11 @@ namespace IBAstore.Models
 {
     public class ApplicationUser : IdentityUser
     {
-        public ICollection<Order> Orders { get; set; }
-        public ICollection<Cart> Carts { get; set; } 
-        public ApplicationUser()
-        {
-            Orders = new List<Order>();
-            Carts = new List<Cart>();
-        }
-    }
-    public class ApplicationContext : IdentityDbContext<ApplicationUser>
-    {
-        public ApplicationContext() : base("StoreContext") { }
-
-        public static ApplicationContext Create()
-        {
-            return new ApplicationContext();
-        }
-    }
+        public string Name { get; set; }
+        public DateTime? Birth { get; set; }
+        public string Telephone { get; set; }        
+        public ICollection<Cart> Carts { get; set; }         
+    }    
     public class ApplicationUserManager : UserManager<ApplicationUser>
     {
         public ApplicationUserManager(IUserStore<ApplicationUser> store)
@@ -37,7 +25,7 @@ namespace IBAstore.Models
         public static ApplicationUserManager Create(IdentityFactoryOptions<ApplicationUserManager> options,
                                                 IOwinContext context)
         {
-            ApplicationContext db = context.Get<ApplicationContext>();
+            StoreContext db = context.Get<StoreContext>();
             ApplicationUserManager manager = new ApplicationUserManager(new UserStore<ApplicationUser>(db));
             return manager;
         }
@@ -54,7 +42,7 @@ namespace IBAstore.Models
                                                 IOwinContext context)
         {
             return new ApplicationRoleManager(new
-                    RoleStore<ApplicationRole>(context.Get<ApplicationContext>()));
+                    RoleStore<ApplicationRole>(context.Get<StoreContext>()));
         }
     }
 }

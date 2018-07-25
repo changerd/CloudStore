@@ -15,7 +15,7 @@ namespace IBAstore
     {
         public void Configuration(IAppBuilder app)
         {            
-            app.CreatePerOwinContext<ApplicationContext>(ApplicationContext.Create);
+            app.CreatePerOwinContext<StoreContext>(StoreContext.Create);
             app.CreatePerOwinContext<ApplicationUserManager>(ApplicationUserManager.Create);
             app.CreatePerOwinContext<ApplicationRoleManager>(ApplicationRoleManager.Create);
             app.UseCookieAuthentication(new CookieAuthenticationOptions
