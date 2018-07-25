@@ -35,7 +35,7 @@ namespace IBAstore.Controllers
         //{
         //    db.Categories.Add(category);
         //    db.SaveChanges();
-        //    return RedirectToAction("Home/Index");                
+        //    return RedirectToAction("Index");                
         //}
         public ActionResult CreateRole()
         {
