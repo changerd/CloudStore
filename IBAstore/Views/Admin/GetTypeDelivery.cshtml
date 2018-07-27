@@ -1,0 +1,35 @@
+﻿@model IEnumerable<IBAstore.Models.TypeDelivery>
+
+@{
+    ViewBag.Title = "Типы доставки";
+}
+
+<h2>Типы доставки</h2>
+
+<p>
+    @Html.ActionLink("Создать", "CreateTypeDelivery")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayName("Название")
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>            
+            @Html.ActionLink("Удалить", "DeleteTypeDelivery", new { id=item.Id })
+        </td>
+    </tr>
+}
+
+</table>
+
+<div>
+    @Html.ActionLink("Назад", "Index")
+</div>

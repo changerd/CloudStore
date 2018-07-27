@@ -1,0 +1,35 @@
+﻿@model IEnumerable<IBAstore.Models.Manufacturer>
+
+@{
+    ViewBag.Title = "Производители";
+}
+
+<h2>Производители</h2>
+
+<p>
+    @Html.ActionLink("Создать", "CreateManufacturer")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayName("Название")
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.ActionLink("Редактировать", "EditManufacturer", new { id=item.Id }) |            
+            @Html.ActionLink("Удалить", "DeleteManufacturer", new { id=item.Id })
+        </td>
+    </tr>
+}
+
+</table>
+<div>
+    @Html.ActionLink("Назад", "Index")
+</div>

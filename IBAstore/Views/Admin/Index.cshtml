@@ -4,52 +4,52 @@
 }
 
 <h2>Панель администратора</h2>
-
+<hr />
 <div class="row content">
-    <div class="col-md-3">       
+    <div class="col-md-3">
         <div class="panel panel-default">
             <div class="panel-heading">Данные о пользователях</div>
-            <div class="panel-body">                
-                    <div class="list-group">
-                        <a href="Index" class="list-group-item">Роли</a>
-                        <a href="#" class="list-group-item">Пользователи</a>                        
-                    </div>                 
+            <div class="panel-body">
+                <div class="list-group">
+                    @Html.ActionLink("Роли", "GetRole", "Admin", new { @class = "list-group-item" })
+                    @Html.ActionLink("Пользователи", "GetUser", "Admin", new { @class = "list-group-item" })
+                </div>
             </div>
         </div>
         <div class="panel panel-default">
             <div class="panel-heading">Данные о товарах</div>
-            <div class="panel-body">                
-                    <div class="list-group">
-                        <a href="Index" class="list-group-item">Производители</a>
-                        <a href="#" class="list-group-item">Статусы</a>
-                        <a href="#" class="list-group-item">Категории</a>
-                        <a href="#" class="list-group-item">Товары</a>
-                    </div>                
+            <div class="panel-body">
+                <div class="list-group">
+                    @Html.ActionLink("Производители", "GetManufacturer", "Admin", new { @class = "list-group-item" })
+                    @Html.ActionLink("Статусы", "GetStatusProduct", "Admin", new { @class = "list-group-item" })
+                    @Html.ActionLink("Категории", "GetCategory", "Admin", new { @class = "list-group-item" })
+                    @Html.ActionLink("Товары", "GetProduct", "Admin", new { @class = "list-group-item" })
+                </div>
+            </div>
+        </div>        
+        <div class="panel panel-default">
+            <div class="panel-heading">Данные о заказах</div>
+            <div class="panel-body">
+                <div class="list-group">
+                    @Html.ActionLink("Способ оплаты", "GetPaymentMethod", "Admin", new { @class = "list-group-item" })
+                    @Html.ActionLink("Статусы", "GetStatusOrder", "Admin", new { @class = "list-group-item" })
+                </div>
             </div>
         </div>
         <div class="panel panel-default">
             <div class="panel-heading">Данные о доставках</div>
             <div class="panel-body">
                 <div class="list-group">
-                    <a href="Index" class="list-group-item">Типы</a>
-                    <a href="#" class="list-group-item">Статусы</a>                    
-                </div>
-            </div>
-        </div>
-        <div class="panel panel-default">
-            <div class="panel-heading">Данные о заказах</div>
-            <div class="panel-body">
-                <div class="list-group">
-                    <a href="Index" class="list-group-item">Способы оплаты</a>                    
+                    @Html.ActionLink("Типы", "GetTypeDelivery", "Admin", new { @class = "list-group-item" })
                 </div>
             </div>
         </div>
     </div>
     <div class="col-md-4">
-        
+
         <p>В разработке)</p>
-        
-    </div>    
+
+    </div>
 </div>
 
 

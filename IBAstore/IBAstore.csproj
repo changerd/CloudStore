@@ -183,6 +183,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Infastructure\IdentityHelpers.cs" />
     <Compile Include="Migrations\201807251504522_DataMigration.cs" />
     <Compile Include="Migrations\201807251504522_DataMigration.Designer.cs">
       <DependentUpon>201807251504522_DataMigration.cs</DependentUpon>
@@ -263,6 +264,27 @@
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Admin\CreateRole.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
+    <Content Include="Views\Admin\GetRole.cshtml" />
+    <Content Include="Views\Admin\EditRole.cshtml" />
+    <Content Include="Views\Admin\GetUser.cshtml" />
+    <Content Include="Views\Admin\DetailsUser.cshtml" />
+    <Content Include="Views\Admin\GiveRole.cshtml" />
+    <Content Include="Views\Admin\GetManufacturer.cshtml" />
+    <Content Include="Views\Admin\CreateManufacturer.cshtml" />
+    <Content Include="Views\Admin\EditManufacturer.cshtml" />
+    <Content Include="Views\Admin\GetStatusProduct.cshtml" />
+    <Content Include="Views\Admin\CreateStatusProduct.cshtml" />
+    <Content Include="Views\Admin\GetCategory.cshtml" />
+    <Content Include="Views\Admin\CreateCategory.cshtml" />
+    <Content Include="Views\Admin\EditCategory.cshtml" />
+    <Content Include="Views\Admin\GetPaymentMethod.cshtml" />
+    <Content Include="Views\Admin\CreatePaymentMethod.cshtml" />
+    <Content Include="Views\Admin\GetStatusOrder.cshtml" />
+    <Content Include="Views\Admin\CreateStatusOrder.cshtml" />
+    <Content Include="Views\Admin\GetTypeDelivery.cshtml" />
+    <Content Include="Views\Admin\CreateTypeDelivery.cshtml" />
+    <Content Include="Views\Admin\GetProduct.cshtml" />
+    <Content Include="Views\Admin\CreateProduct.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
