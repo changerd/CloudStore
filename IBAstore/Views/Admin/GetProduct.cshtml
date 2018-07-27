@@ -1,10 +1,10 @@
 ﻿@model IEnumerable<IBAstore.Models.Product>
 
 @{
-    ViewBag.Title = "GetProduct";
+    ViewBag.Title = "Товары";
 }
 
-<h2>GetProduct</h2>
+<h2>Товары</h2>
 
 <p>
     @Html.ActionLink("Создать новый товар", "CreateProduct")
@@ -19,36 +19,36 @@
         </th>
         <th>
             @Html.DisplayName("Статус")
-        </th>        
+        </th>
         <th>
             @Html.DisplayName("Цена")
         </th>
         <th></th>
     </tr>
-
-@foreach (var item in Model) {
+    @foreach (var item in Model)
+    {
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.Name)
-        </td> 
+        </td>
         <td>
             @Html.DisplayFor(modelItem => item.Manufacturer.Name)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.StatusProduct.Name)
-        </td>                
+        </td>
         <td>
             @Html.DisplayFor(modelItem => item.Cost)
         </td>
         <td>
-            @Html.ActionLink("Редактировать", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Подробнее", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Удалить", "Delete", new { id=item.Id })
+            @Html.ActionLink("Редактировать", "EditProduct", new { id = item.Id }) |
+            @Html.ActionLink("Подробнее", "DetailsProduct", new { id = item.Id }) |
+            @Html.ActionLink("Удалить", "DeleteProduct", new { id = item.Id })
         </td>
     </tr>
-}
+    }
 
 </table>
 <div>
-    @Html.ActionLink("Назад", "Index")
+    @Html.ActionLink("Назад", "Admin")
 </div>

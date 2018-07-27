@@ -4,6 +4,7 @@ using Microsoft.AspNet.Identity.Owin;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
@@ -301,7 +302,7 @@ namespace IBAstore.Controllers
         }
         public ActionResult GetProduct()
         {
-            List<Product> product = db.Products.ToList();
+            List<Product> product = db.Products.Include(c =>c.Manufacturer).Include(c => c.StatusProduct).ToList();
             return View(product);
         }
         public ActionResult CreateProduct()
@@ -315,12 +316,117 @@ namespace IBAstore.Controllers
             return View();
         }
         [HttpPost]
-        public async Task<ActionResult> CreateProduct(Product product)
+        public async Task<ActionResult> CreateProduct(Product product, int[] selectedCategory, HttpPostedFileBase uploadImage)
         {
+            if (uploadImage != null)
+            {
+            byte[] imageData = null;            
+            using (var binaryReader = new BinaryReader(uploadImage.InputStream))
+            {
+                imageData = binaryReader.ReadBytes(uploadImage.ContentLength);
+            }
+            
+            product.Photo = imageData;
+            }
+            if (selectedCategory != null)
+            {                
+                foreach (var c in db.Categories.Where(co => selectedCategory.Contains(co.Id)))
+                {
+                    product.Categories.Add(c);
+                }
+            }
             db.Products.Add(product);
             await db.SaveChangesAsync();
-            return RedirectToAction("GetPaymentMethod");
+            return RedirectToAction("GetProduct");
         }
+        public ActionResult DetailsProduct(int id)
+        {
+            ////var works = context.Works
+            //       .Select(x => new WorkListView
+            //        {
+            //            Id = x.Id,
+            //            ServerName = x.Server.Name,
+            //            ProgramName = x.Program.Name
+            //        })
+            //       .ToList();
+
+            //var sproduct = db.Products.Select(x => new ProductView
+            //{
+            //    Id = id,
+            //    Name = x.Name,
+            //    ManufacturerName = x.Manufacturer.Name,
+            //    Photo = x.Photo,
+            //    Description = x.Description,
+            //    Cost = x.Cost,
+            //    StatusProductName = x.StatusProduct.Name
+            //}).ToList();
+            //var product = sproduct.Find(i => i.Id == id);
+            var productt = db.Products.Include(c => c.Manufacturer).Include(c => c.StatusProduct).Include(c => c.Categories).ToList();
+            var product = productt.Find(i => i.Id == id);            
+            if (product == null)
+            {
+                return HttpNotFound();
+            }
+            return View(product);
+        }
+        public ActionResult EditProduct(int id)
+        {
+            Product product = db.Products.Find(id);
+            //var productt = db.Products.Include(c => c.Manufacturer).Include(c => c.StatusProduct).Include(c => c.Categories).ToList();
+            //var product = productt.Find(i => i.Id == id);
+            List<Category> category = db.Categories.ToList();
+            SelectList manufacturer = new SelectList(db.Manufacturers, "Id", "Name");
+            SelectList statusproduct = new SelectList(db.StatusProducts, "Id", "Name");
+            ViewBag.Category = category;
+            ViewBag.Manufacturer = manufacturer;
+            ViewBag.StatusProduct = statusproduct;
+            if(product == null)
+            {
+                return HttpNotFound();
+            }
+            return View(product);
+        }
+        [HttpPost]
+        public async Task<ActionResult> EditProduct(Product product, int[] selectedCategory, HttpPostedFileBase uploadImage)
+        {
+            Product newProduct = db.Products.Find(product.Id);
+            newProduct.Name = product.Name;
+            newProduct.ManufacturerId = product.ManufacturerId;            
+            newProduct.Description = product.Description;
+            newProduct.Cost = product.Cost;
+            newProduct.StatusProductId = product.StatusProductId;
+            if (uploadImage != null)
+            {
+                byte[] imageData = null;
+                using (var binaryReader = new BinaryReader(uploadImage.InputStream))
+                {
+                    imageData = binaryReader.ReadBytes(uploadImage.ContentLength);
+                }
+
+                newProduct.Photo = imageData;
+            }
+            if (selectedCategory != null)
+            {
+                foreach (var c in db.Categories.Where(co => selectedCategory.Contains(co.Id)))
+                {
+                    newProduct.Categories.Add(c);
+                }
+            }
+            db.Entry(newProduct).State = EntityState.Modified;
+            await db.SaveChangesAsync();
+            return RedirectToAction("GetProduct");
+        }
+        public async Task<ActionResult> DeleteProduct(int id)
+        {
+            Product product = db.Products.Find(id);
+            if (product != null)
+            {
+                db.Products.Remove(product);
+                await db.SaveChangesAsync();
+            }
+            return RedirectToAction("GetProduct");
+        }
+
 
         public ActionResult GetPaymentMethod()
         {

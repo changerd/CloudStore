@@ -208,6 +208,7 @@
     <Compile Include="Models\Cart.cs" />
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\Delivery.cs" />
+    <Compile Include="Models\ListView.cs" />
     <Compile Include="Models\Order.cs" />
     <Compile Include="Models\PaymentMethod.cs" />
     <Compile Include="Models\TypeDelivery.cs" />
@@ -285,6 +286,8 @@
     <Content Include="Views\Admin\CreateTypeDelivery.cshtml" />
     <Content Include="Views\Admin\GetProduct.cshtml" />
     <Content Include="Views\Admin\CreateProduct.cshtml" />
+    <Content Include="Views\Admin\DetailsProduct.cshtml" />
+    <Content Include="Views\Admin\EditProduct.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
