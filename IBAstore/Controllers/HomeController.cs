@@ -29,7 +29,7 @@ namespace IBAstore.Controllers
         }
         public string WhoAmI()
         {
-            return User.Identity.Name.ToString() + "\n" + User.Identity.GetUserId(); 
+            return User.Identity.Name.ToString() + "\n" + User.Identity.GetUserId() + "\n" + User.Identity.AuthenticationType; 
         }
     }
 }

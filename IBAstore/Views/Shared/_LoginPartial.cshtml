@@ -16,6 +16,9 @@
                 @Html.ActionLink("Здравствуйте, " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
             </li>
             <li>
+                <a href="@Url.Action("Index", "Home")"><span class="glyphicon glyphicon-shopping-cart"></span> Cart</a>
+            </li>
+            <li>
                 @Html.ActionLink("Выйти", "Logout", "Account", routeValues: null, htmlAttributes: new { title = "Manage" })
             </li>
         </ul>
