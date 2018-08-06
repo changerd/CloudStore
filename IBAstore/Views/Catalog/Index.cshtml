@@ -1,0 +1,61 @@
+﻿@using IBAstore.Models
+@model IEnumerable<Category>
+
+@{
+    ViewBag.Title = "Категории";
+}
+
+<h2>Категории</h2>
+
+<br />
+
+<ul class="menu">
+
+    @foreach (var c in Model.Where(p => p.ParentCategoryId == null))
+    {
+
+        <li>
+            <!--<a href="#" class="btn btn-default" role="button">@c.Name</a>-->
+            @Html.ActionLink(c.Name, "Items", new { id = c.Id }, new { @class = "btn btn-default" })
+            @if (Model.Count(p => p.ParentCategoryId == c.Id) > 0)
+            {
+                @:<ul>
+        }
+
+            @RenderMenuItem(Model, c)
+
+            @if (Model.Count(p => p.ParentCategoryId == c.Id) > 0)
+            {
+                @:</ul>
+            }
+
+        </li>
+    }
+</ul>
+
+
+@helper RenderMenuItem(IEnumerable<Category> category, Category cat)
+{
+foreach (var cp in category.Where(p => p.ParentCategoryId == cat.Id))
+{
+
+
+        @:<li>
+            @Html.ActionLink(cp.Name, "Items", new { id = cp.Id }, new { @class = "btn btn-default" })
+
+    if (category.Count(p => p.ParentCategoryId == cp.Id) > 0)
+    {
+            @:<ul>
+        }
+
+        @RenderMenuItem(category, cp)
+    if (category.Count(p => p.ParentCategoryId == cp.Id) > 0)
+    {
+            @:</ul>
+    }
+    else
+    {
+            @:</li>
+    }
+}
+}

@@ -7,13 +7,13 @@ namespace IBAstore.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class DataMigration1 : IMigrationMetadata
+    public sealed partial class DataMigration : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(DataMigration1));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(DataMigration));
         
         string IMigrationMetadata.Id
         {
-            get { return "201807251517057_DataMigration1"; }
+            get { return "201808031022502_DataMigration"; }
         }
         
         string IMigrationMetadata.Source

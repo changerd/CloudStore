@@ -1,4 +1,5 @@
 ﻿@model IEnumerable<IBAstore.Models.Category>
+@using IBAstore.Models
 
 @{
     ViewBag.Title = "Категории товаров";
@@ -14,6 +15,9 @@
         <th>
             @Html.DisplayName("Название")
         </th>
+        <th>
+            @Html.DisplayName("Родительская категория")
+        </th>
         <th></th>
     </tr>
 
@@ -21,6 +25,9 @@
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ParentCategory.Name)
         </td>
         <td>
             @Html.ActionLink("Редактировать", "EditCategory", new { id=item.Id }) |            

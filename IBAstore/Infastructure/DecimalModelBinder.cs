@@ -9,26 +9,19 @@ namespace IBAstore.Infastructure
 {
     public class DecimalModelBinder : IModelBinder
     {
-        public object BindModel(ControllerContext controllerContext,
-        ModelBindingContext bindingContext)
+        public object BindModel(ControllerContext controllerContext, ModelBindingContext bindingContext)
         {
-            var valueResult = bindingContext.ValueProvider
-                .GetValue(bindingContext.ModelName);
+            var valueResult = bindingContext.ValueProvider.GetValue(bindingContext.ModelName);
             var modelState = new ModelState { Value = valueResult };
             object actualValue = null;
+
             try
             {
-                //Check if this is a nullable decimal and a null or empty string has been passed
-                var isNullableAndNull = (bindingContext.ModelMetadata.IsNullableValueType &&
-                                          string.IsNullOrEmpty(valueResult.AttemptedValue));
-
-                //If not nullable and null then we should try and parse the decimal
-                if (!isNullableAndNull)
-                {
-                    actualValue = decimal.Parse(valueResult.AttemptedValue, NumberStyles.Any, CultureInfo.CurrentCulture);
-                }
+                actualValue = !string.IsNullOrEmpty(valueResult.AttemptedValue) ?
+                    decimal.Parse(valueResult.AttemptedValue, new NumberFormatInfo { NumberDecimalSeparator = "." }) :
+                    (decimal?)null;
             }
-            catch (FormatException e)
+            catch (Exception e)
             {
                 modelState.Errors.Add(e);
             }

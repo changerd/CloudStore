@@ -265,6 +265,8 @@ namespace IBAstore.Controllers
         }
         public ActionResult CreateCategory()
         {
+            SelectList parentcategory = new SelectList(db.Categories, "Id", "Name");            
+            ViewBag.ParentCategory = parentcategory;
             return View();
         }
         [HttpPost]
@@ -276,6 +278,8 @@ namespace IBAstore.Controllers
         }
         public ActionResult EditCategory(int id)
         {
+            SelectList parentcategory = new SelectList(db.Categories, "Id", "Name");
+            ViewBag.ParentCategory = parentcategory;
             Category category = db.Categories.Find(id);
             if (category != null)
             {

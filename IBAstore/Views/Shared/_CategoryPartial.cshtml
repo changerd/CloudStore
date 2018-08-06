@@ -1,0 +1,67 @@
+﻿@using IBAstore.Models
+
+@{
+    StoreContext db = new StoreContext();
+    IEnumerable<Category> Categories = db.Categories.ToList();
+}
+
+@helper RenderMenuItem(IEnumerable<Category> category, Category cat)
+{
+foreach (var cp in category.Where(p => p.ParentCategoryId == cat.Id))
+{
+        @:<li><a href="#">@cp.Name</a>
+
+
+
+
+    if (category.Count(p => p.ParentCategoryId == cp.Id) > 0)
+    {
+            @:<ul class="dropdown-menu">
+        }
+
+        @RenderMenuItem(category, cp)
+    if (category.Count(p => p.ParentCategoryId == cp.Id) > 0)
+    {
+            @:</ul>
+    }
+    else
+    {
+            @:</li>
+    }
+}
+}
+
+<div class="navbar navbar-inverse">
+    <div class="navbar-collapse collapse">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#"></a>
+        </div>
+        <ul class="nav navbar-nav">
+            @foreach (var c in Categories.Where(p => p.ParentCategoryId == null))
+            {
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="@Url.Action("WhoAmI", "Home")">@c.Name<span class="caret"></span></a>
+                    @if (Categories.Count(p => p.ParentCategoryId == c.Id) > 0)
+                    {
+                        @:<ul class="dropdown-menu">
+        }
+
+                    @RenderMenuItem(Categories, c)
+                    @if (Categories.Count(p => p.ParentCategoryId == c.Id) > 0)
+                    {
+                        <li><a href="#">Показать все</a></li>
+                        @:</ul>
+            }
+                    else
+                    {
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Показать все</a></li>
+                        </ul>
+                    }
+
+                </li>
+            }
+        </ul>
+    </div>
+</div>
+

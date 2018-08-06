@@ -27,7 +27,7 @@
         </div>
 
         <div class="form-group">
-            @Html.Label("Производитель", "ManufacturerId", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.Label("Производитель", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownList("ManufacturerId", ViewBag.Manufacturer as SelectList, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.ManufacturerId, "", new { @class = "text-danger" })
@@ -70,7 +70,7 @@
         </div>        
 
         <div class="form-group">
-            @Html.Label("Статус", "StatusProductId", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.Label("Статус", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownList("StatusProductId", ViewBag.StatusProduct as SelectList, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.StatusProductId, "", new { @class = "text-danger" })

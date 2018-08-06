@@ -9,10 +9,14 @@ namespace IBAstore.Models
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        public int? ParentCategoryId { get; set; }
+        public Category ParentCategory { get; set; }
+        public virtual ICollection<Category> Categories { get; set; }
         public virtual ICollection<Product> Products { get; set; }
         public Category()
         {
             Products = new List<Product>();
+            Categories = new List<Category>();
         }
     }
 }

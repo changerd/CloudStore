@@ -1,0 +1,23 @@
+﻿@using IBAstore.Models
+@model ProductListViewModel
+@using IBAstore.Infastructure
+
+@{
+    ViewBag.Title = "Items";
+}
+
+<h2>@ViewBag.CategoryName</h2>
+<hr />
+
+@foreach (var item in Model.Products)
+{
+    <h4>@item.Manufacturer.Name @item.Name</h4>
+            <p>@item.Description</p>
+                <h5><b>@item.Cost.ToString("# руб")</b></h5>
+}
+
+<div>
+    @Html.PageLinks(Model.PagingInfo, x => Url.Action("Items", new { page = x }))
+</div>
+
+
