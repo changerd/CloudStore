@@ -1,0 +1,33 @@
+﻿@model IBAstore.Models.Product
+
+@{
+    ViewBag.Title = Model.Manufacturer.Name + " " + Model.Name;
+}
+
+<br />
+
+<div class="row">
+    <div class="col-sm-8">
+        <center><img class="thumbnail" src="data:image/jpeg;base64, @Convert.ToBase64String(Model.Photo)" /></center>
+        <h3>Описание:</h3>
+        <p>@Model.Description</p>
+    </div>
+    <div class="col-sm-4">
+        <h1>@Model.Name</h1>
+        <p>Производитель: @Model.Manufacturer.Name</p>
+        <h2>@Model.Cost.ToString("# руб")</h2>
+        <h3>@Model.StatusProduct.Name</h3>
+        @if (Model.StatusProduct.Name == "Нет в наличии" || Model.StatusProduct.Name == "Снят с производства")
+        {
+            <div class="form-group">
+                <button class="btn btn-default disabled btn-lg btn-block">Добавить в корзину</button>
+            </div>
+        }
+        else
+        {
+            <div class="form-group">
+                <button class="btn btn-default btn-lg btn-block">Добавить в корзину</button>
+            </div>
+        }
+    </div>
+</div>

@@ -40,9 +40,12 @@
             @Html.DisplayName("Фото")
         </dt>
 
-        <dd>
-            @Html.Raw("<img src=\"data:image/jpeg;base64," + Convert.ToBase64String(Model.Photo) + "\" />")
-        </dd>
+        @if (Model.Photo != null)
+        {
+            <dd>
+                @Html.Raw("<img src=\"data:image/jpeg;base64," + Convert.ToBase64String(Model.Photo) + "\" />")
+            </dd>
+        }
 
         <dt>
             @Html.DisplayName("Описание")
@@ -64,7 +67,7 @@
         </dt>
         <dd>
             @Html.DisplayFor(model => model.StatusProduct.Name)
-        </dd>        
+        </dd>
     </dl>
 </div>
 <p>

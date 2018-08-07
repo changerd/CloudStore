@@ -13,11 +13,36 @@ namespace IBAstore
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
-            routes.MapRoute(
-                name: null,
-                url: "{id}/Page{page}",
-                defaults: new { controller = "Catalog", action = "Items" }
-            );
+            //routes.MapRoute(null,
+            //    "",
+            //    new
+            //    {
+            //        controller = "Catalog",
+            //        action = "Items",
+            //        category = (string)null,
+            //        page = 1
+            //    }
+            //);
+
+            //routes.MapRoute(
+            //    name: null,
+            //    url: "{id}/Page{page}",
+            //    defaults: new { controller = "Catalog", action = "Items", manufacturer = (string)null },
+            //    constraints: new { page = @"\d+" }
+            //);
+
+            //routes.MapRoute(null,
+            //    "{id}/{manufacturer}",
+            //    new { controller = "Catalog", action = "Items" }
+            //);
+
+            //routes.MapRoute(null,
+            //    "{id}/{manufacturer}/Page{page}",
+            //    new { controller = "Catalog", action = "Items" },
+            //    new { page = @"\d+" }
+            //);
+
+            //routes.MapRoute(null, "{controller}/{action}");
 
             routes.MapRoute(
                 name: "Default",

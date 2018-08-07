@@ -23,23 +23,56 @@ namespace IBAstore.Controllers
             List<Category> categories = db.Categories.ToList();
             return View(categories);
         }
-        public ActionResult Items(int id, int page = 1)
+        public ActionResult Items(int id, int? manufacturer, int page = 1)
         {
             var category = db.Categories.Find(id);
             string categoryname = category.Name;
-            ViewBag.CategoryName = categoryname;            
-            var products = db.Products.Include(c => c.Manufacturer).Include(c => c.StatusProduct).Include(c => c.Categories).Where(c => c.Categories.Any(cc => cc.Id == id)).ToList(); 
+            ViewBag.CategoryName = categoryname;
+            ViewBag.mid = manufacturer;
+            var product = db.Products
+                .Include(c => c.Manufacturer)
+                .Include(c => c.StatusProduct)
+                .Include(c => c.Categories)
+                .Where(c => c.Categories.Any(cc => cc.Id == id));
+                //.Where(c => manufacturer == null || c.Manufacturer.Name == manufacturer)
+                //.ToList();
+            if (manufacturer != null && manufacturer != 0)
+            {
+                product = product.Where(c => c.ManufacturerId == manufacturer);
+            }
+            List<Product> products = product.ToList();
+            var manufacturers = db.Manufacturers.Where(m => m.Products.Any(p => p.Categories.Any(c => c.Id == id))).ToList();
+            manufacturers.Insert(0, new Manufacturer { Name = "Все", Id = 0 });
             ProductListViewModel model = new ProductListViewModel
             {
-                Products = products.OrderBy(p => p.Id).Skip((page - 1) * pagesize).Take(pagesize),
+                Products = products.Where(m => manufacturer == null || manufacturer == 0 || m.ManufacturerId == manufacturer).OrderBy(p => p.Id).Skip((page - 1) * pagesize).Take(pagesize),
                 PagingInfo = new PagingInfo
                 {
                     CurrentPage = page,
                     ItemsPerPage = pagesize,
-                    TotalItems = products.Count()
-                }
+                    TotalItems = manufacturer == 0 || manufacturer == null ? products.Count() : db.Products.Where(c => c.Categories.Any(cc => cc.Id == id)).Where(m => m.ManufacturerId == manufacturer).Count()                    
+                },
+                Manufacturers = new SelectList(manufacturers, "Id", "Name")
+                
             };
             return View(model);
+        }
+        [HttpGet]
+        public ActionResult SearchResult(string search)
+        {
+            ViewBag.SearchResult = search;
+            var searchresult = db.Products.Where(p=> p.Name.Contains(search)).Include(c => c.Manufacturer).Include(c => c.StatusProduct).Include(c => c.Categories).ToList();
+            return View(searchresult);            
+        }
+        public ActionResult DetailsItem(int id)
+        {            
+            var productt = db.Products.Include(c => c.Manufacturer).Include(c => c.StatusProduct).Include(c => c.Categories).ToList();
+            var product = productt.Find(i => i.Id == id);
+            if (product == null)
+            {
+                return HttpNotFound();
+            }
+            return View(product);
         }
     }
 }
