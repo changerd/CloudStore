@@ -13,7 +13,13 @@ namespace IBAstore.Models
     {
         public string Name { get; set; }
         public DateTime? Birth { get; set; }            
-        public ICollection<Cart> Carts { get; set; }         
+        public ICollection<Cart> Carts { get; set; } 
+        public ICollection<SaleStat> SaleStats { get; set; }
+        public ApplicationUser()
+        {
+            Carts = new List<Cart>();
+            SaleStats = new List<SaleStat>();
+        }
     }    
     public class ApplicationUserManager : UserManager<ApplicationUser>
     {

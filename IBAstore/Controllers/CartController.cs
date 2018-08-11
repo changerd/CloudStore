@@ -56,21 +56,12 @@ namespace IBAstore.Controllers
         public ActionResult Checkout()
         {
             SelectList paymentmethod = new SelectList(db.PaymentMethods, "Id", "Name");
-            SelectList typedelivery = new SelectList(db.TypeDeliveries, "Id", "Name");            
-            //ViewBag.CartId = cartid;
-            //ViewBag.Description = orderdescription;
+            SelectList typedelivery = new SelectList(db.TypeDeliveries, "Id", "Name");           
             decimal value = GetCart().ComputeTotalValue();
             ViewBag.Value = value;
             ViewBag.PaymentMethod = paymentmethod;
             ViewBag.TypeDelivery = typedelivery;
-            return View(/*new Order
-            {
-                Date = DateTime.Now,
-                CartId = cartid,
-                Description = orderdescription,
-                Value = value,
-                StatusOrderId = 2
-            }*/);
+            return View();
         }
         [HttpPost]
         public async Task<ActionResult> Checkout(Order order)
@@ -78,9 +69,17 @@ namespace IBAstore.Controllers
             string orderdescription = null;
             int cartid = GetCart().Id;
             decimal value = GetCart().ComputeTotalValue();
+            string userid = User.Identity.GetUserId();
             foreach (var cart in GetCart().Products)
             {
                 orderdescription += cart.Name + " " + "Цена " + cart.Cost + " руб" + "\n";
+                SaleStat stat = new SaleStat
+                {
+                    ProductId = cart.Id,
+                    UserId = userid,
+                    Date = DateTime.Now
+                };
+                db.SaleStats.Add(stat);
             }
             order.Date = DateTime.Now;
             order.CartId = cartid;

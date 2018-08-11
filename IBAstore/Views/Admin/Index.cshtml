@@ -45,10 +45,44 @@
             </div>
         </div>
     </div>
-    <div class="col-md-4">
-
-        <p>В разработке)</p>
-
+    <div class="col-md-9">
+        <div class="container">
+            <h2 class="text-center">Статистика</h2>
+            <hr />
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">Заказы</div>
+                        <div class="panel-body">
+                            <h2 class="pull-left"><span class="glyphicon glyphicon-shopping-cart"></span></h2>
+                            <h2 class="pull-right">@Html.Action("SummaryOrders", "Admin")</h2>
+                        </div>
+                        <div class="panel-footer">@Html.ActionLink("Подробнее", "GetOrder", "Admin")</div>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">Продажи</div>
+                        <div class="panel-body">
+                            <h2 class="pull-left"><span class="glyphicon glyphicon-usd"></span></h2>
+                            <h2 class="pull-right">@Html.Action("SummarySales", "Admin")</h2>
+                        </div>
+                        <div class="panel-footer">@Html.ActionLink("Подробнее", "GetSale", "Admin")</div>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">Пользователи</div>
+                        <div class="panel-body">
+                            <h2 class="pull-left"><span class="glyphicon glyphicon-user"></span></h2>
+                            <h2 class="pull-right">@Html.Action("SummaryUsers", "Admin")</h2>
+                        </div>
+                        <div class="panel-footer">@Html.ActionLink("Подробнее", "GetUserStat", "Admin")</div>
+                    </div>
+                </div>
+            </div>
+            <hr />
+        </div>
     </div>
 </div>
 

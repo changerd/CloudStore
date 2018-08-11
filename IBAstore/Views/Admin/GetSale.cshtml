@@ -1,0 +1,59 @@
+﻿@model IEnumerable<IBAstore.Models.SaleStat>
+
+@{
+    ViewBag.Title = "Продажи";
+}
+
+<h2>Продажи</h2>
+
+<div class="row panel">
+    <div class="col-md-2">
+        <form method="get">
+            <div class="form-inline">
+                <label class="control-label">От</label>
+                @Html.Editor("firstdate", new { htmlAttributes = new { @class = "form-control", type = "date" } })
+                <label class="control-label">До</label>
+                @Html.Editor("seconddate", new { htmlAttributes = new { @class = "form-control", type = "date" } })
+                <label class="control-label">Товар</label>
+                <p>@Html.DropDownList("product", ViewBag.Products as SelectList, htmlAttributes: new { @class = "form-control" })</p>
+                <input type="submit" value="Фильтр" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+    <div class="col-md-10">
+        <table class="table">
+            <tr>
+                <th>
+                    @Html.DisplayName("Товар")
+                </th>
+                <th>
+                    @Html.DisplayName("Клиент")
+                </th>
+                <th>
+                    @Html.DisplayName("Дата")
+                </th>                
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Product.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.User.UserName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Date)
+                    </td>                    
+                </tr>
+            }
+
+        </table>
+    </div>
+</div>
+
+<div>
+    @Html.ActionLink("Назад", "Index")
+</div>
+

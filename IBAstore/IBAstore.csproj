@@ -209,6 +209,10 @@
     <Compile Include="Migrations\201808102300150_DataMigration4.Designer.cs">
       <DependentUpon>201808102300150_DataMigration4.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201808111734409_DataMigration5.cs" />
+    <Compile Include="Migrations\201808111734409_DataMigration5.Designer.cs">
+      <DependentUpon>201808111734409_DataMigration5.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Cart.cs" />
     <Compile Include="Models\Category.cs" />
@@ -216,6 +220,7 @@
     <Compile Include="Models\Order.cs" />
     <Compile Include="Models\PagingInfo.cs" />
     <Compile Include="Models\PaymentMethod.cs" />
+    <Compile Include="Models\SaleStat.cs" />
     <Compile Include="Models\TypeDelivery.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\LoginModel.cs" />
@@ -339,6 +344,14 @@
     <Content Include="Views\Manage\Index.cshtml" />
     <Content Include="Views\Manage\Edit.cshtml" />
     <Content Include="Views\Manage\DetailOrder.cshtml" />
+    <Content Include="Views\Admin\SummaryOrders.cshtml" />
+    <Content Include="Views\Admin\SummaryUsers.cshtml" />
+    <Content Include="Views\Admin\GetOrder.cshtml" />
+    <Content Include="Views\Admin\DetailsOrder.cshtml" />
+    <Content Include="Views\Admin\EditOrder.cshtml" />
+    <Content Include="Views\Admin\SummarySales.cshtml" />
+    <Content Include="Views\Admin\GetSale.cshtml" />
+    <Content Include="Views\Admin\GetUserStat.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -367,6 +380,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201808102300150_DataMigration4.resx">
       <DependentUpon>201808102300150_DataMigration4.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201808111734409_DataMigration5.resx">
+      <DependentUpon>201808111734409_DataMigration5.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

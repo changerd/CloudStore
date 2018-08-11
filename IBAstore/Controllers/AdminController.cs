@@ -39,18 +39,6 @@ namespace IBAstore.Controllers
         {
             return View(RoleManager.Roles);
         }
-        //[HttpGet]
-        //public ActionResult Create()
-        //{
-        //    return View();
-        //}
-        //[HttpPost]
-        //public ActionResult Create(Category category)
-        //{
-        //    db.Categories.Add(category);
-        //    db.SaveChanges();
-        //    return RedirectToAction("Index");                
-        //}
         public ActionResult CreateRole()
         {
             return View();
@@ -62,7 +50,7 @@ namespace IBAstore.Controllers
             {
                 IdentityResult result = await RoleManager.CreateAsync(new ApplicationRole
                 {
-                    Name = model.Name,                    
+                    Name = model.Name,
                 });
                 if (result.Succeeded)
                 {
@@ -91,7 +79,7 @@ namespace IBAstore.Controllers
             {
                 ApplicationRole role = await RoleManager.FindByIdAsync(model.Id);
                 if (role != null)
-                {                    
+                {
                     role.Name = model.Name;
                     IdentityResult result = await RoleManager.UpdateAsync(role);
                     if (result.Succeeded)
@@ -165,7 +153,7 @@ namespace IBAstore.Controllers
         public ActionResult GetUser()
         {
             return View(UserManager.Users);
-        }        
+        }
         public ActionResult DetailsUser(string id)
         {
             var user = db.Users.Find(id);
@@ -174,7 +162,7 @@ namespace IBAstore.Controllers
                 return HttpNotFound();
             }
             return View(user);
-        }        
+        }
         public async Task<ActionResult> DeleteUser(string id)
         {
             Cart query = db.Carts.Where(c => c.UserId == id).FirstOrDefault();
@@ -186,7 +174,7 @@ namespace IBAstore.Controllers
             ApplicationUser user = await UserManager.FindByIdAsync(id);
             if (user != null)
             {
-                IdentityResult result = await UserManager.DeleteAsync(user);                
+                IdentityResult result = await UserManager.DeleteAsync(user);
             }
             return RedirectToAction("GetUser");
         }
@@ -194,25 +182,25 @@ namespace IBAstore.Controllers
         {
             List<Manufacturer> manufacturer = db.Manufacturers.ToList();
             return View(manufacturer);
-        }        
+        }
         public ActionResult CreateManufacturer()
         {
             return View();
         }
         [HttpPost]
-        public async Task <ActionResult> CreateManufacturer(Manufacturer manufacturer)
+        public async Task<ActionResult> CreateManufacturer(Manufacturer manufacturer)
         {
             db.Manufacturers.Add(manufacturer);
             await db.SaveChangesAsync();
             return RedirectToAction("GetManufacturer");
         }
         public ActionResult EditManufacturer(int id)
-        {            
+        {
             Manufacturer manu = db.Manufacturers.Find(id);
             if (manu != null)
             {
                 return View(manu);
-            }            
+            }
             return HttpNotFound();
         }
         [HttpPost]
@@ -247,7 +235,7 @@ namespace IBAstore.Controllers
             db.StatusProducts.Add(status);
             await db.SaveChangesAsync();
             return RedirectToAction("GetStatusProduct");
-        }        
+        }
         public async Task<ActionResult> DeleteStatusProduct(int id)
         {
             StatusProduct status = db.StatusProducts.Find(id);
@@ -265,7 +253,7 @@ namespace IBAstore.Controllers
         }
         public ActionResult CreateCategory()
         {
-            SelectList parentcategory = new SelectList(db.Categories, "Id", "Name");            
+            SelectList parentcategory = new SelectList(db.Categories, "Id", "Name");
             ViewBag.ParentCategory = parentcategory;
             return View();
         }
@@ -306,7 +294,7 @@ namespace IBAstore.Controllers
         }
         public ActionResult GetProduct()
         {
-            List<Product> product = db.Products.Include(c =>c.Manufacturer).Include(c => c.StatusProduct).ToList();
+            List<Product> product = db.Products.Include(c => c.Manufacturer).Include(c => c.StatusProduct).ToList();
             return View(product);
         }
         public ActionResult CreateProduct()
@@ -324,16 +312,16 @@ namespace IBAstore.Controllers
         {
             if (uploadImage != null)
             {
-            byte[] imageData = null;            
-            using (var binaryReader = new BinaryReader(uploadImage.InputStream))
-            {
-                imageData = binaryReader.ReadBytes(uploadImage.ContentLength);
-            }
-            
-            product.Photo = imageData;
+                byte[] imageData = null;
+                using (var binaryReader = new BinaryReader(uploadImage.InputStream))
+                {
+                    imageData = binaryReader.ReadBytes(uploadImage.ContentLength);
+                }
+
+                product.Photo = imageData;
             }
             if (selectedCategory != null)
-            {                
+            {
                 foreach (var c in db.Categories.Where(co => selectedCategory.Contains(co.Id)))
                 {
                     product.Categories.Add(c);
@@ -344,9 +332,9 @@ namespace IBAstore.Controllers
             return RedirectToAction("GetProduct");
         }
         public ActionResult DetailsProduct(int id)
-        {            
+        {
             var productt = db.Products.Include(c => c.Manufacturer).Include(c => c.StatusProduct).Include(c => c.Categories).ToList();
-            var product = productt.Find(i => i.Id == id);            
+            var product = productt.Find(i => i.Id == id);
             if (product == null)
             {
                 return HttpNotFound();
@@ -364,7 +352,7 @@ namespace IBAstore.Controllers
             ViewBag.Category = category;
             ViewBag.Manufacturer = manufacturer;
             ViewBag.StatusProduct = statusproduct;
-            if(product == null)
+            if (product == null)
             {
                 return HttpNotFound();
             }
@@ -375,7 +363,7 @@ namespace IBAstore.Controllers
         {
             Product newProduct = db.Products.Find(product.Id);
             newProduct.Name = product.Name;
-            newProduct.ManufacturerId = product.ManufacturerId;            
+            newProduct.ManufacturerId = product.ManufacturerId;
             newProduct.Description = product.Description;
             newProduct.Cost = product.Cost;
             newProduct.StatusProductId = product.StatusProductId;
@@ -490,5 +478,103 @@ namespace IBAstore.Controllers
             }
             return RedirectToAction("GetTypeDelivery");
         }
-    }
+        public PartialViewResult SummaryOrders()
+        {
+            var orders = db.Orders.Count();
+            return PartialView(orders);
+        }
+        public PartialViewResult SummarySales()
+        {
+            var sales = db.SaleStats.Count();
+            return PartialView(sales);
+        }
+        public PartialViewResult SummaryUsers()
+        {
+            return PartialView(UserManager.Users.Count());
+        }
+        public ActionResult GetOrder(int? status, string id)
+        {
+
+            var order = db.Orders.Include(o => o.StatusOrder).Include(o => o.Cart.User);
+            if (status != null && status != 0)
+            {
+                order = order.Where(s => s.StatusOrderId == status);
+            }
+            if (id != null)
+            {
+                order = order.Where(u => u.Cart.UserId == id);
+            }
+            var orders = order.ToList();
+            var statusorders = db.StatusOrders.ToList();
+            statusorders.Insert(0, new StatusOrder { Name = "Все", Id = 0 });
+            SelectList so = new SelectList(statusorders, "Id", "Name");
+            ViewBag.StatusOrder = so;
+            return View(orders);
+        }
+        public ActionResult DetailsOrder(int id)
+        {
+            var orders = db.Orders.Include(o => o.StatusOrder).Include(o => o.PaymentMethod).Include(o => o.TypeDelivery).Include(o => o.Cart.User).ToList();
+            var order = orders.Find(o => o.Id == id);
+            if (order == null)
+            {
+                return HttpNotFound();
+            }
+            return View(order);
+        }
+        public ActionResult EditOrder(int id)
+        {
+            SelectList status = new SelectList(db.StatusOrders, "Id", "Name");
+            ViewBag.StatusOrder = status;
+            var orders = db.Orders.Include(o => o.StatusOrder).Include(o => o.PaymentMethod).Include(o => o.TypeDelivery).Include(o => o.Cart.User).ToList();
+            var order = orders.Find(o => o.Id == id);
+            if (order == null)
+            {
+                return HttpNotFound();
+            }
+            return View(order);
+        }
+        [HttpPost]
+        public async Task<ActionResult> EditOrder(Order order)
+        {            
+            db.Entry(order).State = EntityState.Modified;
+            await db.SaveChangesAsync();
+            return RedirectToAction("GetOrder");
+        }
+        public async Task<ActionResult> DeleteOrder(int id)
+        {
+            var order = db.Orders.Find(id);
+            if (order != null)
+            {
+                db.Orders.Remove(order);
+                await db.SaveChangesAsync();
+            }
+            return RedirectToAction("GetOrder");
+        }
+        public ActionResult GetSale(int? product, DateTime? firstdate, DateTime? seconddate)
+        {
+            var sale = db.SaleStats.Include(s => s.Product).Include(s => s.User);
+            if (firstdate != null)
+            {
+                sale = sale.Where(s => s.Date > firstdate);
+            }
+            if (seconddate != null)
+            {
+                sale = sale.Where(s => s.Date < seconddate);
+            }
+            if (product != null && product != 0)
+            {
+                sale = sale.Where(s => s.ProductId == product);
+            }
+            var sales = sale.ToList();
+            var products = db.Products.OrderBy(n => n.Name).ToList();
+            products.Insert(0, new Product { Name = "Все", Id = 0 });
+            SelectList pr = new SelectList(products, "Id", "Name");
+            ViewBag.Products = pr;
+            return View(sales);
+        }
+        public ActionResult GetUserStat()
+        {
+            return View(UserManager.Users);
+        }
+    }    
 }

@@ -18,10 +18,12 @@ namespace IBAstore.Models
         public StatusProduct StatusProduct { get; set; }
         public virtual ICollection<Category> Categories { get; set; }
         public virtual ICollection<Cart> Carts { get; set; }
+        public virtual ICollection<SaleStat> SaleStats { get; set; } 
         public Product()
         {
             Categories = new List<Category>();
             Carts = new List<Cart>();
+            SaleStats = new List<SaleStat>();
         }
 
     }
