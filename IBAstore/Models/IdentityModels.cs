@@ -12,8 +12,7 @@ namespace IBAstore.Models
     public class ApplicationUser : IdentityUser
     {
         public string Name { get; set; }
-        public DateTime? Birth { get; set; }
-        public string Telephone { get; set; }        
+        public DateTime? Birth { get; set; }            
         public ICollection<Cart> Carts { get; set; }         
     }    
     public class ApplicationUserManager : UserManager<ApplicationUser>

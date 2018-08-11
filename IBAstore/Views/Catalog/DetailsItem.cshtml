@@ -25,9 +25,14 @@
         }
         else
         {
-            <div class="form-group">
-                <button class="btn btn-default btn-lg btn-block">Добавить в корзину</button>
-            </div>
+            using (Html.BeginForm("AddToCart", "Cart"))
+            {                                              
+                <div class="form-group">
+                    @Html.HiddenFor(x => x.Id)
+                    @Html.Hidden("returnUrl", Request.Url.PathAndQuery)                    
+                    <input type="submit" class="btn btn-default btn-lg btn-block" value="Добавить в корзину" />
+                </div>
+            }
         }
     </div>
 </div>

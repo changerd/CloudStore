@@ -1,0 +1,83 @@
+﻿@model IBAstore.Models.ApplicationUser
+@using IBAstore.Models
+
+@{
+    ViewBag.Title = "Профиль";
+    StoreContext db = new StoreContext();
+    var Orders = db.Orders.Where(o => o.Cart.UserId == Model.Id);
+}
+
+<h2>Профиль</h2>
+
+<div>   
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayName("Логин")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UserName)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Электронная почта")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("ФИО")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Дата рождения")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Birth)
+        </dd>       
+
+        <dt>
+            @Html.DisplayName("Телефон")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PhoneNumber)
+        </dd>
+    </dl>
+</div>
+
+<h2>Заказы</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayName("Номер заказа")
+        </th>        
+        <th></th>
+    </tr>
+
+    @foreach (var item in Orders)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>            
+            <td>
+                @Html.ActionLink("Подробнее", "DetailOrder", new { id = item.Id })                
+            </td>
+        </tr>
+    }
+</table>
+
+<p>    
+    @Html.ActionLink("Назад", "Index", "Home", routeValues: null, htmlAttributes: new { @class = "btn btn-default" })
+    @Html.ActionLink("Редактировать профиль", "Edit", new { id = Model.Id }, new { @class = "btn btn-default" })
+</p>

@@ -1,0 +1,120 @@
+﻿@model IBAstore.Models.Order
+
+@{
+    ViewBag.Title = "Данные о заказе";
+}
+
+<h2>Данные о заказе</h2>
+
+<div>    
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayName("Номер заказа")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Id)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Способ оплаты")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PaymentMethod.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Статус заказа")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StatusOrder.Name)
+        </dd>        
+
+        <dt>
+            @Html.DisplayName("Описание")
+        </dt>
+
+        <dd>
+            @Html.DisplayTextFor(model => model.Description)
+        </dd>        
+
+        <dt>
+            @Html.DisplayName("Тип доставки")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TypeDelivery.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Дата оформления заказа")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Date)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Город")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.City)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Улица")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Street)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Дом")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.House)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Корпус")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Housing)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Квартира")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Flat)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Телефон")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Telephone)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Сумма заказа")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Value)
+        </dd>
+
+    </dl>
+</div>
+<p>    
+    @Html.ActionLink("Назад", "Index", "Home", routeValues: null, htmlAttributes: new { @class = "btn btn-default" })
+</p>

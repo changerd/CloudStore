@@ -344,27 +344,7 @@ namespace IBAstore.Controllers
             return RedirectToAction("GetProduct");
         }
         public ActionResult DetailsProduct(int id)
-        {
-            ////var works = context.Works
-            //       .Select(x => new WorkListView
-            //        {
-            //            Id = x.Id,
-            //            ServerName = x.Server.Name,
-            //            ProgramName = x.Program.Name
-            //        })
-            //       .ToList();
-
-            //var sproduct = db.Products.Select(x => new ProductView
-            //{
-            //    Id = id,
-            //    Name = x.Name,
-            //    ManufacturerName = x.Manufacturer.Name,
-            //    Photo = x.Photo,
-            //    Description = x.Description,
-            //    Cost = x.Cost,
-            //    StatusProductName = x.StatusProduct.Name
-            //}).ToList();
-            //var product = sproduct.Find(i => i.Id == id);
+        {            
             var productt = db.Products.Include(c => c.Manufacturer).Include(c => c.StatusProduct).Include(c => c.Categories).ToList();
             var product = productt.Find(i => i.Id == id);            
             if (product == null)

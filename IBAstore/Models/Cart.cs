@@ -17,5 +17,9 @@ namespace IBAstore.Models
             Orders = new List<Order>();
             Products = new List<Product>();
         }
+        public decimal ComputeTotalValue()
+        {
+            return Products.Sum(s => s.Cost);
+        }
     }
 }

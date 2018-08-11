@@ -15,8 +15,7 @@ namespace IBAstore.Models
             return new StoreContext();
         }
         public DbSet<Cart> Carts { get; set; }
-        public DbSet<Category> Categories { get; set; }
-        public DbSet<Delivery> Deliveries { get; set; }
+        public DbSet<Category> Categories { get; set; }        
         //public DbSet<ApplicationUser> Users { get; set; }
         //public DbSet<ApplicationRole> Roles { get; set; }
         public DbSet<Order> Orders { get; set; }

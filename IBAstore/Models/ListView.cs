@@ -12,5 +12,10 @@ namespace IBAstore.Models
         public PagingInfo PagingInfo { get; set; }
         public SelectList Manufacturers { get; set; }
     }
+    public class CartIndexViewModel
+    {
+        public Cart Cart { get; set; }
+        public string ReturnUrl { get; set; }
+    }
     
 }

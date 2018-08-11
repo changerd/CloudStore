@@ -179,6 +179,7 @@
     <Compile Include="App_Start\Startup.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\CartController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\CatalogController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -192,10 +193,25 @@
     <Compile Include="Migrations\201808031022502_DataMigration.Designer.cs">
       <DependentUpon>201808031022502_DataMigration.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201808100950019_DataMigration1.cs" />
+    <Compile Include="Migrations\201808100950019_DataMigration1.Designer.cs">
+      <DependentUpon>201808100950019_DataMigration1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201808101008373_DataMigration2.cs" />
+    <Compile Include="Migrations\201808101008373_DataMigration2.Designer.cs">
+      <DependentUpon>201808101008373_DataMigration2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201808101221440_DataMigration3.cs" />
+    <Compile Include="Migrations\201808101221440_DataMigration3.Designer.cs">
+      <DependentUpon>201808101221440_DataMigration3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201808102300150_DataMigration4.cs" />
+    <Compile Include="Migrations\201808102300150_DataMigration4.Designer.cs">
+      <DependentUpon>201808102300150_DataMigration4.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Cart.cs" />
     <Compile Include="Models\Category.cs" />
-    <Compile Include="Models\Delivery.cs" />
     <Compile Include="Models\ListView.cs" />
     <Compile Include="Models\Order.cs" />
     <Compile Include="Models\PagingInfo.cs" />
@@ -316,10 +332,16 @@
     <Content Include="Views\Catalog\Items.cshtml" />
     <Content Include="Views\Catalog\SearchResult.cshtml" />
     <Content Include="Views\Catalog\DetailsItem.cshtml" />
+    <Content Include="Views\Cart\Index.cshtml" />
+    <Content Include="Views\Cart\Summary.cshtml" />
+    <Content Include="Views\Cart\Checkout.cshtml" />
+    <Content Include="Views\Cart\Completed.cshtml" />
+    <Content Include="Views\Manage\Index.cshtml" />
+    <Content Include="Views\Manage\Edit.cshtml" />
+    <Content Include="Views\Manage\DetailOrder.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Manage\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -333,6 +355,18 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201808031022502_DataMigration.resx">
       <DependentUpon>201808031022502_DataMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201808100950019_DataMigration1.resx">
+      <DependentUpon>201808100950019_DataMigration1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201808101008373_DataMigration2.resx">
+      <DependentUpon>201808101008373_DataMigration2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201808101221440_DataMigration3.resx">
+      <DependentUpon>201808101221440_DataMigration3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201808102300150_DataMigration4.resx">
+      <DependentUpon>201808102300150_DataMigration4.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
