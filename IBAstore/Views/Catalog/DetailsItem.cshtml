@@ -21,7 +21,7 @@
         {
             <div class="form-group">
                 <button class="btn btn-default disabled btn-lg btn-block">Добавить в корзину</button>
-                @using (Html.BeginForm("AddProductRequest", "Catalog"))
+                @using (Html.BeginForm("AddProductRequest", "Cart"))
                 {
                     <br />                
                     @Html.HiddenFor(x => x.Id)

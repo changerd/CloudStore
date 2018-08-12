@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace IBAstore.Controllers
 {
+    [Authorize]
     public class CartController : Controller
     {
         StoreContext db = new StoreContext();
@@ -39,6 +40,22 @@ namespace IBAstore.Controllers
                 db.SaveChanges();
             }
             return RedirectToAction("Index", new { returnUrl });
+        }
+        public RedirectResult AddProductRequest(int Id, string returnUrl)
+        {
+            string userid = User.Identity.GetUserId();
+            string prname = db.Products.Find(Id).Name;
+            ProductRequest pr = new ProductRequest { ProductId = Id, UserId = userid };
+            var prr = db.ProductRequests.Where(p => p.ProductId == Id).Where(u => u.UserId == userid);
+            if (prr != null)
+            {
+                TempData["message"] = string.Format("Заявка уже существет!", prname);
+                return Redirect(returnUrl);
+            }
+            db.ProductRequests.Add(pr);
+            db.SaveChanges();
+            TempData["message"] = string.Format("Заявка на {0} успешно принята!", prname);
+            return Redirect(returnUrl);
         }
         // GET: Cart
         public ActionResult Index(string returnUrl)
