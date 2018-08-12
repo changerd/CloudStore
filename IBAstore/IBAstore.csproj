@@ -70,6 +70,11 @@
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.5\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Office.Interop.Excel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>..\packages\Microsoft.Office.Interop.Excel.15.0.4795.1000\lib\net20\Microsoft.Office.Interop.Excel.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.Owin, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Owin.4.0.0\lib\net451\Microsoft.Owin.dll</HintPath>
     </Reference>
@@ -213,13 +218,23 @@
     <Compile Include="Migrations\201808111734409_DataMigration5.Designer.cs">
       <DependentUpon>201808111734409_DataMigration5.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201808121240101_DataMigration6.cs" />
+    <Compile Include="Migrations\201808121240101_DataMigration6.Designer.cs">
+      <DependentUpon>201808121240101_DataMigration6.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201808121811038_DataMigration7.cs" />
+    <Compile Include="Migrations\201808121811038_DataMigration7.Designer.cs">
+      <DependentUpon>201808121811038_DataMigration7.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Cart.cs" />
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\ListView.cs" />
+    <Compile Include="Models\News.cs" />
     <Compile Include="Models\Order.cs" />
     <Compile Include="Models\PagingInfo.cs" />
     <Compile Include="Models\PaymentMethod.cs" />
+    <Compile Include="Models\ProductRequest.cs" />
     <Compile Include="Models\SaleStat.cs" />
     <Compile Include="Models\TypeDelivery.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -332,7 +347,6 @@
     <Content Include="Scripts\popper.js.map" />
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
-    <Content Include="Views\Shared\_CategoryPartial.cshtml" />
     <Content Include="Views\Catalog\Index.cshtml" />
     <Content Include="Views\Catalog\Items.cshtml" />
     <Content Include="Views\Catalog\SearchResult.cshtml" />
@@ -352,9 +366,12 @@
     <Content Include="Views\Admin\SummarySales.cshtml" />
     <Content Include="Views\Admin\GetSale.cshtml" />
     <Content Include="Views\Admin\GetUserStat.cshtml" />
+    <Content Include="Views\Admin\CreateNews.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\Carousel\" />
+    <Folder Include="Prices\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -383,6 +400,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201808111734409_DataMigration5.resx">
       <DependentUpon>201808111734409_DataMigration5.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201808121240101_DataMigration6.resx">
+      <DependentUpon>201808121240101_DataMigration6.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201808121811038_DataMigration7.resx">
+      <DependentUpon>201808121811038_DataMigration7.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

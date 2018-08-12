@@ -13,21 +13,26 @@ namespace IBAstore.Controllers
         StoreContext db = new StoreContext();
         public ActionResult Index()
         {
-            List<Category> categories = new List<Category>();
-            ViewBag.Categories = categories;
+            var photo1 = db.Products.Find(3010).Photo;
+            var photo2 = db.Products.Find(2017).Photo;
+            var photo3 = db.Products.Find(3011).Photo;
+            ViewBag.FirstPhoto = photo1;
+            ViewBag.SecondPhoto = photo2;
+            ViewBag.ThirdPhoto = photo3;
             return View();
         }
 
         public ActionResult About()
         {
-            ViewBag.Message = "Your application description page.";
+            ViewBag.Title = "IBAstore";
+            ViewBag.Message = "Данный проект является тестовым заданием для стажировки.";
 
             return View();
         }
 
         public ActionResult Contact()
         {
-            ViewBag.Message = "Your contact page.";
+            ViewBag.Message = "IBA.";
 
             return View();
         }       

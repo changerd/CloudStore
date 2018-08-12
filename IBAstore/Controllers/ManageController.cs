@@ -48,6 +48,7 @@ namespace IBAstore.Controllers
             user.Name = model.Name;
             user.Birth = model.Birth;
             user.PhoneNumber = model.PhoneNumber;
+            user.GetNews = model.GetNews;
             IdentityResult result = await UserManager.UpdateAsync(user);
             return RedirectToAction("Index");
         }

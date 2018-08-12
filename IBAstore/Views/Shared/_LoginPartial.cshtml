@@ -9,17 +9,17 @@
             @if (User.IsInRole("Admin"))
             {
                 <li>
-                    @Html.ActionLink("Панель администратора", "Index", "Admin", routeValues: null, htmlAttributes: new { title = "Admin" })
+                    @Html.ActionLink("Панель администратора", "Index", "Admin")
                 </li>
             }
             <li>
-                @Html.ActionLink("Здравствуйте, " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+                @Html.ActionLink("Здравствуйте, " + User.Identity.GetUserName() + "!", "Index", "Manage")
             </li>
             <li>
                 <a href="@Url.Action("Index", "Cart")"><span class="glyphicon glyphicon-shopping-cart"></span> Корзина <span class="badge">@Html.Action("Summary", "Cart")</span></a>
             </li>
             <li>
-                @Html.ActionLink("Выйти", "Logout", "Account", routeValues: null, htmlAttributes: new { title = "Manage" })
+                @Html.ActionLink("Выйти", "Logout", "Account")
             </li>
         </ul>
     }

@@ -19,11 +19,13 @@ namespace IBAstore.Models
         public virtual ICollection<Category> Categories { get; set; }
         public virtual ICollection<Cart> Carts { get; set; }
         public virtual ICollection<SaleStat> SaleStats { get; set; } 
+        public virtual ICollection<ProductRequest> ProductRequests { get; set; }
         public Product()
         {
             Categories = new List<Category>();
             Carts = new List<Cart>();
             SaleStats = new List<SaleStat>();
+            ProductRequests = new List<ProductRequest>();
         }
 
     }

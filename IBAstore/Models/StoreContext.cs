@@ -25,6 +25,7 @@ namespace IBAstore.Models
         public DbSet<StatusProduct> StatusProducts { get; set; }
         public DbSet<Manufacturer> Manufacturers { get; set; }
         public DbSet<TypeDelivery> TypeDeliveries { get; set; }      
-        public DbSet<SaleStat> SaleStats { get; set; }        
+        public DbSet<SaleStat> SaleStats { get; set; }
+        public DbSet<ProductRequest> ProductRequests { get; set; }
     }
 }

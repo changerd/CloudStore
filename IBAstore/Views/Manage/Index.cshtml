@@ -41,7 +41,7 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Birth)
+            @Model.Birth.Value.ToShortDateString()
         </dd>       
 
         <dt>
@@ -50,6 +50,14 @@
 
         <dd>
             @Html.DisplayFor(model => model.PhoneNumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Получать новости")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.GetNews)
         </dd>
     </dl>
 </div>

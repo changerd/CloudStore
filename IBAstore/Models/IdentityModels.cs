@@ -12,13 +12,16 @@ namespace IBAstore.Models
     public class ApplicationUser : IdentityUser
     {
         public string Name { get; set; }
-        public DateTime? Birth { get; set; }            
+        public DateTime? Birth { get; set; }
+        public bool GetNews { get; set; }
         public ICollection<Cart> Carts { get; set; } 
         public ICollection<SaleStat> SaleStats { get; set; }
+        public virtual ICollection<ProductRequest> ProductRequests { get; set; }
         public ApplicationUser()
         {
             Carts = new List<Cart>();
             SaleStats = new List<SaleStat>();
+            ProductRequests = new List<ProductRequest>();
         }
     }    
     public class ApplicationUserManager : UserManager<ApplicationUser>

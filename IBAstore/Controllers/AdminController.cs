@@ -8,7 +8,9 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
+using System.Web.Helpers;
 using System.Web.Mvc;
+using Excel = Microsoft.Office.Interop.Excel;
 
 namespace IBAstore.Controllers
 {
@@ -384,6 +386,26 @@ namespace IBAstore.Controllers
                     newProduct.Categories.Add(c);
                 }
             }
+            if (newProduct.StatusProductId == 2)
+            {
+                var requests = db.ProductRequests.Where(p => p.ProductId == newProduct.Id).Include(u => u.User).ToList();
+                if (requests != null)
+                {
+                    foreach (var r in requests)
+                    {
+                        WebMail.SmtpServer = "smtp.gmail.com";
+                        WebMail.SmtpPort = 587;
+                        WebMail.EnableSsl = true;
+                        WebMail.UserName = "newsibastore@gmail.com";
+                        WebMail.Password = "iba123456";
+                        WebMail.From = "newsibastore@gmail.com";
+                        WebMail.Send(r.User.Email,
+                            "Наличие " + newProduct.Name,
+                            "Здравствуйте, " + r.User.Name + ". Товар " + newProduct.Name + ", на который вы оставили заявку в наличии!");
+                        db.ProductRequests.Remove(r);
+                    }
+                }
+            }
             db.Entry(newProduct).State = EntityState.Modified;
             await db.SaveChangesAsync();
             return RedirectToAction("GetProduct");
@@ -575,6 +597,58 @@ namespace IBAstore.Controllers
         public ActionResult GetUserStat()
         {
             return View(UserManager.Users);
+        }
+        public FileResult GenerateExcelPrice()
+        {
+            string Path = AppDomain.CurrentDomain.BaseDirectory + @"Prices\";
+            string Name = "Price_" + DateTime.Now.ToShortDateString() + ".xlsx";
+            string FilePath = Path + Name;            
+            Excel.Application excelApp = new Excel.Application();
+            excelApp.Workbooks.Add();
+            Excel._Worksheet worksheet = excelApp.ActiveSheet;
+            worksheet.Cells[1, "A"] = "Id";
+            worksheet.Cells[1, "B"] = "Производитель";
+            worksheet.Cells[1, "C"] = "Название";
+            worksheet.Cells[1, "D"] = "Описание";
+            worksheet.Cells[1, "E"] = "Цена";
+            worksheet.Cells[1, "F"] = "Статус";
+            List<Product> products = db.Products.Include(c => c.Manufacturer).Include(c => c.StatusProduct).ToList();
+            int row = 1;
+            foreach (var p  in products)
+            {
+                row++;
+                worksheet.Cells[row, "A"] = p.Id.ToString();
+                worksheet.Cells[row, "B"] = p.Manufacturer.Name;
+                worksheet.Cells[row, "C"] = p.Name;
+                worksheet.Cells[row, "D"] = p.Description;
+                worksheet.Cells[row, "E"] = p.Cost.ToString() + " руб";
+                worksheet.Cells[row, "F"] = p.StatusProduct.Name;                
+            }
+            worksheet.Range["A1"].AutoFormat(Excel.XlRangeAutoFormat.xlRangeAutoFormatClassic1);            
+            worksheet.SaveAs(string.Format(FilePath));            
+            excelApp.Quit();
+            excelApp.Quit();
+            return File(FilePath, "application/vnd.ms-excel", Name);
+        }
+        public ActionResult CreateNews()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult CreateNews(News news)
+        {
+            var users = db.Users.Where(u => u.GetNews == true).ToList();
+            foreach(var u in users)
+            {
+                WebMail.SmtpServer = "smtp.gmail.com";
+                WebMail.SmtpPort = 587;
+                WebMail.EnableSsl = true;
+                WebMail.UserName = "newsibastore@gmail.com";
+                WebMail.Password = "iba123456";
+                WebMail.From = "newsibastore@gmail.com";
+                WebMail.Send(u.Email, news.Subject, news.Body);
+            }
+            return RedirectToAction("Index");
         }
     }    
 }
