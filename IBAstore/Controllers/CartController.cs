@@ -45,13 +45,7 @@ namespace IBAstore.Controllers
         {
             string userid = User.Identity.GetUserId();
             string prname = db.Products.Find(Id).Name;
-            ProductRequest pr = new ProductRequest { ProductId = Id, UserId = userid };
-            var prr = db.ProductRequests.Where(p => p.ProductId == Id).Where(u => u.UserId == userid);
-            if (prr != null)
-            {
-                TempData["message"] = string.Format("Заявка уже существет!", prname);
-                return Redirect(returnUrl);
-            }
+            ProductRequest pr = new ProductRequest { ProductId = Id, UserId = userid };            
             db.ProductRequests.Add(pr);
             db.SaveChanges();
             TempData["message"] = string.Format("Заявка на {0} успешно принята!", prname);

@@ -40,8 +40,8 @@
             @Html.DisplayName("Дата рождения")
         </dt>
 
-        <dd>
-            @Model.Birth.Value.ToShortDateString()
+        <dd>            
+            @Html.DisplayFor(model => model.Birth)
         </dd>       
 
         <dt>
