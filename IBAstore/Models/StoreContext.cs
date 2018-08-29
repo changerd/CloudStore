@@ -30,21 +30,25 @@ namespace IBAstore.Models
     {
         protected override void Seed(StoreContext db)
         {
-            var rolestore = new RoleStore<ApplicationRole>(db);
-            var rolemanager = new RoleManager<ApplicationRole>(rolestore);            
-            List<ApplicationRole> identityRoles = new List<ApplicationRole>();
-            identityRoles.Add(new ApplicationRole() { Name = "Admin" });
-            identityRoles.Add(new ApplicationRole() { Name = "User" });
-            foreach (var role in identityRoles)
-            {
-                rolemanager.Create(role);
-            }            
+            db.Roles.Add(new ApplicationRole { Name = "Admin" });
+            db.Roles.Add(new ApplicationRole { Name = "User" });
             var userstore = new UserStore<ApplicationUser>(db);
             var usermanager = new UserManager<ApplicationUser>(userstore);
-            ApplicationUser admin = new ApplicationUser();
-            admin.UserName = "admin";
-            usermanager.Create(admin, "admin");
-            usermanager.AddToRole(admin.Id, "Admin");
+            //ApplicationUser admin = new ApplicationUser();
+            //admin.UserName = "admin";
+            //usermanager.Create(admin, "admin");
+            //usermanager.AddToRole(admin.Id, "Admin");
+            ApplicationUser user = new ApplicationUser { UserName = "admin" };
+            IdentityResult result = usermanager.Create(user, "admin");
+            if (result.Succeeded)
+            {
+                usermanager.AddToRole(user.Id, "Admin");
+                Cart cart = new Cart
+                {
+                    UserId = user.Id,
+                };
+                db.Carts.Add(cart);                
+            }
             base.Seed(db);
         }
     }
