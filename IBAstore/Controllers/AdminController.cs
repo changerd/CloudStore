@@ -14,7 +14,7 @@ using Excel = Microsoft.Office.Interop.Excel;
 
 namespace IBAstore.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    //[Authorize(Roles = "Admin")]
     public class AdminController : Controller
     {
         StoreContext db = new StoreContext();
