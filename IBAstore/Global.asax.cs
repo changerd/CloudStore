@@ -16,14 +16,14 @@ namespace IBAstore
     public class MvcApplication : System.Web.HttpApplication
     {
         protected void Application_Start()
-        {            
+        {
+            Database.SetInitializer(new DBInitializer());
             AreaRegistration.RegisterAllAreas();
             ModelBinders.Binders.Add(typeof(decimal), new DecimalModelBinder());
             ModelBinders.Binders.Add(typeof(decimal?), new DecimalModelBinder());
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
-            BundleConfig.RegisterBundles(BundleTable.Bundles);
-            Database.SetInitializer(new DBInitializer());
+            BundleConfig.RegisterBundles(BundleTable.Bundles);            
         }
         protected void Application_BeginRequest(object sender, EventArgs e)
         {
