@@ -1,9 +1,7 @@
-﻿using Microsoft.AspNet.Identity.EntityFramework;
-using System;
+﻿using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 using System.Collections.Generic;
 using System.Data.Entity;
-using System.Linq;
-using System.Web;
 
 namespace IBAstore.Models
 {
@@ -27,5 +25,27 @@ namespace IBAstore.Models
         public DbSet<TypeDelivery> TypeDeliveries { get; set; }      
         public DbSet<SaleStat> SaleStats { get; set; }
         public DbSet<ProductRequest> ProductRequests { get; set; }
+    }
+    public class DBInitializer : CreateDatabaseIfNotExists<StoreContext>
+    {
+        protected override void Seed(StoreContext db)
+        {
+            var rolestore = new RoleStore<ApplicationRole>(db);
+            var rolemanager = new RoleManager<ApplicationRole>(rolestore);            
+            List<ApplicationRole> identityRoles = new List<ApplicationRole>();
+            identityRoles.Add(new ApplicationRole() { Name = "Admin" });
+            identityRoles.Add(new ApplicationRole() { Name = "User" });
+            foreach (var role in identityRoles)
+            {
+                rolemanager.Create(role);
+            }            
+            var userstore = new UserStore<ApplicationUser>(db);
+            var usermanager = new UserManager<ApplicationUser>(userstore);
+            ApplicationUser admin = new ApplicationUser();
+            admin.UserName = "admin";
+            usermanager.Create(admin, "admin");
+            usermanager.AddToRole(admin.Id, "Admin");
+            base.Seed(db);
+        }
     }
 }
