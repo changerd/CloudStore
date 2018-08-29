@@ -1,6 +1,8 @@
 ﻿using IBAstore.Infastructure;
+using IBAstore.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Globalization;
 using System.Linq;
 using System.Threading;
@@ -21,6 +23,7 @@ namespace IBAstore
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+            Database.SetInitializer(new DBInitializer());
         }
         protected void Application_BeginRequest(object sender, EventArgs e)
         {
