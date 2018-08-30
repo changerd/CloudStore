@@ -18,6 +18,8 @@ namespace IBAstore
         protected void Application_Start()
         {
             Database.SetInitializer(new DBInitializer());
+            StoreContext context = new StoreContext();
+            context.Database.Initialize(true);
             AreaRegistration.RegisterAllAreas();
             ModelBinders.Binders.Add(typeof(decimal), new DecimalModelBinder());
             ModelBinders.Binders.Add(typeof(decimal?), new DecimalModelBinder());
