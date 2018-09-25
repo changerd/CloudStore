@@ -194,38 +194,6 @@
     <Compile Include="Infastructure\DecimalModelBinder.cs" />
     <Compile Include="Infastructure\IdentityHelpers.cs" />
     <Compile Include="Infastructure\PagingHelpers.cs" />
-    <Compile Include="Migrations\201808031022502_DataMigration.cs" />
-    <Compile Include="Migrations\201808031022502_DataMigration.Designer.cs">
-      <DependentUpon>201808031022502_DataMigration.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201808100950019_DataMigration1.cs" />
-    <Compile Include="Migrations\201808100950019_DataMigration1.Designer.cs">
-      <DependentUpon>201808100950019_DataMigration1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201808101008373_DataMigration2.cs" />
-    <Compile Include="Migrations\201808101008373_DataMigration2.Designer.cs">
-      <DependentUpon>201808101008373_DataMigration2.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201808101221440_DataMigration3.cs" />
-    <Compile Include="Migrations\201808101221440_DataMigration3.Designer.cs">
-      <DependentUpon>201808101221440_DataMigration3.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201808102300150_DataMigration4.cs" />
-    <Compile Include="Migrations\201808102300150_DataMigration4.Designer.cs">
-      <DependentUpon>201808102300150_DataMigration4.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201808111734409_DataMigration5.cs" />
-    <Compile Include="Migrations\201808111734409_DataMigration5.Designer.cs">
-      <DependentUpon>201808111734409_DataMigration5.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201808121240101_DataMigration6.cs" />
-    <Compile Include="Migrations\201808121240101_DataMigration6.Designer.cs">
-      <DependentUpon>201808121240101_DataMigration6.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201808121811038_DataMigration7.cs" />
-    <Compile Include="Migrations\201808121811038_DataMigration7.Designer.cs">
-      <DependentUpon>201808121811038_DataMigration7.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Cart.cs" />
     <Compile Include="Models\Category.cs" />
@@ -294,15 +262,6 @@
     <Content Include="Scripts\umd\popper-utils.min.js" />
     <Content Include="Scripts\umd\popper.js" />
     <Content Include="Scripts\umd\popper.min.js" />
-    <Content Include="Web.config">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="Web.Debug.config">
-      <DependentUpon>Web.config</DependentUpon>
-    </Content>
-    <Content Include="Web.Release.config">
-      <DependentUpon>Web.config</DependentUpon>
-    </Content>
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
@@ -367,6 +326,13 @@
     <Content Include="Views\Admin\GetSale.cshtml" />
     <Content Include="Views\Admin\GetUserStat.cshtml" />
     <Content Include="Views\Admin\CreateNews.cshtml" />
+    <Content Include="web.config" />
+    <None Include="web.Debug.config">
+      <DependentUpon>web.config</DependentUpon>
+    </None>
+    <None Include="web.Release.config">
+      <DependentUpon>web.config</DependentUpon>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -381,32 +347,6 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201808031022502_DataMigration.resx">
-      <DependentUpon>201808031022502_DataMigration.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201808100950019_DataMigration1.resx">
-      <DependentUpon>201808100950019_DataMigration1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201808101008373_DataMigration2.resx">
-      <DependentUpon>201808101008373_DataMigration2.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201808101221440_DataMigration3.resx">
-      <DependentUpon>201808101221440_DataMigration3.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201808102300150_DataMigration4.resx">
-      <DependentUpon>201808102300150_DataMigration4.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201808111734409_DataMigration5.resx">
-      <DependentUpon>201808111734409_DataMigration5.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201808121240101_DataMigration6.resx">
-      <DependentUpon>201808121240101_DataMigration6.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201808121811038_DataMigration7.resx">
-      <DependentUpon>201808121811038_DataMigration7.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
