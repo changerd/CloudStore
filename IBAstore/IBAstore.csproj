@@ -326,7 +326,9 @@
     <Content Include="Views\Admin\GetSale.cshtml" />
     <Content Include="Views\Admin\GetUserStat.cshtml" />
     <Content Include="Views\Admin\CreateNews.cshtml" />
-    <Content Include="web.config" />
+    <Content Include="web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>

@@ -31,9 +31,9 @@ namespace IBAstore.Models
         protected override void Seed(StoreContext db)
         {            
             var userManager = new ApplicationUserManager(new UserStore<ApplicationUser>(db));
-            var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(db));            
-            var role1 = new IdentityRole { Name = "Admin" };
-            var role2 = new IdentityRole { Name = "User" };            
+            var roleManager = new ApplicationRoleManager(new RoleStore<ApplicationRole>(db));            
+            var role1 = new ApplicationRole { Name = "Admin" };
+            var role2 = new ApplicationRole { Name = "User" };            
             roleManager.Create(role1);
             roleManager.Create(role2);            
             var admin = new ApplicationUser { UserName = "admin" };
