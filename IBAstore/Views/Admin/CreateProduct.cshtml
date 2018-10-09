@@ -39,6 +39,7 @@
                 {
                     <input type="checkbox" name="selectedCategory"value="@c.Id" @*@(Model.Categories.Contains(c) ? "checked=\"checked\"" : "")*@ />@c.Name <br /> 
                 }
+                @Html.ValidationMessage("Categories", new { @class = "text-danger" })
             </div>            
         </div>
 
@@ -46,7 +47,8 @@
         <div class="form-group">
             @Html.Label("Фото", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">               
-                    <input type="file" name="uploadImage" />                
+                <input type="file" name="uploadImage" />
+                @Html.ValidationMessage("Photo", new { @class = "text-danger" })
             </div>
         </div>
 

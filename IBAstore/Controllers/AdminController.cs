@@ -191,10 +191,19 @@ namespace IBAstore.Controllers
         }
         [HttpPost]
         public async Task<ActionResult> CreateManufacturer(Manufacturer manufacturer)
-        {
-            db.Manufacturers.Add(manufacturer);
-            await db.SaveChangesAsync();
-            return RedirectToAction("GetManufacturer");
+        {           
+            var m = db.Manufacturers.Any(p => string.Compare(p.Name, manufacturer.Name) == 0);
+            if (m)
+            {
+                ModelState.AddModelError("Name", "Такой производитель уже существует.");
+            }
+            if (ModelState.IsValid)
+            {
+                db.Manufacturers.Add(manufacturer);
+                await db.SaveChangesAsync();
+                return RedirectToAction("GetManufacturer");
+            }
+            return View(manufacturer);
         }
         public ActionResult EditManufacturer(int id)
         {
@@ -207,10 +216,19 @@ namespace IBAstore.Controllers
         }
         [HttpPost]
         public async Task<ActionResult> EditManufacturer(Manufacturer manu)
-        {
-            db.Entry(manu).State = EntityState.Modified;
-            await db.SaveChangesAsync();
-            return RedirectToAction("GetManufacturer");
+        {            
+            var m = db.Manufacturers.Any(p => string.Compare(p.Name, manu.Name) == 0);
+            if (m)
+            {
+                ModelState.AddModelError("Name", "Такой производитель уже существует.");
+            }
+            if (ModelState.IsValid)
+            {
+                db.Entry(manu).State = EntityState.Modified;
+                await db.SaveChangesAsync();
+                return RedirectToAction("GetManufacturer");
+            }
+            return View(manu);
         }
         public async Task<ActionResult> DeleteManufacturer(int id)
         {
@@ -261,10 +279,19 @@ namespace IBAstore.Controllers
         }
         [HttpPost]
         public async Task<ActionResult> CreateCategory(Category category)
-        {
-            db.Categories.Add(category);
-            await db.SaveChangesAsync();
-            return RedirectToAction("GetCategory");
+        {            
+            var cat = db.Categories.Any(c => string.Compare(c.Name, category.Name) == 0);
+            if (cat)
+            {
+                ModelState.AddModelError("Name", "Такая категория уже существует");
+            }
+            if (ModelState.IsValid)
+            {
+                db.Categories.Add(category);
+                await db.SaveChangesAsync();
+                return RedirectToAction("GetCategory");
+            }
+            return CreateCategory();
         }
         public ActionResult EditCategory(int id)
         {
@@ -280,9 +307,18 @@ namespace IBAstore.Controllers
         [HttpPost]
         public async Task<ActionResult> EditCategory(Category category)
         {
-            db.Entry(category).State = EntityState.Modified;
-            await db.SaveChangesAsync();
-            return RedirectToAction("GetCategory");
+            var cat = db.Categories.Any(c => string.Compare(c.Name, category.Name) == 0);
+            if (cat)
+            {
+                ModelState.AddModelError("Name", "Такая категория уже существует");
+            }
+            if (ModelState.IsValid)
+            {
+                db.Entry(category).State = EntityState.Modified;
+                await db.SaveChangesAsync();
+                return RedirectToAction("GetCategory");
+            }
+            return EditCategory(category.Id);
         }
         public async Task<ActionResult> DeleteCategory(int id)
         {
@@ -319,8 +355,11 @@ namespace IBAstore.Controllers
                 {
                     imageData = binaryReader.ReadBytes(uploadImage.ContentLength);
                 }
-
                 product.Photo = imageData;
+            }
+            else
+            {
+                ModelState.AddModelError("Photo", "Для товара не выбрана фотография.");
             }
             if (selectedCategory != null)
             {
@@ -329,9 +368,17 @@ namespace IBAstore.Controllers
                     product.Categories.Add(c);
                 }
             }
-            db.Products.Add(product);
-            await db.SaveChangesAsync();
-            return RedirectToAction("GetProduct");
+            else
+            {
+                ModelState.AddModelError("Categories", "Для товара не выбрана категория.");
+            }
+            if (ModelState.IsValid)
+            {
+                db.Products.Add(product);
+                await db.SaveChangesAsync();
+                return RedirectToAction("GetProduct");
+            }
+            return CreateProduct();
         }
         public ActionResult DetailsProduct(int id)
         {
