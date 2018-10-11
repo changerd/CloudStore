@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -45,12 +46,26 @@ namespace IBAstore.Controllers
         public async Task<ActionResult> Edit(ApplicationUser model)
         {
             ApplicationUser user = await UserManager.FindByIdAsync(model.Id);
+            user.Email=model.Email;
             user.Name = model.Name;
             user.Birth = model.Birth;
             user.PhoneNumber = model.PhoneNumber;
             user.GetNews = model.GetNews;
-            IdentityResult result = await UserManager.UpdateAsync(user);
-            return RedirectToAction("Index");
+            string reg = ".+\\@.+\\..+";
+            if (!Regex.IsMatch(user.Email, reg))
+            {
+                ModelState.AddModelError("Email", "Не корректная электронная почта.");
+            }
+            if (string.IsNullOrEmpty(user.Email) && user.GetNews == true)
+            {
+                ModelState.AddModelError("GetNews", "Чтобы получать новости, нужно ввести электронную почту.");
+            }
+            if (ModelState.IsValid)
+            {
+                IdentityResult result = await UserManager.UpdateAsync(user);
+                return RedirectToAction("Index");
+            }
+            return View(model);
         }
         public ActionResult DetailOrder(int id)
         {
