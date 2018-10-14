@@ -1,0 +1,16 @@
+﻿@model IBAstore.Models.PaymentMethod
+
+@{
+    ViewBag.Title = "Удаление способа оплаты";
+}
+
+<h1>Вы точно хотите удалить способ оплаты: <b>@Model.Name</b>?</h1>
+
+@using (Html.BeginForm())
+{
+    <div class="form-group">
+        <input type="submit" value="Удалить" class="btn btn-danger" />
+        <a class="btn btn-default" href="@Url.Action("GetPaymentMethod", "Admin")">Назад</a>
+    </div>
+}
+

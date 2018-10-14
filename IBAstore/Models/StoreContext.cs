@@ -24,7 +24,7 @@ namespace IBAstore.Models
         public DbSet<Manufacturer> Manufacturers { get; set; }
         public DbSet<TypeDelivery> TypeDeliveries { get; set; }      
         public DbSet<SaleStat> SaleStats { get; set; }
-        public DbSet<ProductRequest> ProductRequests { get; set; }
+        public DbSet<ProductRequest> ProductRequests { get; set; }       
     }
     public class DBInitializer : CreateDatabaseIfNotExists<StoreContext>
     {

@@ -329,6 +329,15 @@
     <Content Include="web.config">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="Views\Admin\DeleteRole.cshtml" />
+    <Content Include="Views\Admin\DeleteUser.cshtml" />
+    <Content Include="Views\Admin\DeleteManufacturer.cshtml" />
+    <Content Include="Views\Admin\DeleteStatusProduct.cshtml" />
+    <Content Include="Views\Admin\DeleteCategory.cshtml" />
+    <Content Include="Views\Admin\DeleteProduct.cshtml" />
+    <Content Include="Views\Admin\DeletePaymentMethod.cshtml" />
+    <Content Include="Views\Admin\DeleteStatusOrder.cshtml" />
+    <Content Include="Views\Admin\DeleteTypeDelivery.cshtml" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>

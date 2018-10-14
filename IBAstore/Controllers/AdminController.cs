@@ -98,12 +98,25 @@ namespace IBAstore.Controllers
         }
         public async Task<ActionResult> DeleteRole(string id)
         {
-            ApplicationRole role = await RoleManager.FindByIdAsync(id);
-            if (role != null)
+            ApplicationRole role = await RoleManager.FindByIdAsync(id);            
+            if (role == null)
             {
-                IdentityResult result = await RoleManager.DeleteAsync(role);
+                return HttpNotFound();
             }
+            return View(role);
+        }
+        [HttpPost, ActionName("DeleteRole")]
+        public async Task<ActionResult> DeleteRoleConfirmed(string id)
+        {
+            ApplicationRole role = await RoleManager.FindByIdAsync(id);
+            if (role == null)
+            {
+                return HttpNotFound();
+            }
+            IdentityResult result = await RoleManager.DeleteAsync(role);
             return RedirectToAction("GetRole");
+
+
         }
         public async Task<ActionResult> GiveRole(string id)
         {
@@ -166,19 +179,28 @@ namespace IBAstore.Controllers
             return View(user);
         }
         public async Task<ActionResult> DeleteUser(string id)
-        {
-            Cart query = db.Carts.Where(c => c.UserId == id).FirstOrDefault();
-            if (query != null)
-            {
-                db.Carts.Remove(query);
-                await db.SaveChangesAsync();
-            }
+        {            
             ApplicationUser user = await UserManager.FindByIdAsync(id);
-            if (user != null)
+            if (user == null)
             {
-                IdentityResult result = await UserManager.DeleteAsync(user);
+                return HttpNotFound();
             }
+            return View(user);
+        }
+        [HttpPost, ActionName("DeleteUser")]
+        public async Task<ActionResult> DeleteUserConfirmed(string id)
+        {
+            ApplicationUser user = await UserManager.FindByIdAsync(id);
+            Cart query = db.Carts.Where(c => c.UserId == id).FirstOrDefault();
+            if (user == null)
+            {
+                return HttpNotFound();
+            }
+            db.Carts.Remove(query);            
+            await db.SaveChangesAsync();
+            IdentityResult result = await UserManager.DeleteAsync(user);
             return RedirectToAction("GetUser");
+
         }
         public ActionResult GetManufacturer()
         {
@@ -191,7 +213,7 @@ namespace IBAstore.Controllers
         }
         [HttpPost]
         public async Task<ActionResult> CreateManufacturer(Manufacturer manufacturer)
-        {           
+        {
             var m = db.Manufacturers.Any(p => string.Compare(p.Name, manufacturer.Name) == 0);
             if (m)
             {
@@ -216,7 +238,7 @@ namespace IBAstore.Controllers
         }
         [HttpPost]
         public async Task<ActionResult> EditManufacturer(Manufacturer manu)
-        {            
+        {
             var m = db.Manufacturers.Any(p => string.Compare(p.Name, manu.Name) == 0);
             if (m)
             {
@@ -230,14 +252,25 @@ namespace IBAstore.Controllers
             }
             return View(manu);
         }
-        public async Task<ActionResult> DeleteManufacturer(int id)
+        public ActionResult DeleteManufacturer(int id)
         {
             Manufacturer manu = db.Manufacturers.Find(id);
-            if (manu != null)
+            if (manu == null)
             {
-                db.Manufacturers.Remove(manu);
-                await db.SaveChangesAsync();
+                return HttpNotFound();
             }
+            return View(manu);
+        }
+        [HttpPost, ActionName("DeleteManufacturer")]
+        public async Task<ActionResult> DeleteManufacturerConfirmed(int id)
+        {
+            Manufacturer manu = db.Manufacturers.Find(id);
+            if (manu == null)
+            {
+                return HttpNotFound();
+            }
+            db.Manufacturers.Remove(manu);
+            await db.SaveChangesAsync();
             return RedirectToAction("GetManufacturer");
         }
         public ActionResult GetStatusProduct()
@@ -256,14 +289,25 @@ namespace IBAstore.Controllers
             await db.SaveChangesAsync();
             return RedirectToAction("GetStatusProduct");
         }
-        public async Task<ActionResult> DeleteStatusProduct(int id)
+        public ActionResult DeleteStatusProduct(int id)
         {
             StatusProduct status = db.StatusProducts.Find(id);
-            if (status != null)
+            if (status == null)
             {
-                db.StatusProducts.Remove(status);
-                await db.SaveChangesAsync();
+                return HttpNotFound();
             }
+            return View(status);
+        }
+        [HttpPost, ActionName("DeleteStatusProduct")]
+        public async Task<ActionResult> DeleteStatusProductConfirmed(int id)
+        {
+            StatusProduct status = db.StatusProducts.Find(id);
+            if (status == null)
+            {
+                return HttpNotFound();
+            }
+            db.StatusProducts.Remove(status);
+            await db.SaveChangesAsync();
             return RedirectToAction("GetStatusProduct");
         }
         public ActionResult GetCategory()
@@ -279,7 +323,7 @@ namespace IBAstore.Controllers
         }
         [HttpPost]
         public async Task<ActionResult> CreateCategory(Category category)
-        {            
+        {
             var cat = db.Categories.Any(c => string.Compare(c.Name, category.Name) == 0);
             if (cat)
             {
@@ -320,14 +364,25 @@ namespace IBAstore.Controllers
             }
             return EditCategory(category.Id);
         }
-        public async Task<ActionResult> DeleteCategory(int id)
+        public ActionResult DeleteCategory(int id)
         {
             Category category = db.Categories.Find(id);
-            if (category != null)
+            if (category == null)
             {
-                db.Categories.Remove(category);
-                await db.SaveChangesAsync();
+                return HttpNotFound();
             }
+            return View(category);
+        }
+        [HttpPost, ActionName("DeleteCategory")]
+        public async Task<ActionResult> DeleteCategoryConfirmed(int id)
+        {
+            Category category = db.Categories.Find(id);
+            if (category == null)
+            {
+                return HttpNotFound();
+            }
+            db.Categories.Remove(category);
+            await db.SaveChangesAsync();
             return RedirectToAction("GetCategory");
         }
         public ActionResult GetProduct()
@@ -457,18 +512,27 @@ namespace IBAstore.Controllers
             await db.SaveChangesAsync();
             return RedirectToAction("GetProduct");
         }
-        public async Task<ActionResult> DeleteProduct(int id)
+        public ActionResult DeleteProduct(int id)
         {
             Product product = db.Products.Find(id);
-            if (product != null)
+            if (product == null)
             {
-                db.Products.Remove(product);
-                await db.SaveChangesAsync();
+                return HttpNotFound();
             }
+            return View(product);
+        }
+        [HttpPost, ActionName("DeleteProduct")]
+        public async Task<ActionResult> DeleteProductConfirmed(int id)
+        {
+            Product product = db.Products.Find(id);
+            if (product == null)
+            {
+                return HttpNotFound();
+            }
+            db.Products.Remove(product);
+            await db.SaveChangesAsync();
             return RedirectToAction("GetProduct");
         }
-
-
         public ActionResult GetPaymentMethod()
         {
             List<PaymentMethod> pm = db.PaymentMethods.ToList();
@@ -485,14 +549,25 @@ namespace IBAstore.Controllers
             await db.SaveChangesAsync();
             return RedirectToAction("GetPaymentMethod");
         }
-        public async Task<ActionResult> DeletePaymentMethod(int id)
+        public ActionResult DeletePaymentMethod(int id)
         {
             PaymentMethod pm = db.PaymentMethods.Find(id);
-            if (pm != null)
+            if (pm == null)
             {
-                db.PaymentMethods.Remove(pm);
-                await db.SaveChangesAsync();
+                return HttpNotFound();
             }
+            return View(pm);
+        }
+        [HttpPost, ActionName("DeletePaymentMethod")]
+        public async Task<ActionResult> DeletePaymentMethodConfirmed(int id)
+        {
+            PaymentMethod pm = db.PaymentMethods.Find(id);
+            if (pm == null)
+            {
+                return HttpNotFound();
+            }
+            db.PaymentMethods.Remove(pm);
+            await db.SaveChangesAsync();
             return RedirectToAction("GetPaymentMethod");
         }
         public ActionResult GetStatusOrder()
@@ -511,14 +586,25 @@ namespace IBAstore.Controllers
             await db.SaveChangesAsync();
             return RedirectToAction("GetStatusOrder");
         }
-        public async Task<ActionResult> DeleteStatusOrder(int id)
+        public ActionResult DeleteStatusOrder(int id)
         {
             StatusOrder status = db.StatusOrders.Find(id);
-            if (status != null)
+            if (status == null)
             {
-                db.StatusOrders.Remove(status);
-                await db.SaveChangesAsync();
+                return HttpNotFound();
             }
+            return View(status);
+        }
+        [HttpPost, ActionName("DeleteStatusOrder")]
+        public async Task<ActionResult> DeleteStatusOrderConfirmed(int id)
+        {
+            StatusOrder status = db.StatusOrders.Find(id);
+            if (status == null)
+            {
+                return HttpNotFound();
+            }
+            db.StatusOrders.Remove(status);
+            await db.SaveChangesAsync();
             return RedirectToAction("GetStatusOrder");
         }
         public ActionResult GetTypeDelivery()
@@ -537,14 +623,25 @@ namespace IBAstore.Controllers
             await db.SaveChangesAsync();
             return RedirectToAction("GetTypeDelivery");
         }
-        public async Task<ActionResult> DeleteTypeDelivery(int id)
+        public ActionResult DeleteTypeDelivery(int id)
         {
             TypeDelivery type = db.TypeDeliveries.Find(id);
-            if (type != null)
+            if (type == null)
             {
-                db.TypeDeliveries.Remove(type);
-                await db.SaveChangesAsync();
+                return HttpNotFound();
             }
+            return View(type);
+        }
+        [HttpPost, ActionName("DeleteTypeDelivery")]
+        public async Task<ActionResult> DeleteTypeDeliveryConfirmed(int id)
+        {
+            TypeDelivery type = db.TypeDeliveries.Find(id);
+            if (type == null)
+            {
+                return HttpNotFound();
+            }
+            db.TypeDeliveries.Remove(type);
+            await db.SaveChangesAsync();
             return RedirectToAction("GetTypeDelivery");
         }
         public PartialViewResult SummaryOrders()
@@ -604,7 +701,7 @@ namespace IBAstore.Controllers
         }
         [HttpPost]
         public async Task<ActionResult> EditOrder(Order order)
-        {            
+        {
             db.Entry(order).State = EntityState.Modified;
             await db.SaveChangesAsync();
             return RedirectToAction("GetOrder");
@@ -649,7 +746,7 @@ namespace IBAstore.Controllers
         {
             string Path = AppDomain.CurrentDomain.BaseDirectory + @"Prices\";
             string Name = "Price_" + DateTime.Now.ToShortDateString() + ".xlsx";
-            string FilePath = Path + Name;            
+            string FilePath = Path + Name;
             Excel.Application excelApp = new Excel.Application();
             excelApp.Workbooks.Add();
             Excel._Worksheet worksheet = excelApp.ActiveSheet;
@@ -661,7 +758,7 @@ namespace IBAstore.Controllers
             worksheet.Cells[1, "F"] = "Статус";
             List<Product> products = db.Products.Include(c => c.Manufacturer).Include(c => c.StatusProduct).ToList();
             int row = 1;
-            foreach (var p  in products)
+            foreach (var p in products)
             {
                 row++;
                 worksheet.Cells[row, "A"] = p.Id.ToString();
@@ -669,10 +766,10 @@ namespace IBAstore.Controllers
                 worksheet.Cells[row, "C"] = p.Name;
                 worksheet.Cells[row, "D"] = p.Description;
                 worksheet.Cells[row, "E"] = p.Cost.ToString() + " руб";
-                worksheet.Cells[row, "F"] = p.StatusProduct.Name;                
+                worksheet.Cells[row, "F"] = p.StatusProduct.Name;
             }
-            worksheet.Range["A1"].AutoFormat(Excel.XlRangeAutoFormat.xlRangeAutoFormatClassic1);            
-            worksheet.SaveAs(string.Format(FilePath));            
+            worksheet.Range["A1"].AutoFormat(Excel.XlRangeAutoFormat.xlRangeAutoFormatClassic1);
+            worksheet.SaveAs(string.Format(FilePath));
             excelApp.Quit();
             excelApp.Quit();
             return File(FilePath, "application/vnd.ms-excel", Name);
@@ -685,7 +782,7 @@ namespace IBAstore.Controllers
         public ActionResult CreateNews(News news)
         {
             var users = db.Users.Where(u => u.GetNews == true).ToList();
-            foreach(var u in users)
+            foreach (var u in users)
             {
                 WebMail.SmtpServer = "smtp.gmail.com";
                 WebMail.SmtpPort = 587;
@@ -697,5 +794,5 @@ namespace IBAstore.Controllers
             }
             return RedirectToAction("Index");
         }
-    }    
+    }
 }
