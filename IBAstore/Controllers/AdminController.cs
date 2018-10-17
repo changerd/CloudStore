@@ -471,6 +471,7 @@ namespace IBAstore.Controllers
             newProduct.Description = product.Description;
             newProduct.Cost = product.Cost;
             newProduct.StatusProductId = product.StatusProductId;
+            newProduct.Stock = product.Stock;
             if (uploadImage != null)
             {
                 byte[] imageData = null;

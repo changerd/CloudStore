@@ -18,25 +18,45 @@ namespace IBAstore.Controllers
         public Cart GetCart()
         {
             string user = User.Identity.GetUserId();
-            var cart = db.Carts.FirstOrDefault(c => c.UserId == user);
+            var cart = db.Carts.FirstOrDefault(c => c.UserId == user);       
             return cart;
         }
-        public RedirectToRouteResult AddToCart(int Id, string returnUrl)
+        public List<Line> GetLines()
+        {
+            int cartid = GetCart().Id;
+            var list = db.Lines.Include(p => p.Product).Where(c => c.CartId == cartid).ToList();
+            return list;
+        }
+        public RedirectToRouteResult AddToCart(int Id, string returnUrl, int quantity)
         {            
             Product product = db.Products.FirstOrDefault(p => p.Id == Id);
             if (product != null)
             {
-                GetCart().Products.Add(product);
+                var sline = db.Lines.Where(p => p.ProductId == product.Id).FirstOrDefault();
+                if (sline == null)
+                {
+                    Line line = new Line
+                    {
+                        ProductId = product.Id,
+                        Quantity = quantity
+                    };
+                    GetCart().Lines.Add(line);
+                }
+                else
+                {
+                    sline.Quantity += quantity;
+                }
+                //GetCart().Products.Add(product);                
                 db.SaveChanges();
             }
             return RedirectToAction("Index", new { returnUrl });
         }
         public RedirectToRouteResult RemoveFromCart(int Id, string returnUrl)
         {
-            Product product = db.Products.First(p => p.Id == Id);
-            if (product != null)
+            Line line = db.Lines.First(p => p.Id == Id);
+            if (line != null)
             {
-                GetCart().Products.Remove(product);
+                db.Lines.Remove(line);
                 db.SaveChanges();
             }
             return RedirectToAction("Index", new { returnUrl });
@@ -53,10 +73,11 @@ namespace IBAstore.Controllers
         }
         // GET: Cart
         public ActionResult Index(string returnUrl)
-        {
+        {            
             return View(new CartIndexViewModel
-            {
+            {                
                 Cart = GetCart(),
+                Lines = GetLines(),
                 ReturnUrl = returnUrl
             });
         }
@@ -68,7 +89,7 @@ namespace IBAstore.Controllers
         {
             SelectList paymentmethod = new SelectList(db.PaymentMethods, "Id", "Name");
             SelectList typedelivery = new SelectList(db.TypeDeliveries, "Id", "Name");           
-            decimal value = GetCart().ComputeTotalValue();
+            decimal value = GetLines().Sum(s => s.Product.Cost * s.Quantity);
             ViewBag.Value = value;
             ViewBag.PaymentMethod = paymentmethod;
             ViewBag.TypeDelivery = typedelivery;
@@ -79,32 +100,38 @@ namespace IBAstore.Controllers
         {
             string orderdescription = null;
             int cartid = GetCart().Id;
-            decimal value = GetCart().ComputeTotalValue();
+            decimal value = GetLines().Sum(s => s.Product.Cost * s.Quantity);
             string userid = User.Identity.GetUserId();
-            foreach (var cart in GetCart().Products)
+            foreach (var cart in GetLines())
             {
-                orderdescription += cart.Name + " " + "Цена " + cart.Cost + " руб" + "\n";
-                SaleStat stat = new SaleStat
+                orderdescription += cart.Product.Name + " Цена " + cart.Product.Cost + " руб Количество  " + cart.Quantity + " штук." + "\n";
+                for (int i = 0; i < cart.Quantity; i++)
                 {
-                    ProductId = cart.Id,
-                    UserId = userid,
-                    Date = DateTime.Now
-                };
-                db.SaleStats.Add(stat);
+                    SaleStat stat = new SaleStat
+                    {
+                        ProductId = cart.Product.Id,
+                        UserId = userid,
+                        Date = DateTime.Now
+                    };
+                    db.SaleStats.Add(stat);
+                }
+                var pr = db.Products.Find(cart.Product.Id);
+                pr.Stock -= cart.Quantity;
+                db.Entry(pr).State = EntityState.Modified;
             }
             order.Date = DateTime.Now;
             order.CartId = cartid;
             order.Description = orderdescription;
             order.Value = value;
             order.StatusOrderId = 2;
-            if (GetCart().Products.Count() == 0)
+            if (GetCart().Lines.Count() == 0)
             {
                 ModelState.AddModelError("", "Извините, ваша корзина пуста!");
             }
             if (ModelState.IsValid)
             {
                 db.Orders.Add(order);
-                GetCart().Products.Clear();
+                db.Lines.RemoveRange(GetLines());
                 await db.SaveChangesAsync();
                 return View("Completed");
             }

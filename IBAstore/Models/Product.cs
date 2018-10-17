@@ -20,21 +20,24 @@ namespace IBAstore.Models
         [Display(Name = "Цена товара")]
         public decimal Cost { get; set; }
         [Required]
+        [Display(Name = "Количество на складе")]
+        public int Stock { get; set; }
+        [Required]
         [Display(Name = "Производитель товара")]
         public int ManufacturerId { get; set; }
         [Required]
         [Display(Name = "Статус товара")]
         public int StatusProductId { get; set; }
         public Manufacturer Manufacturer { get; set; }
-        public StatusProduct StatusProduct { get; set; }
+        public StatusProduct StatusProduct { get; set; }        
         public virtual ICollection<Category> Categories { get; set; }
-        public virtual ICollection<Cart> Carts { get; set; }
+        public virtual ICollection<Line> Lines { get; set; }
         public virtual ICollection<SaleStat> SaleStats { get; set; } 
         public virtual ICollection<ProductRequest> ProductRequests { get; set; }
         public Product()
         {
             Categories = new List<Category>();
-            Carts = new List<Cart>();
+            Lines = new List<Line>();
             SaleStats = new List<SaleStat>();
             ProductRequests = new List<ProductRequest>();
         }

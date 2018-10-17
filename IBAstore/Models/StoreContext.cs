@@ -12,11 +12,12 @@ namespace IBAstore.Models
         {
             return new StoreContext();
         }
-        public DbSet<Cart> Carts { get; set; }
+        public DbSet<Cart> Carts { get; set; }        
         public DbSet<Category> Categories { get; set; }        
         //public DbSet<ApplicationUser> Users { get; set; }
         //public DbSet<ApplicationRole> Roles { get; set; }
         public DbSet<Order> Orders { get; set; }
+        public DbSet<Line> Lines { get; set; }
         public DbSet<PaymentMethod> PaymentMethods { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<StatusOrder> StatusOrders { get; set; }

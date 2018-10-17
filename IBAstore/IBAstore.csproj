@@ -196,6 +196,7 @@
     <Compile Include="Infastructure\PagingHelpers.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Cart.cs" />
+    <Compile Include="Models\Line.cs" />
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\ListView.cs" />
     <Compile Include="Models\News.cs" />
