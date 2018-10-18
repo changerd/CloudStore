@@ -9,13 +9,13 @@ namespace IBAstore.Models
     public class CreateRoleModel
     {
         [Required]
-        public string Name { get; set; }       
+        public string RoleName { get; set; }       
     }
     public class EditRoleModel
     {
         public string Id { get; set; }
         [Required]
-        public string Name { get; set; }
+        public string RoleName { get; set; }
     }
     public class RoleEditModel
     {

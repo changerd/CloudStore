@@ -31,11 +31,11 @@
                     </div>
                 }
                 <h3>
-                    <strong>@Html.ActionLink(item.Manufacturer.Name + " " +item.Name, "DetailsItem", new { id = item.Id })</strong>
+                    <strong>@Html.ActionLink(item.Manufacturer.ManufacturerName + " " +item.ProductName, "DetailsItem", new { id = item.Id })</strong>
                     <span class="pull-right label label-default">@item.Cost.ToString("# руб")</span>
                 </h3>
                 <span class="lead">@item.Description</span>
-                <h4><b>@item.StatusProduct.Name</b></h4>
+                <h4><b>@item.StatusProduct.StatusProductName</b></h4>
             </div>
         }
     </div>

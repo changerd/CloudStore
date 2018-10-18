@@ -10,21 +10,21 @@ namespace IBAstore.Models
     {
         [Required]
         [Display(Name = "Логин")]
-        public string Login { get; set; }
+        public string RegisterLogin { get; set; }
 
         [Required]
         [RegularExpression(".+\\@.+\\..+")]
-        public string Email { get; set; }    
+        public string RegisterEmail { get; set; }    
 
         [Required]
         [DataType(DataType.Password)]
         [Display(Name = "Пароль")]
-        public string Password { get; set; }
+        public string RegisterPassword { get; set; }
 
         [Required]
         [Compare("Password", ErrorMessage = "Пароли не совпадают")]
         [Display(Name = "Подтвердите пароль")]
         [DataType(DataType.Password)]
-        public string PasswordConfirm { get; set; }
+        public string RegisterPasswordConfirm { get; set; }
     }
 }

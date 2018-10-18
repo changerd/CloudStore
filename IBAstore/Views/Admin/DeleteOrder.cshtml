@@ -1,0 +1,16 @@
+﻿@model IBAstore.Models.Order
+
+@{
+    ViewBag.Title = "DeleteOrder";
+}
+
+<h1>Вы точно хотите удалить заказ: <b>@Model.Id</b>?</h1>
+
+@using (Html.BeginForm())
+{
+    <div class="form-group">
+        <input type="submit" value="Удалить" class="btn btn-danger" />
+        <a class="btn btn-default" href="@Url.Action("GetOrder", "Admin")">Назад</a>
+    </div>
+}
+

@@ -11,7 +11,7 @@ namespace IBAstore.Models
         public int Id { get; set; }
         [Required]
         [Display(Name = "Название товара")]
-        public string Name { get; set; }        
+        public string ProductName { get; set; }        
         public byte[] Photo { get; set; }
         [Required]
         [Display(Name = "Описание товара")]

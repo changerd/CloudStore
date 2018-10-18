@@ -47,7 +47,7 @@ namespace IBAstore.Controllers
         {
             ApplicationUser user = await UserManager.FindByIdAsync(model.Id);
             user.Email=model.Email;
-            user.Name = model.Name;
+            user.FullName = model.FullName;
             user.Birth = model.Birth;
             user.PhoneNumber = model.PhoneNumber;
             user.GetNews = model.GetNews;

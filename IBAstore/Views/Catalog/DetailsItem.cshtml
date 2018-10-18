@@ -14,11 +14,11 @@
         <p>@Model.Description</p>        
     </div>
     <div class="col-sm-4">
-        <h1>@Model.Name</h1>
-        <p>Производитель: @Model.Manufacturer.Name</p>
+        <h1>@Model.ProductName</h1>
+        <p>Производитель: @Model.Manufacturer.ManufacturerName</p>
         <h2>@Model.Cost.ToString("# руб")</h2>
-        <h3>@Model.StatusProduct.Name</h3>
-        @if (Model.StatusProduct.Name == "Нет в наличии" || Model.StatusProduct.Name == "Снят с производства")
+        <h3>@Model.StatusProduct.StatusProductName</h3>
+        @if (Model.StatusProduct.StatusProductName == "Нет в наличии" || Model.StatusProduct.StatusProductName == "Снят с производства")
         {
             <div class="form-group">
                 <button class="btn btn-default disabled btn-lg btn-block">Добавить в корзину</button>

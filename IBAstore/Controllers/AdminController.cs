@@ -18,6 +18,15 @@ namespace IBAstore.Controllers
     public class AdminController : Controller
     {
         StoreContext db = new StoreContext();
+        public void HierarchyCategory(Product product, Category cat)
+        {
+            if (cat.ParentCategoryId != null)
+            {
+                var parentcategory = db.Categories.Find(cat.ParentCategoryId);
+                product.Categories.Add(parentcategory);
+                HierarchyCategory(product, parentcategory);
+            }
+        }
         private ApplicationUserManager UserManager
         {
             get
@@ -52,7 +61,7 @@ namespace IBAstore.Controllers
             {
                 IdentityResult result = await RoleManager.CreateAsync(new ApplicationRole
                 {
-                    Name = model.Name,
+                    Name = model.RoleName,
                 });
                 if (result.Succeeded)
                 {
@@ -70,7 +79,7 @@ namespace IBAstore.Controllers
             ApplicationRole role = await RoleManager.FindByIdAsync(id);
             if (role != null)
             {
-                return View(new EditRoleModel { Id = role.Id, Name = role.Name });
+                return View(new EditRoleModel { Id = role.Id, RoleName = role.Name });
             }
             return RedirectToAction("GetRole");
         }
@@ -82,7 +91,7 @@ namespace IBAstore.Controllers
                 ApplicationRole role = await RoleManager.FindByIdAsync(model.Id);
                 if (role != null)
                 {
-                    role.Name = model.Name;
+                    role.Name = model.RoleName;
                     IdentityResult result = await RoleManager.UpdateAsync(role);
                     if (result.Succeeded)
                     {
@@ -98,7 +107,7 @@ namespace IBAstore.Controllers
         }
         public async Task<ActionResult> DeleteRole(string id)
         {
-            ApplicationRole role = await RoleManager.FindByIdAsync(id);            
+            ApplicationRole role = await RoleManager.FindByIdAsync(id);
             if (role == null)
             {
                 return HttpNotFound();
@@ -179,7 +188,7 @@ namespace IBAstore.Controllers
             return View(user);
         }
         public async Task<ActionResult> DeleteUser(string id)
-        {            
+        {
             ApplicationUser user = await UserManager.FindByIdAsync(id);
             if (user == null)
             {
@@ -196,7 +205,7 @@ namespace IBAstore.Controllers
             {
                 return HttpNotFound();
             }
-            db.Carts.Remove(query);            
+            db.Carts.Remove(query);
             await db.SaveChangesAsync();
             IdentityResult result = await UserManager.DeleteAsync(user);
             return RedirectToAction("GetUser");
@@ -214,10 +223,10 @@ namespace IBAstore.Controllers
         [HttpPost]
         public async Task<ActionResult> CreateManufacturer(Manufacturer manufacturer)
         {
-            var m = db.Manufacturers.Any(p => string.Compare(p.Name, manufacturer.Name) == 0);
+            var m = db.Manufacturers.Any(p => string.Compare(p.ManufacturerName, manufacturer.ManufacturerName) == 0);
             if (m)
             {
-                ModelState.AddModelError("Name", "Такой производитель уже существует.");
+                ModelState.AddModelError("ManufacturerName", "Такой производитель уже существует.");
             }
             if (ModelState.IsValid)
             {
@@ -239,18 +248,9 @@ namespace IBAstore.Controllers
         [HttpPost]
         public async Task<ActionResult> EditManufacturer(Manufacturer manu)
         {
-            var m = db.Manufacturers.Any(p => string.Compare(p.Name, manu.Name) == 0);
-            if (m)
-            {
-                ModelState.AddModelError("Name", "Такой производитель уже существует.");
-            }
-            if (ModelState.IsValid)
-            {
-                db.Entry(manu).State = EntityState.Modified;
-                await db.SaveChangesAsync();
-                return RedirectToAction("GetManufacturer");
-            }
-            return View(manu);
+            db.Entry(manu).State = EntityState.Modified;
+            await db.SaveChangesAsync();
+            return RedirectToAction("GetManufacturer");
         }
         public ActionResult DeleteManufacturer(int id)
         {
@@ -317,17 +317,17 @@ namespace IBAstore.Controllers
         }
         public ActionResult CreateCategory()
         {
-            SelectList parentcategory = new SelectList(db.Categories, "Id", "Name");
+            SelectList parentcategory = new SelectList(db.Categories, "Id", "CategoryName");
             ViewBag.ParentCategory = parentcategory;
             return View();
         }
         [HttpPost]
         public async Task<ActionResult> CreateCategory(Category category)
         {
-            var cat = db.Categories.Any(c => string.Compare(c.Name, category.Name) == 0);
+            var cat = db.Categories.Any(c => string.Compare(c.CategoryName, category.CategoryName) == 0);
             if (cat)
             {
-                ModelState.AddModelError("Name", "Такая категория уже существует");
+                ModelState.AddModelError("CategoryName", "Такая категория уже существует");
             }
             if (ModelState.IsValid)
             {
@@ -339,7 +339,7 @@ namespace IBAstore.Controllers
         }
         public ActionResult EditCategory(int id)
         {
-            SelectList parentcategory = new SelectList(db.Categories, "Id", "Name");
+            SelectList parentcategory = new SelectList(db.Categories, "Id", "CategoryName");
             ViewBag.ParentCategory = parentcategory;
             Category category = db.Categories.Find(id);
             if (category != null)
@@ -351,18 +351,9 @@ namespace IBAstore.Controllers
         [HttpPost]
         public async Task<ActionResult> EditCategory(Category category)
         {
-            var cat = db.Categories.Any(c => string.Compare(c.Name, category.Name) == 0);
-            if (cat)
-            {
-                ModelState.AddModelError("Name", "Такая категория уже существует");
-            }
-            if (ModelState.IsValid)
-            {
-                db.Entry(category).State = EntityState.Modified;
-                await db.SaveChangesAsync();
-                return RedirectToAction("GetCategory");
-            }
-            return EditCategory(category.Id);
+            db.Entry(category).State = EntityState.Modified;
+            await db.SaveChangesAsync();
+            return RedirectToAction("GetCategory");
         }
         public ActionResult DeleteCategory(int id)
         {
@@ -393,8 +384,8 @@ namespace IBAstore.Controllers
         public ActionResult CreateProduct()
         {
             List<Category> category = db.Categories.ToList();
-            SelectList manufacturer = new SelectList(db.Manufacturers, "Id", "Name");
-            SelectList statusproduct = new SelectList(db.StatusProducts, "Id", "Name");
+            SelectList manufacturer = new SelectList(db.Manufacturers, "Id", "ManufacturerName");
+            SelectList statusproduct = new SelectList(db.StatusProducts, "Id", "StatusProductName");
             ViewBag.Category = category;
             ViewBag.Manufacturer = manufacturer;
             ViewBag.StatusProduct = statusproduct;
@@ -421,6 +412,7 @@ namespace IBAstore.Controllers
                 foreach (var c in db.Categories.Where(co => selectedCategory.Contains(co.Id)))
                 {
                     product.Categories.Add(c);
+                    HierarchyCategory(product, c);
                 }
             }
             else
@@ -451,8 +443,8 @@ namespace IBAstore.Controllers
             //var productt = db.Products.Include(c => c.Manufacturer).Include(c => c.StatusProduct).Include(c => c.Categories).ToList();
             //var product = productt.Find(i => i.Id == id);
             List<Category> category = db.Categories.ToList();
-            SelectList manufacturer = new SelectList(db.Manufacturers, "Id", "Name");
-            SelectList statusproduct = new SelectList(db.StatusProducts, "Id", "Name");
+            SelectList manufacturer = new SelectList(db.Manufacturers, "Id", "ManufacturerName");
+            SelectList statusproduct = new SelectList(db.StatusProducts, "Id", "StatusProductName");
             ViewBag.Category = category;
             ViewBag.Manufacturer = manufacturer;
             ViewBag.StatusProduct = statusproduct;
@@ -466,7 +458,7 @@ namespace IBAstore.Controllers
         public async Task<ActionResult> EditProduct(Product product, int[] selectedCategory, HttpPostedFileBase uploadImage)
         {
             Product newProduct = db.Products.Find(product.Id);
-            newProduct.Name = product.Name;
+            newProduct.ProductName = product.ProductName;
             newProduct.ManufacturerId = product.ManufacturerId;
             newProduct.Description = product.Description;
             newProduct.Cost = product.Cost;
@@ -489,7 +481,8 @@ namespace IBAstore.Controllers
                     newProduct.Categories.Add(c);
                 }
             }
-            if (newProduct.StatusProductId == 2)
+            var stp = db.StatusProducts.FirstOrDefault(s => s.StatusProductName == "В наличии");            
+            if (newProduct.StatusProductId == stp.Id)
             {
                 var requests = db.ProductRequests.Where(p => p.ProductId == newProduct.Id).Include(u => u.User).ToList();
                 if (requests != null)
@@ -503,8 +496,8 @@ namespace IBAstore.Controllers
                         WebMail.Password = "iba123456";
                         WebMail.From = "newsibastore@gmail.com";
                         WebMail.Send(r.User.Email,
-                            "Наличие " + newProduct.Name,
-                            "Здравствуйте, " + r.User.Name + ". Товар " + newProduct.Name + ", на который вы оставили заявку в наличии!");
+                            "Наличие " + newProduct.ProductName,
+                            "Здравствуйте, " + r.User.FullName + ". Товар " + newProduct.ProductName + ", на который вы оставили заявку в наличии!");
                         db.ProductRequests.Remove(r);
                     }
                 }
@@ -673,8 +666,8 @@ namespace IBAstore.Controllers
             }
             var orders = order.ToList();
             var statusorders = db.StatusOrders.ToList();
-            statusorders.Insert(0, new StatusOrder { Name = "Все", Id = 0 });
-            SelectList so = new SelectList(statusorders, "Id", "Name");
+            statusorders.Insert(0, new StatusOrder { StatusOrderName = "Все", Id = 0 });
+            SelectList so = new SelectList(statusorders, "Id", "StatusOrderName");
             ViewBag.StatusOrder = so;
             return View(orders);
         }
@@ -690,7 +683,7 @@ namespace IBAstore.Controllers
         }
         public ActionResult EditOrder(int id)
         {
-            SelectList status = new SelectList(db.StatusOrders, "Id", "Name");
+            SelectList status = new SelectList(db.StatusOrders, "Id", "StatusOrderName");
             ViewBag.StatusOrder = status;
             var orders = db.Orders.Include(o => o.StatusOrder).Include(o => o.PaymentMethod).Include(o => o.TypeDelivery).Include(o => o.Cart.User).ToList();
             var order = orders.Find(o => o.Id == id);
@@ -707,14 +700,25 @@ namespace IBAstore.Controllers
             await db.SaveChangesAsync();
             return RedirectToAction("GetOrder");
         }
-        public async Task<ActionResult> DeleteOrder(int id)
+        public ActionResult DeleteOrder(int id)
         {
-            var order = db.Orders.Find(id);
-            if (order != null)
+            Order order = db.Orders.Find(id);
+            if (order == null)
             {
-                db.Orders.Remove(order);
-                await db.SaveChangesAsync();
+                return HttpNotFound();
             }
+            return View(order);
+        }
+        [HttpPost, ActionName("DeleteOrder")]
+        public async Task<ActionResult> DeleteOrderConfirmed(int id)
+        {
+            Order order = db.Orders.Find(id);
+            if (order == null)
+            {
+                return HttpNotFound();
+            }
+            db.Orders.Remove(order);
+            await db.SaveChangesAsync();
             return RedirectToAction("GetOrder");
         }
         public ActionResult GetSale(int? product, DateTime? firstdate, DateTime? seconddate)
@@ -733,9 +737,9 @@ namespace IBAstore.Controllers
                 sale = sale.Where(s => s.ProductId == product);
             }
             var sales = sale.ToList();
-            var products = db.Products.OrderBy(n => n.Name).ToList();
-            products.Insert(0, new Product { Name = "Все", Id = 0 });
-            SelectList pr = new SelectList(products, "Id", "Name");
+            var products = db.Products.OrderBy(n => n.ProductName).ToList();
+            products.Insert(0, new Product { ProductName = "Все", Id = 0 });
+            SelectList pr = new SelectList(products, "Id", "ProductName");
             ViewBag.Products = pr;
             return View(sales);
         }
@@ -763,11 +767,11 @@ namespace IBAstore.Controllers
             {
                 row++;
                 worksheet.Cells[row, "A"] = p.Id.ToString();
-                worksheet.Cells[row, "B"] = p.Manufacturer.Name;
-                worksheet.Cells[row, "C"] = p.Name;
+                worksheet.Cells[row, "B"] = p.Manufacturer.ManufacturerName;
+                worksheet.Cells[row, "C"] = p.ProductName;
                 worksheet.Cells[row, "D"] = p.Description;
                 worksheet.Cells[row, "E"] = p.Cost.ToString() + " руб";
-                worksheet.Cells[row, "F"] = p.StatusProduct.Name;
+                worksheet.Cells[row, "F"] = p.StatusProduct.StatusProductName;
             }
             worksheet.Range["A1"].AutoFormat(Excel.XlRangeAutoFormat.xlRangeAutoFormatClassic1);
             worksheet.SaveAs(string.Format(FilePath));

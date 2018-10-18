@@ -64,7 +64,7 @@ namespace IBAstore.Controllers
         public RedirectResult AddProductRequest(int Id, string returnUrl)
         {
             string userid = User.Identity.GetUserId();
-            string prname = db.Products.Find(Id).Name;
+            string prname = db.Products.Find(Id).ProductName;
             ProductRequest pr = new ProductRequest { ProductId = Id, UserId = userid };            
             db.ProductRequests.Add(pr);
             db.SaveChanges();
@@ -87,8 +87,8 @@ namespace IBAstore.Controllers
         }
         public ActionResult Checkout()
         {
-            SelectList paymentmethod = new SelectList(db.PaymentMethods, "Id", "Name");
-            SelectList typedelivery = new SelectList(db.TypeDeliveries, "Id", "Name");           
+            SelectList paymentmethod = new SelectList(db.PaymentMethods, "Id", "PaymentMethodName");
+            SelectList typedelivery = new SelectList(db.TypeDeliveries, "Id", "TypeDeliveryName");           
             decimal value = GetLines().Sum(s => s.Product.Cost * s.Quantity);
             ViewBag.Value = value;
             ViewBag.PaymentMethod = paymentmethod;
@@ -104,7 +104,7 @@ namespace IBAstore.Controllers
             string userid = User.Identity.GetUserId();
             foreach (var cart in GetLines())
             {
-                orderdescription += cart.Product.Name + " Цена " + cart.Product.Cost + " руб Количество  " + cart.Quantity + " штук." + "\n";
+                orderdescription += cart.Product.ProductName + " Цена " + cart.Product.Cost + " руб Количество  " + cart.Quantity + " штук." + "\n";
                 for (int i = 0; i < cart.Quantity; i++)
                 {
                     SaleStat stat = new SaleStat
@@ -123,7 +123,8 @@ namespace IBAstore.Controllers
             order.CartId = cartid;
             order.Description = orderdescription;
             order.Value = value;
-            order.StatusOrderId = 2;
+            var storder = db.StatusOrders.FirstOrDefault(s => s.StatusOrderName == "Принят");
+            order.StatusOrderId = storder.Id;
             if (GetCart().Lines.Count() == 0)
             {
                 ModelState.AddModelError("", "Извините, ваша корзина пуста!");

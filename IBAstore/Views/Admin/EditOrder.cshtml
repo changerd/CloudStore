@@ -22,7 +22,7 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Cart.User.Name)
+            @Html.DisplayFor(model => model.Cart.User.FullName)
         </dd>
 
         <dt>
@@ -30,7 +30,7 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.PaymentMethod.Name)
+            @Html.DisplayFor(model => model.PaymentMethod.PaymentMethodName)
         </dd>
 
         <dt>
@@ -38,7 +38,7 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.StatusOrder.Name)
+            @Html.DisplayFor(model => model.StatusOrder.StatusOrderName)
         </dd>
 
         <dt>
@@ -54,7 +54,7 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.TypeDelivery.Name)
+            @Html.DisplayFor(model => model.TypeDelivery.TypeDeliveryName)
         </dd>
 
         <dt>
@@ -145,7 +145,7 @@
         @Html.HiddenFor(model => model.TypeDeliveryId)
 
         <div class="form-group">
-            @Html.LabelFor(model => model.StatusOrderId, "StatusOrderId", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.Label("Статус заказа", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownList("StatusOrderId", ViewBag.StatusOrder as SelectList, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.StatusOrderId, "", new { @class = "text-danger" })

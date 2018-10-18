@@ -39,7 +39,7 @@ else
                         <img class="img-thumbnail" width="75" height="89" src="data:image/jpeg;base64, @Convert.ToBase64String(item.Product.Photo)" />
                     </td>
                     <td class="text-left">@item.Quantity</td>
-                    <td class="text-left">@item.Product.Name</td>
+                    <td class="text-left">@item.Product.ProductName</td>
                     <td class="text-right">@item.Product.Cost.ToString("# руб")</td>
                     <td>
                         @using (Html.BeginForm("RemoveFromCart", "Cart"))

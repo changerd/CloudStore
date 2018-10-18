@@ -11,7 +11,7 @@ namespace IBAstore.Models
         public int Id { get; set; }
         [Required]
         [Display(Name = "Название способа оплаты")]
-        public string Name { get; set; }
+        public string PaymentMethodName { get; set; }
         public ICollection<Order> Orders { get; set; }
         public PaymentMethod()
         {

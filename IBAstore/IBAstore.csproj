@@ -194,6 +194,10 @@
     <Compile Include="Infastructure\DecimalModelBinder.cs" />
     <Compile Include="Infastructure\IdentityHelpers.cs" />
     <Compile Include="Infastructure\PagingHelpers.cs" />
+    <Compile Include="Migrations\201810181903204_DataMigration.cs" />
+    <Compile Include="Migrations\201810181903204_DataMigration.Designer.cs">
+      <DependentUpon>201810181903204_DataMigration.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Cart.cs" />
     <Compile Include="Models\Line.cs" />
@@ -339,6 +343,7 @@
     <Content Include="Views\Admin\DeletePaymentMethod.cshtml" />
     <Content Include="Views\Admin\DeleteStatusOrder.cshtml" />
     <Content Include="Views\Admin\DeleteTypeDelivery.cshtml" />
+    <Content Include="Views\Admin\DeleteOrder.cshtml" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>
@@ -359,6 +364,11 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201810181903204_DataMigration.resx">
+      <DependentUpon>201810181903204_DataMigration.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

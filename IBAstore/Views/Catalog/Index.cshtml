@@ -22,7 +22,7 @@
     {
 
         <li>            
-            @Html.ActionLink(c.Name, "Items", new { id = c.Id }, new { @class = "btn btn-default" })
+            @Html.ActionLink(c.CategoryName, "Items", new { id = c.Id }, new { @class = "btn btn-default" })
             @if (Model.Count(p => p.ParentCategoryId == c.Id) > 0)
             {
                 @:<ul>
@@ -47,7 +47,7 @@ foreach (var cp in category.Where(p => p.ParentCategoryId == cat.Id))
 
 
         @:<li>
-            @Html.ActionLink(cp.Name, "Items", new { id = cp.Id }, new { @class = "btn btn-default" })
+            @Html.ActionLink(cp.CategoryName, "Items", new { id = cp.Id }, new { @class = "btn btn-default" })
 
     if (category.Count(p => p.ParentCategoryId == cp.Id) > 0)
     {

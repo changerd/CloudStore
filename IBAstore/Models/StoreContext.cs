@@ -50,6 +50,47 @@ namespace IBAstore.Models
                 };
                 db.Carts.Add(cart);
             }
+
+            PaymentMethod pm1 = new PaymentMethod { PaymentMethodName = "Наличными" };
+            PaymentMethod pm2 = new PaymentMethod { PaymentMethodName = "Банковской картой" };
+            db.PaymentMethods.Add(pm1);
+            db.PaymentMethods.Add(pm2);
+
+            StatusOrder so1 = new StatusOrder { StatusOrderName = "Принят" };
+            StatusOrder so2 = new StatusOrder { StatusOrderName = "Обрабатывается" };
+            StatusOrder so3 = new StatusOrder { StatusOrderName = "Обработан" };
+            StatusOrder so4 = new StatusOrder { StatusOrderName = "Комплектуется" };
+            StatusOrder so5 = new StatusOrder { StatusOrderName = "Скомплектован" };
+            StatusOrder so6 = new StatusOrder { StatusOrderName = "Передан на доставку" };
+            StatusOrder so7 = new StatusOrder { StatusOrderName = "Доставляется" };
+            StatusOrder so8 = new StatusOrder { StatusOrderName = "Выполнен" };
+            StatusOrder so9 = new StatusOrder { StatusOrderName = "Возврат" };
+            StatusOrder so10 = new StatusOrder { StatusOrderName = "Отменён" };
+            db.StatusOrders.Add(so1);
+            db.StatusOrders.Add(so2);
+            db.StatusOrders.Add(so3);
+            db.StatusOrders.Add(so4);
+            db.StatusOrders.Add(so5);
+            db.StatusOrders.Add(so6);
+            db.StatusOrders.Add(so7);
+            db.StatusOrders.Add(so8);
+            db.StatusOrders.Add(so9);
+            db.StatusOrders.Add(so10);
+
+            StatusProduct sp1 = new StatusProduct { StatusProductName = "В наличии" };
+            StatusProduct sp2 = new StatusProduct { StatusProductName = "Нет в наличии" };
+            StatusProduct sp3 = new StatusProduct { StatusProductName = "Снят с производства" };
+            db.StatusProducts.Add(sp1);
+            db.StatusProducts.Add(sp2);
+            db.StatusProducts.Add(sp3);
+
+            TypeDelivery td1 = new TypeDelivery { TypeDeliveryName = "Самовывоз" };
+            TypeDelivery td2 = new TypeDelivery { TypeDeliveryName = "Курьер" };
+            TypeDelivery td3 = new TypeDelivery { TypeDeliveryName = "Почта" };
+            db.TypeDeliveries.Add(td1);
+            db.TypeDeliveries.Add(td2);
+            db.TypeDeliveries.Add(td3);
+
             base.Seed(db);
         }
     }

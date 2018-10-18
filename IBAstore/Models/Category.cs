@@ -11,7 +11,7 @@ namespace IBAstore.Models
         public int Id { get; set; }
         [Required]
         [Display (Name = "Название категории")]
-        public string Name { get; set; }
+        public string CategoryName { get; set; }
         public int? ParentCategoryId { get; set; }
         public Category ParentCategory { get; set; }
         public virtual ICollection<Category> Categories { get; set; }

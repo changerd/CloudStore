@@ -46,8 +46,8 @@ namespace IBAstore.Controllers
         {
             if (ModelState.IsValid)
             {
-                ApplicationUser user = new ApplicationUser { UserName = model.Login, Email = model.Email };
-                IdentityResult result = await UserManager.CreateAsync(user, model.Password);
+                ApplicationUser user = new ApplicationUser { UserName = model.RegisterLogin, Email = model.RegisterEmail };
+                IdentityResult result = await UserManager.CreateAsync(user, model.RegisterPassword);
                 if (result.Succeeded)
                 {
                     await this.UserManager.AddToRoleAsync(user.Id, "User");

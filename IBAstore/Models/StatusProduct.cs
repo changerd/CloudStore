@@ -11,7 +11,7 @@ namespace IBAstore.Models
         public int Id { get; set; }
         [Required]
         [Display(Name = "Название статуса продукта")]
-        public string Name { get; set; }
+        public string StatusProductName { get; set; }
         public ICollection<Product> Products { get; set; }
         public StatusProduct()
         {

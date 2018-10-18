@@ -27,7 +27,7 @@ namespace IBAstore.Controllers
         public ActionResult Items(int id, int? manufacturer, int page = 1)
         {
             var category = db.Categories.Find(id);
-            string categoryname = category.Name;
+            string categoryname = category.CategoryName;
             ViewBag.CategoryName = categoryname;
             ViewBag.mid = manufacturer;
             var product = db.Products
@@ -43,7 +43,7 @@ namespace IBAstore.Controllers
             }
             List<Product> products = product.ToList();
             var manufacturers = db.Manufacturers.Where(m => m.Products.Any(p => p.Categories.Any(c => c.Id == id))).ToList();
-            manufacturers.Insert(0, new Manufacturer { Name = "Все", Id = 0 });
+            manufacturers.Insert(0, new Manufacturer { ManufacturerName = "Все", Id = 0 });
             ProductListViewModel model = new ProductListViewModel
             {
                 Products = products.Where(m => manufacturer == null || manufacturer == 0 || m.ManufacturerId == manufacturer).OrderBy(p => p.Id).Skip((page - 1) * pagesize).Take(pagesize),
@@ -53,7 +53,7 @@ namespace IBAstore.Controllers
                     ItemsPerPage = pagesize,
                     TotalItems = manufacturer == 0 || manufacturer == null ? products.Count() : db.Products.Where(c => c.Categories.Any(cc => cc.Id == id)).Where(m => m.ManufacturerId == manufacturer).Count()                    
                 },
-                Manufacturers = new SelectList(manufacturers, "Id", "Name")
+                Manufacturers = new SelectList(manufacturers, "Id", "ManufacturerName")
                 
             };
             return View(model);
@@ -62,7 +62,7 @@ namespace IBAstore.Controllers
         public ActionResult SearchResult(string search)
         {
             ViewBag.SearchResult = search;
-            var searchresult = db.Products.Where(p=> p.Name.Contains(search)).Include(c => c.Manufacturer).Include(c => c.StatusProduct).Include(c => c.Categories).ToList();
+            var searchresult = db.Products.Where(p=> p.ProductName.Contains(search)).Include(c => c.Manufacturer).Include(c => c.StatusProduct).Include(c => c.Categories).ToList();
             return View(searchresult);            
         }
         public ActionResult DetailsItem(int id)

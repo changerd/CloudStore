@@ -16,14 +16,14 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Name)
+            @Html.DisplayFor(model => model.ProductName)
         </dd>
         <dt>
             @Html.DisplayName("Производитель")
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Manufacturer.Name)
+            @Html.DisplayFor(model => model.Manufacturer.ManufacturerName)
         </dd>
         <dt>
             @Html.DisplayName("Категории")
@@ -32,7 +32,7 @@
             <ul>
                 @foreach (var c in Model.Categories)
                 {
-                    <li>@c.Name</li>
+                    <li>@c.CategoryName</li>
                 }
             </ul>
         </dd>
@@ -66,7 +66,7 @@
             @Html.DisplayName("Статус")
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.StatusProduct.Name)
+            @Html.DisplayFor(model => model.StatusProduct.StatusProductName)
         </dd>
         <dt>
             @Html.DisplayName("Количество на складе")

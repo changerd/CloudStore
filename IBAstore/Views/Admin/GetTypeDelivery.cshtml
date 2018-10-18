@@ -20,7 +20,7 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.Name)
+            @Html.DisplayFor(modelItem => item.TypeDeliveryName)
         </td>
         <td>            
             @Html.ActionLink("Удалить", "DeleteTypeDelivery", new { id=item.Id })

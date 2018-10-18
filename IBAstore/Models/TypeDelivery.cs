@@ -11,7 +11,7 @@ namespace IBAstore.Models
         public int Id { get; set; }
         [Required]
         [Display(Name = "Название типа заказа")]
-        public string Name { get; set; }
+        public string TypeDeliveryName { get; set; }
         public ICollection<Order> Orders { get; set; }
         public TypeDelivery()
         {
