@@ -52,7 +52,7 @@ namespace IBAstore.Controllers
             user.PhoneNumber = model.PhoneNumber;
             user.GetNews = model.GetNews;
             string reg = ".+\\@.+\\..+";
-            if (!Regex.IsMatch(user.Email, reg))
+            if (!string.IsNullOrEmpty(user.Email) && !Regex.IsMatch(user.Email, reg))
             {
                 ModelState.AddModelError("Email", "Не корректная электронная почта.");
             }

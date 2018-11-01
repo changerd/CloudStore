@@ -11,9 +11,9 @@
 @using (Html.BeginForm("CreateProduct", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
-        
+
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
@@ -35,22 +35,47 @@
         <div class="form-group">
             @Html.Label("Категории", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @foreach (Category c in ViewBag.Category)
+                @if (Model.Categories != null)
                 {
-                    <input type="checkbox" name="selectedCategory"value="@c.Id" @*@(Model.Categories.Contains(c) ? "checked=\"checked\"" : "")*@ />@c.CategoryName <br /> 
+                    foreach (Category c in ViewBag.Category)
+                    {
+                        <input type="checkbox" name="selectedCategory" value="@c.Id" @(Model.Categories.Contains(c) ? "checked=\"checked\"" : "") />@c.CategoryName <br />
+                    }
+                }
+                else
+                {
+                    foreach (Category c in ViewBag.Category)
+                    {
+                        <input type="checkbox" name="selectedCategory" value="@c.Id" @*@(Model.Categories.Contains(c) ? "checked=\"checked\"" : "")*@ />@c.CategoryName <br />
+                    }
                 }
                 @Html.ValidationMessage("Categories", new { @class = "text-danger" })
-            </div>            
-        </div>
-
-
-        <div class="form-group">
-            @Html.Label("Фото", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">               
-                <input type="file" name="uploadImage" />
-                @Html.ValidationMessage("Photo", new { @class = "text-danger" })
             </div>
         </div>
+
+        @if (Model.Photo != null)
+        {
+            <div class="form-group">
+                @Html.Label("Фото", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.Raw("<img name=\"uploadImage\" src=\"data:image/jpeg;base64," + Convert.ToBase64String(Model.Photo) + "\" />")
+                    @Html.HiddenFor(model => Model.Photo)
+                    <input type="file" name="uploadImage" />
+                    @Html.ValidationMessage("Photo", new { @class = "text-danger" })
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="form-group">
+                @Html.Label("Фото", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <input type="file" name="uploadImage" />
+                    @Html.ValidationMessage("Photo", new { @class = "text-danger" })
+                </div>
+            </div>
+        }
+        
 
         <div class="form-group">
             @Html.Label("Описание", htmlAttributes: new { @class = "control-label col-md-2" })

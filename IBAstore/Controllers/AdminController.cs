@@ -381,15 +381,15 @@ namespace IBAstore.Controllers
             List<Product> product = db.Products.Include(c => c.Manufacturer).Include(c => c.StatusProduct).ToList();
             return View(product);
         }
-        public ActionResult CreateProduct()
+        public ActionResult CreateProduct(Product product)
         {
             List<Category> category = db.Categories.ToList();
             SelectList manufacturer = new SelectList(db.Manufacturers, "Id", "ManufacturerName");
             SelectList statusproduct = new SelectList(db.StatusProducts, "Id", "StatusProductName");
-            ViewBag.Category = category;
+            ViewBag.Category = category;            
             ViewBag.Manufacturer = manufacturer;
-            ViewBag.StatusProduct = statusproduct;
-            return View();
+            ViewBag.StatusProduct = statusproduct;            
+            return View(product);
         }
         [HttpPost]
         public async Task<ActionResult> CreateProduct(Product product, int[] selectedCategory, HttpPostedFileBase uploadImage)
@@ -403,7 +403,7 @@ namespace IBAstore.Controllers
                 }
                 product.Photo = imageData;
             }
-            else
+            if (product.Photo == null)
             {
                 ModelState.AddModelError("Photo", "Для товара не выбрана фотография.");
             }
@@ -425,7 +425,7 @@ namespace IBAstore.Controllers
                 await db.SaveChangesAsync();
                 return RedirectToAction("GetProduct");
             }
-            return CreateProduct();
+            return CreateProduct(product);
         }
         public ActionResult DetailsProduct(int id)
         {

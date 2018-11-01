@@ -13,6 +13,7 @@ namespace IBAstore.Models
         public string RegisterLogin { get; set; }
 
         [Required]
+        [Display(Name = "Электронная почта")]
         [RegularExpression(".+\\@.+\\..+")]
         public string RegisterEmail { get; set; }    
 
@@ -22,7 +23,7 @@ namespace IBAstore.Models
         public string RegisterPassword { get; set; }
 
         [Required]
-        [Compare("Password", ErrorMessage = "Пароли не совпадают")]
+        [Compare("RegisterPassword", ErrorMessage = "Пароли не совпадают")]
         [Display(Name = "Подтвердите пароль")]
         [DataType(DataType.Password)]
         public string RegisterPasswordConfirm { get; set; }

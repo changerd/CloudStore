@@ -28,9 +28,10 @@ namespace IBAstore.Controllers
             return list;
         }
         public RedirectToRouteResult AddToCart(int Id, string returnUrl, int quantity)
-        {            
+        {
+            string strerror = null;
             Product product = db.Products.FirstOrDefault(p => p.Id == Id);
-            if (product != null)
+            if (product != null && product.Stock >= quantity)
             {
                 var sline = db.Lines.Where(p => p.ProductId == product.Id).FirstOrDefault();
                 if (sline == null)
@@ -46,17 +47,36 @@ namespace IBAstore.Controllers
                 {
                     sline.Quantity += quantity;
                 }
+                product.Stock -= quantity;
+                if (product.Stock < 1)
+                {
+                    var stp = db.StatusProducts.FirstOrDefault(s => s.StatusProductName == "Нет в наличии");
+                    product.StatusProductId = stp.Id;
+                }
+                db.Entry(product).State = EntityState.Modified;
                 //GetCart().Products.Add(product);                
                 db.SaveChanges();
             }
-            return RedirectToAction("Index", new { returnUrl });
+            else
+            {
+                ModelState.AddModelError("Quantity", "Для добавления недостаточно количества на складе. Доступно: " + product.Stock);
+                strerror = "Для добавления недостаточно количества на складе. Доступно: " + product.Stock;
+            }
+            if (ModelState.IsValid)
+            {
+                return RedirectToAction("Index", new { returnUrl });
+            }
+            return RedirectToAction("DetailsItem", "Catalog", new { Id = Id, Err = strerror });
         }
         public RedirectToRouteResult RemoveFromCart(int Id, string returnUrl)
         {
             Line line = db.Lines.First(p => p.Id == Id);
             if (line != null)
             {
-                db.Lines.Remove(line);
+                Product product = db.Products.FirstOrDefault(p => p.Id == line.ProductId);
+                product.Stock += line.Quantity;
+                db.Lines.Remove(line);                
+                db.Entry(product).State = EntityState.Modified;
                 db.SaveChanges();
             }
             return RedirectToAction("Index", new { returnUrl });
@@ -114,10 +134,7 @@ namespace IBAstore.Controllers
                         Date = DateTime.Now
                     };
                     db.SaleStats.Add(stat);
-                }
-                var pr = db.Products.Find(cart.Product.Id);
-                pr.Stock -= cart.Quantity;
-                db.Entry(pr).State = EntityState.Modified;
+                }                
             }
             order.Date = DateTime.Now;
             order.CartId = cartid;

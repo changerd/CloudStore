@@ -41,7 +41,10 @@
                     @Html.Hidden("returnUrl", Request.Url.PathAndQuery)                    
                     <label for="inputquantity">Количество</label>
                     <input class="form-control" type="number" min="1" value="1" name="quantity" id="inputquantity" />
-                    
+                    @if (ViewBag.Err != null)
+                    {
+                        <div class="text-danger">@ViewBag.Err</div>
+                    }
                     <br />
                     <input type="submit" class="btn btn-default btn-lg btn-block" value="Добавить в корзину" />
                 </div>

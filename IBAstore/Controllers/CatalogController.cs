@@ -12,6 +12,12 @@ namespace IBAstore.Controllers
     public class CatalogController : Controller
     {
         StoreContext db = new StoreContext();
+        public Cart GetCart()
+        {
+            string user = User.Identity.GetUserId();
+            var cart = db.Carts.FirstOrDefault(c => c.UserId == user);
+            return cart;
+        }
         public int pagesize = 5;
         // GET: Items
         public ActionResult Index()
@@ -65,10 +71,11 @@ namespace IBAstore.Controllers
             var searchresult = db.Products.Where(p=> p.ProductName.Contains(search)).Include(c => c.Manufacturer).Include(c => c.StatusProduct).Include(c => c.Categories).ToList();
             return View(searchresult);            
         }
-        public ActionResult DetailsItem(int id)
+        public ActionResult DetailsItem(int id, string err = null)
         {            
             var productt = db.Products.Include(c => c.Manufacturer).Include(c => c.StatusProduct).Include(c => c.Categories).ToList();
-            var product = productt.Find(i => i.Id == id);            
+            var product = productt.Find(i => i.Id == id);
+            ViewBag.Err = err;
             if (product == null)
             {
                 return HttpNotFound();
