@@ -14,11 +14,12 @@ namespace IBAstore.Controllers
     public class CartController : Controller
     {
         StoreContext db = new StoreContext();
-
+        string SPNotAviable = "Нет в наличии";
+        string SOAccepted = "Принят";
         public Cart GetCart()
         {
             string user = User.Identity.GetUserId();
-            var cart = db.Carts.FirstOrDefault(c => c.UserId == user);       
+            var cart = db.Carts.FirstOrDefault(c => String.Equals(c.UserId, user));       
             return cart;
         }
         public List<Line> GetLines()
@@ -29,7 +30,7 @@ namespace IBAstore.Controllers
         }
         public RedirectToRouteResult AddToCart(int Id, string returnUrl, int quantity)
         {
-            string strerror = null;
+            string strerror = null;            
             Product product = db.Products.FirstOrDefault(p => p.Id == Id);
             if (product != null && product.Stock >= quantity)
             {
@@ -50,7 +51,7 @@ namespace IBAstore.Controllers
                 product.Stock -= quantity;
                 if (product.Stock < 1)
                 {
-                    var stp = db.StatusProducts.FirstOrDefault(s => s.StatusProductName == "Нет в наличии");
+                    var stp = db.StatusProducts.FirstOrDefault(s => String.Equals(s.StatusProductName, SPNotAviable));
                     product.StatusProductId = stp.Id;
                 }
                 db.Entry(product).State = EntityState.Modified;
@@ -60,7 +61,7 @@ namespace IBAstore.Controllers
             else
             {
                 ModelState.AddModelError("Quantity", "Для добавления недостаточно количества на складе. Доступно: " + product.Stock);
-                strerror = "Для добавления недостаточно количества на складе. Доступно: " + product.Stock;
+                strerror = String.Format("Для добавления недостаточно количества на складе. Доступно: {0}", product.Stock);
             }
             if (ModelState.IsValid)
             {
@@ -124,7 +125,7 @@ namespace IBAstore.Controllers
             string userid = User.Identity.GetUserId();
             foreach (var cart in GetLines())
             {
-                orderdescription += cart.Product.ProductName + " Цена " + cart.Product.Cost + " руб Количество  " + cart.Quantity + " штук." + "\n";
+                orderdescription += String.Format("{0} Цена {1} руб Количество {2} штук. {3} ", cart.Product.ProductName, cart.Product.Cost, cart.Quantity, String.Empty);
                 for (int i = 0; i < cart.Quantity; i++)
                 {
                     SaleStat stat = new SaleStat
@@ -140,7 +141,7 @@ namespace IBAstore.Controllers
             order.CartId = cartid;
             order.Description = orderdescription;
             order.Value = value;
-            var storder = db.StatusOrders.FirstOrDefault(s => s.StatusOrderName == "Принят");
+            var storder = db.StatusOrders.FirstOrDefault(s => String.Equals(s.StatusOrderName, SOAccepted));
             order.StatusOrderId = storder.Id;
             if (GetCart().Lines.Count() == 0)
             {

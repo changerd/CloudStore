@@ -18,6 +18,7 @@ namespace IBAstore.Controllers
     public class AdminController : Controller
     {
         StoreContext db = new StoreContext();
+        string SPInStock = "В наличии";
         public void HierarchyCategory(Product product, Category cat)
         {
             if (cat.ParentCategoryId != null)
@@ -132,7 +133,7 @@ namespace IBAstore.Controllers
             ApplicationRole role = await RoleManager.FindByIdAsync(id);
             string[] memberIDs = role.Users.Select(x => x.UserId).ToArray();
 
-            IEnumerable<ApplicationUser> members = UserManager.Users.Where(x => memberIDs.Any(y => y == x.Id));
+            IEnumerable<ApplicationUser> members = UserManager.Users.Where(x => memberIDs.Any(y => String.Equals(y, x.Id)));
 
             IEnumerable<ApplicationUser> nonMembers = UserManager.Users.Except(members);
 
@@ -161,16 +162,13 @@ namespace IBAstore.Controllers
                 }
                 foreach (string userId in model.IdsToDelete ?? new string[] { })
                 {
-                    result = await UserManager.RemoveFromRoleAsync(userId,
-                    model.RoleName);
-
+                    result = await UserManager.RemoveFromRoleAsync(userId, model.RoleName);
                     if (!result.Succeeded)
                     {
                         return View("Error", result.Errors);
                     }
                 }
                 return RedirectToAction("GetRole");
-
             }
             return View("Error", new string[] { "Роль не найдена" });
         }
@@ -200,7 +198,7 @@ namespace IBAstore.Controllers
         public async Task<ActionResult> DeleteUserConfirmed(string id)
         {
             ApplicationUser user = await UserManager.FindByIdAsync(id);
-            Cart query = db.Carts.Where(c => c.UserId == id).FirstOrDefault();
+            Cart query = db.Carts.Where(c => String.Equals(c.UserId, id)).FirstOrDefault();
             if (user == null)
             {
                 return HttpNotFound();
@@ -481,7 +479,7 @@ namespace IBAstore.Controllers
                     newProduct.Categories.Add(c);
                 }
             }
-            var stp = db.StatusProducts.FirstOrDefault(s => s.StatusProductName == "В наличии");            
+            var stp = db.StatusProducts.FirstOrDefault(s => String.Equals(s.StatusProductName, SPInStock));            
             if (newProduct.StatusProductId == stp.Id)
             {
                 var requests = db.ProductRequests.Where(p => p.ProductId == newProduct.Id).Include(u => u.User).ToList();

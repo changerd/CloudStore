@@ -12,12 +12,6 @@ namespace IBAstore.Controllers
     public class CatalogController : Controller
     {
         StoreContext db = new StoreContext();
-        public Cart GetCart()
-        {
-            string user = User.Identity.GetUserId();
-            var cart = db.Carts.FirstOrDefault(c => c.UserId == user);
-            return cart;
-        }
         public int pagesize = 5;
         // GET: Items
         public ActionResult Index()
