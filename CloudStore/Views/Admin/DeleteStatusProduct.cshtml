@@ -1,0 +1,15 @@
+﻿@model CloudStore.Models.StatusProduct
+
+@{
+    ViewBag.Title = "Удаление статуса продукта";
+}
+
+<h1>Вы точно хотите удалить cтатус продукта: <b>@Model.StatusProductName</b>?</h1>
+
+@using (Html.BeginForm())
+{
+    <div class="form-group">
+        <input type="submit" value="Удалить" class="btn btn-danger" />
+        <a class="btn btn-default" href="@Url.Action("GetStatusProduct", "Admin")">Назад</a>
+    </div>
+}

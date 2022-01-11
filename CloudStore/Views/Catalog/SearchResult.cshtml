@@ -1,0 +1,31 @@
+﻿@model IEnumerable<CloudStore.Models.Product>
+
+@{
+    ViewBag.Title = "Результаты поиска";
+}
+
+<h2>Результаты поиска: @ViewBag.SearchResult</h2>
+
+<hr />
+
+@foreach (var item in Model)
+{
+    <div class="well">
+        @if (item.Photo != null)
+                {
+            <div class="pull-left" style="margin-right: 10px">
+                <img class="img-thumbnail" width="75" height="89" src="data:image/jpeg;base64, @Convert.ToBase64String(item.Photo)" />
+            </div>
+        }
+        <h3>
+            <strong>@Html.ActionLink(item.Manufacturer.ManufacturerName + " " + item.ProductName, "DetailsItem", new { id = item.Id })</strong>
+            <span class="pull-right label label-default">@item.Cost.ToString("# руб")</span>
+        </h3>
+        <span class="lead">@item.Description</span>
+        <h4><b>@item.StatusProduct.StatusProductName</b></h4>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Назад", "Index")
+</div>

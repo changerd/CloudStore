@@ -1,0 +1,34 @@
+﻿@model IEnumerable<CloudStore.Models.StatusProduct>
+
+@{
+    ViewBag.Title = "Статусы товара";
+}
+
+<h2>Статусы товара</h2>
+
+<p>
+    @Html.ActionLink("Создать", "CreateStatusProduct")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayName("Название")
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.StatusProductName)
+        </td>
+        <td>            
+            @Html.ActionLink("Удалить", "DeleteStatusProduct", new { id=item.Id })
+        </td>
+    </tr>
+}
+
+</table>
+<div>
+    @Html.ActionLink("Назад", "Index")
+</div>

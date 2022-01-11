@@ -1,0 +1,16 @@
+﻿@model CloudStore.Models.Category
+
+@{
+    ViewBag.Title = "Удаление категории";
+}
+
+<h1>Вы точно хотите удалить категорию: <b>@Model.CategoryName</b>?</h1>
+
+@using (Html.BeginForm())
+{
+    <div class="form-group">
+        <input type="submit" value="Удалить" class="btn btn-danger" />
+        <a class="btn btn-default" href="@Url.Action("GetCategory", "Admin")">Назад</a>
+    </div>
+}
+

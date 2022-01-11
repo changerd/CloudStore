@@ -1,0 +1,17 @@
+﻿@model CloudStore.Models.ApplicationRole
+
+@{
+    ViewBag.Title = "Удаление роли";
+}
+
+<h1>Вы точно хотите удалить роль: <b>@Model.Name</b>?</h1>
+
+@using (Html.BeginForm())
+{
+    <div class="form-group">
+        <input type="submit" value="Удалить" class="btn btn-danger" />
+        <a class="btn btn-default" href="@Url.Action("GetRole", "Admin")">Назад</a>
+    </div>
+}
+
+
