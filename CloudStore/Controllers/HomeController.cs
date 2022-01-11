@@ -24,15 +24,15 @@ namespace CloudStore.Controllers
 
         public ActionResult About()
         {
-            ViewBag.Title = "CloudStore";
-            ViewBag.Message = "Данный проект является тестовым заданием для стажировки.";
+            ViewBag.Title = string.Empty;
+            ViewBag.Message = string.Empty;
 
             return View();
         }
 
         public ActionResult Contact()
         {
-            ViewBag.Message = "IBA.";
+            ViewBag.Message = string.Empty;
 
             return View();
         }       
