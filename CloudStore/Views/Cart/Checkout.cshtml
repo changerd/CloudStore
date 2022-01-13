@@ -2,10 +2,10 @@
 @model Order
 
 @{
-    ViewBag.Title = "Оформление заказа";
+    ViewBag.Title = "Checkout";
 }
 
-<h2>Оформление заказа</h2>
+<h2>Checkout</h2>
 
 <hr />
 
@@ -17,7 +17,7 @@
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         
         <div class="form-group">
-            @Html.Label("Тип доставки", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.Label("Delivery type", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownList("TypeDeliveryId", ViewBag.TypeDelivery as SelectList, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.TypeDeliveryId, "", new { @class = "text-danger" })
@@ -25,7 +25,7 @@
         </div>
 
         <div class="form-group">
-            @Html.Label("Город", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.Label("City", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.City, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.City, "", new { @class = "text-danger" })
@@ -33,7 +33,7 @@
         </div>
 
         <div class="form-group">
-            @Html.Label("Улица", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.Label("City", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Street, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Street, "", new { @class = "text-danger" })
@@ -41,7 +41,7 @@
         </div>
 
         <div class="form-group">
-            @Html.Label("Дом", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.Label("House", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.House, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.House, "", new { @class = "text-danger" })
@@ -49,7 +49,7 @@
         </div>
 
         <div class="form-group">
-            @Html.Label("Корпус", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.Label("Housing", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Housing, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Housing, "", new { @class = "text-danger" })
@@ -57,7 +57,7 @@
         </div>
 
         <div class="form-group">
-            @Html.Label("Квартира", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.Label("Flat", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Flat, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Flat, "", new { @class = "text-danger" })
@@ -65,7 +65,7 @@
         </div>
 
         <div class="form-group">
-            @Html.Label("Телефон", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.Label("Telephone", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Telephone, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Telephone, "", new { @class = "text-danger" })
@@ -73,7 +73,7 @@
         </div>
         
         <div class="form-group">
-            @Html.Label("Способ оплаты", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.Label("Payment method", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownList("PaymentMethodId", ViewBag.PaymentMethod as SelectList, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.PaymentMethodId, "", new { @class = "text-danger" })
@@ -81,22 +81,22 @@
         </div>   
         
         <div class="form-group">
-            @Html.Label("Итого", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.Label("Value", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @ViewBag.Value руб
+                @ViewBag.Value rub
             </div>
         </div> 
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Оформить заказ" class="btn btn-default" />
+                <input type="submit" value="Checkout" class="btn btn-default" />
             </div>
         </div>
     </div>
 }
 
 <div>
-    @Html.ActionLink("Назад", "Index")
+    @Html.ActionLink("Back", "Index")
 </div>
 
 @section Scripts {

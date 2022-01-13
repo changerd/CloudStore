@@ -1,22 +1,22 @@
 ﻿@model CloudStore.Models.CartIndexViewModel
 
 @{
-    ViewBag.Title = "Корзина";
+    ViewBag.Title = "Cart";
 }
 
 <h2>Корзина</h2>
 
 @if (Model.Cart.Lines.Count == 0)
 {
-    <h4>Ваша корзина в данный момент пуста, для оформления заказа добавьте товар в корзину</h4>
+<h4>Your cart is currently empty, add the product to your cart to place an order</h4>
 
     if (Model.ReturnUrl == null)
     {
-        <a class="btn btn-default" href="@Url.Action("Index", "Home")">Назад</a>
+        <a class="btn btn-default" href="@Url.Action("Index", "Home")">Back</a>
     }
     else
     {
-        <a class="btn btn-default" href="@Model.ReturnUrl">Назад</a>
+        <a class="btn btn-default" href="@Model.ReturnUrl">Back</a>
     }
 }
 else
@@ -25,9 +25,9 @@ else
         <thead>
             <tr>
                 <th></th>
-                <th>Количество</th>
-                <th>Товар</th>
-                <th class="text-right">Цена</th>
+                <th>Amount</th>
+                <th>Product</th>
+                <th class="text-right">Price</th>
                 <th></th>
             </tr>
         </thead>
@@ -40,13 +40,13 @@ else
                     </td>
                     <td class="text-left">@item.Quantity</td>
                     <td class="text-left">@item.Product.ProductName</td>
-                    <td class="text-right">@item.Product.Cost.ToString("# руб")</td>
+                    <td class="text-right">@item.Product.Cost.ToString("# rub")</td>
                     <td>
                         @using (Html.BeginForm("RemoveFromCart", "Cart"))
                     {
                             @Html.Hidden("Id", item.Id)
                             @Html.HiddenFor(x => x.ReturnUrl)
-                            <input type="submit" class="btn btn-danger" value="Удалить" />
+                            <input type="submit" class="btn btn-danger" value="Delete" />
                         }
                     </td>
                 </tr>
@@ -54,9 +54,9 @@ else
         </tbody>
         <tfoot>
             <tr>
-                <td colspan="3" class="text-left">Итого:</td>
+                <td colspan="3" class="text-left">Total:</td>
                 <td colspan="2" class="text-right">
-                    @Model.Lines.Sum(s => s.Product.Cost * s.Quantity).ToString("# руб")
+                    @Model.Lines.Sum(s => s.Product.Cost * s.Quantity).ToString("# rub")
                 </td>
             </tr>
         </tfoot>
@@ -65,13 +65,13 @@ else
     <div class="text-center">
         @if (Model.ReturnUrl == null)
         {
-            <a class="btn btn-default" href="@Url.Action("Index", "Home")">Назад</a>
+            <a class="btn btn-default" href="@Url.Action("Index", "Home")">Back</a>
         }
         else
         {
-            <a class="btn btn-default" href="@Model.ReturnUrl">Назад</a>
+            <a class="btn btn-default" href="@Model.ReturnUrl">Back</a>
         }
-        @Html.ActionLink("Оформить заказ", "Checkout", null, new { @class = "btn btn-default" })
+        @Html.ActionLink("Checkout", "Checkout", null, new { @class = "btn btn-default" })
     </div>
 }
 

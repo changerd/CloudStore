@@ -1,16 +1,16 @@
 ﻿@model CloudStore.Models.PaymentMethod
 
 @{
-    ViewBag.Title = "Удаление способа оплаты";
+    ViewBag.Title = "Payment method deleting";
 }
 
-<h1>Вы точно хотите удалить способ оплаты: <b>@Model.PaymentMethodName</b>?</h1>
+<h1>Are you sure you want to delete payment method: <b>@Model.PaymentMethodName</b>?</h1>
 
 @using (Html.BeginForm())
 {
     <div class="form-group">
-        <input type="submit" value="Удалить" class="btn btn-danger" />
-        <a class="btn btn-outline-primary" href="@Url.Action("GetPaymentMethod", "Admin")">Назад</a>
+        <input type="submit" value="Delete" class="btn btn-danger" />
+        <a class="btn btn-outline-primary" href="@Url.Action("GetPaymentMethod", "Admin")">Back</a>
     </div>
 }
 

@@ -10,7 +10,7 @@ namespace CloudStore.Models
     {
         public int Id { get; set; }
         [Required]
-        [Display (Name = "Название категории")]
+        [Display (Name = "Category name")]
         public string CategoryName { get; set; }
         public int? ParentCategoryId { get; set; }
         public Category ParentCategory { get; set; }

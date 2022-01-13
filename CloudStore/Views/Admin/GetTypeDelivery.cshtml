@@ -1,18 +1,18 @@
 ﻿@model IEnumerable<CloudStore.Models.TypeDelivery>
 
 @{
-    ViewBag.Title = "Типы доставки";
+    ViewBag.Title = "Delivery types";
 }
 
-<h2>Типы доставки</h2>
+<h2>Delivery types</h2>
 
 <p>
-    @Html.ActionLink("Создать", "CreateTypeDelivery")
+    @Html.ActionLink("Create", "CreateTypeDelivery")
 </p>
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayName("Название")
+            @Html.DisplayName("Name")
         </th>
         <th></th>
     </tr>
@@ -23,7 +23,7 @@
             @Html.DisplayFor(modelItem => item.TypeDeliveryName)
         </td>
         <td>            
-            @Html.ActionLink("Удалить", "DeleteTypeDelivery", new { id=item.Id })
+            @Html.ActionLink("Delete", "DeleteTypeDelivery", new { id=item.Id })
         </td>
     </tr>
 }
@@ -31,5 +31,5 @@
 </table>
 
 <div>
-    @Html.ActionLink("Назад", "Index")
+    @Html.ActionLink("Back", "Index")
 </div>

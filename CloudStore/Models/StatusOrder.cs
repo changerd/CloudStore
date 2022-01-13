@@ -10,7 +10,7 @@ namespace CloudStore.Models
     {
         public int Id { get; set; }
         [Required]
-        [Display(Name = "Название статуса заказа")]
+        [Display(Name = "Status Order Name")]
         public string StatusOrderName { get; set; }
         public ICollection<Order> Orders { get; set; }
         public StatusOrder()

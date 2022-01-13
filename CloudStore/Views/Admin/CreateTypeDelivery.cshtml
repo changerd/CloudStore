@@ -1,10 +1,10 @@
 ﻿@model CloudStore.Models.TypeDelivery
 
 @{
-    ViewBag.Title = "Создание типа доставки";
+    ViewBag.Title = "Type delivery creating";
 }
 
-<h2>Создать тип доставки</h2>
+<h2>Type delivery creating</h2>
 
 
 @using (Html.BeginForm()) 
@@ -16,7 +16,7 @@
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
-            @Html.Label("Название", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.Label("Name", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.TypeDeliveryName, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.TypeDeliveryName, "", new { @class = "text-danger" })
@@ -25,14 +25,14 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10 my-2">
-                <input type="submit" value="Создать" class="btn btn-default" />
+                <input type="submit" value="Create" class="btn btn-default" />
             </div>
         </div>
     </div>
 }
 
 <div>
-    @Html.ActionLink("Назад", "GetTypeDelivery")
+    @Html.ActionLink("Back", "GetTypeDelivery")
 </div>
 
 @section Scripts {

@@ -1,18 +1,18 @@
 ﻿@model IEnumerable<CloudStore.Models.StatusOrder>
 
 @{
-    ViewBag.Title = "Статусы заказа";
+    ViewBag.Title = "Order status";
 }
 
-<h2>Статусы заказа</h2>
+<h2>Order status</h2>
 
 <p>
-    @Html.ActionLink("Создать", "CreateStatusOrder")
+    @Html.ActionLink("Create", "CreateStatusOrder")
 </p>
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayName("Название")
+            @Html.DisplayName("Name")
         </th>
         <th></th>
     </tr>
@@ -23,7 +23,7 @@
             @Html.DisplayFor(modelItem => item.StatusOrderName)
         </td>
         <td>            
-            @Html.ActionLink("Удалить", "DeleteStatusOrder", new { id=item.Id })
+            @Html.ActionLink("Delete", "DeleteStatusOrder", new { id=item.Id })
         </td>
     </tr>
 }
@@ -31,5 +31,5 @@
 </table>
 
 <div>
-    @Html.ActionLink("Назад", "Index")
+    @Html.ActionLink("Back", "Index")
 </div>

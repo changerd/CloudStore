@@ -1,16 +1,16 @@
 ﻿@model CloudStore.Models.StatusOrder
 
 @{
-    ViewBag.Title = "Удаление статуса заказа";
+    ViewBag.Title = "Status order deleting";
 }
 
-<h1>Вы точно хотите удалить статус заказа: <b>@Model.StatusOrderName</b>?</h1>
+<h1>Are you sure you want to delete status order: <b>@Model.StatusOrderName</b>?</h1>
 
 @using (Html.BeginForm())
 {
     <div class="form-group">
-        <input type="submit" value="Удалить" class="btn btn-danger" />
-        <a class="btn btn-default" href="@Url.Action("GetStatusOrder", "Admin")">Назад</a>
+        <input type="submit" value="Delete" class="btn btn-danger" />
+        <a class="btn btn-default" href="@Url.Action("GetStatusOrder", "Admin")">Back</a>
     </div>
 }
 

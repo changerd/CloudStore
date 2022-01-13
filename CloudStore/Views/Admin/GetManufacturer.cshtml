@@ -1,18 +1,18 @@
 ﻿@model IEnumerable<CloudStore.Models.Manufacturer>
 
 @{
-    ViewBag.Title = "Производители";
+    ViewBag.Title = "Manufacturer";
 }
 
-<h2>Производители</h2>
+<h2>Manufacturer</h2>
 
 <p>
-    @Html.ActionLink("Создать", "CreateManufacturer")
+    @Html.ActionLink("Create", "CreateManufacturer")
 </p>
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayName("Название")
+            @Html.DisplayName("Name")
         </th>
         <th></th>
     </tr>
@@ -23,13 +23,13 @@
             @Html.DisplayFor(modelItem => item.ManufacturerName)
         </td>
         <td>
-            @Html.ActionLink("Редактировать", "EditManufacturer", new { id=item.Id }) |            
-            @Html.ActionLink("Удалить", "DeleteManufacturer", new { id=item.Id })
+            @Html.ActionLink("Edit", "EditManufacturer", new { id=item.Id }) |            
+            @Html.ActionLink("Delete", "DeleteManufacturer", new { id=item.Id })
         </td>
     </tr>
 }
 
 </table>
 <div>
-    @Html.ActionLink("Назад", "Index")
+    @Html.ActionLink("Back", "Index")
 </div>

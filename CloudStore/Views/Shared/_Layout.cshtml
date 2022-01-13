@@ -21,13 +21,13 @@
             <div class="collapse navbar-collapse" id="navbarContent">
                 <ul class="navbar-nav me-auto ">
                     <li class="nav-item">
-                        @Html.ActionLink("Каталог", "Index", "Catalog", new { @class = "nav-link", @href = "/Catalog" })
+                        @Html.ActionLink("Catalog", "Index", "Catalog", new { @class = "nav-link", @href = "/Catalog" })
                     </li>
                     <li class="nav-item">
-                        @Html.ActionLink("О магазине", "About", "Home", new { @class = "nav-link", @href = "/Home/About" })
+                        @Html.ActionLink("About", "About", "Home", new { @class = "nav-link", @href = "/Home/About" })
                     </li>
                     <li class="nav-item">
-                        @Html.ActionLink("Контакты", "Contact", "Home", new { @class = "nav-link", @href = "/Home/Contact" })
+                        @Html.ActionLink("Contact", "Contact", "Home", new { @class = "nav-link", @href = "/Home/Contact" })
                     </li>
                 </ul>
                 @Html.Partial("_LoginPartial")

@@ -1,16 +1,16 @@
 ﻿@model CloudStore.Models.Order
 
 @{
-    ViewBag.Title = "DeleteOrder";
+    ViewBag.Title = "Delete Order";
 }
 
-<h1>Вы точно хотите удалить заказ: <b>@Model.Id</b>?</h1>
+<h1>Are you sure you want to delete order: <b>@Model.Id</b>?</h1>
 
 @using (Html.BeginForm())
 {
     <div class="form-group">
-        <input type="submit" value="Удалить" class="btn btn-danger" />
-        <a class="btn btn-default" href="@Url.Action("GetOrder", "Admin")">Назад</a>
+        <input type="submit" value="Delete" class="btn btn-danger" />
+        <a class="btn btn-default" href="@Url.Action("GetOrder", "Admin")">Back</a>
     </div>
 }
 

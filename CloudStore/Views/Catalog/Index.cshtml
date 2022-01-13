@@ -2,17 +2,17 @@
 @model IEnumerable<Category>
 
 @{
-    ViewBag.Title = "Категории";
+    ViewBag.Title = "Categories";
 }
 
-<h2>Категории</h2>
+<h2>Categories</h2>
 
 <br />
 
 <div class="pull-right">
     <form method="get" action="@Url.Action("SearchResult", "Catalog")">        
         <input type="text" name="search" id="search" />
-        <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span>Поиск</button>
+        <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span>Search</button>
     </form>
 </div>
 

@@ -13,9 +13,9 @@
     <div class="col-md-2">
         <form method="get">
             <div class="form-inline">
-                <label class="control-label">Производитель</label>                
+                <label class="control-label">Manufacturer</label>                
                     <p>@Html.DropDownList("manufacturer", Model.Manufacturers as SelectList, htmlAttributes: new { @class = "form-control" })</p>                    
-                   <input type="submit" value="Фильтр" class="btn btn-default" />
+                   <input type="submit" value="Filter" class="btn btn-default" />
                
             </div>
         </form>
@@ -32,7 +32,7 @@
                 }
                 <h3>
                     <strong>@Html.ActionLink(item.Manufacturer.ManufacturerName + " " +item.ProductName, "DetailsItem", new { id = item.Id })</strong>
-                    <span class="pull-right label label-default">@item.Cost.ToString("# руб")</span>
+                    <span class="pull-right label label-default">@item.Cost.ToString("# rub")</span>
                 </h3>
                 <span class="lead">@item.Description</span>
                 <h4><b>@item.StatusProduct.StatusProductName</b></h4>

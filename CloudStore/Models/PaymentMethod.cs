@@ -10,7 +10,7 @@ namespace CloudStore.Models
     {
         public int Id { get; set; }
         [Required]
-        [Display(Name = "Название способа оплаты")]
+        [Display(Name = "Payment Method Name")]
         public string PaymentMethodName { get; set; }
         public ICollection<Order> Orders { get; set; }
         public PaymentMethod()

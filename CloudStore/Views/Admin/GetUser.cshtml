@@ -1,16 +1,16 @@
 ﻿@model IEnumerable<CloudStore.Models.ApplicationUser>
 
 @{
-    ViewBag.Title = "Пользователи";
+    ViewBag.Title = "Users";
 }
 
-<h2>Пользователи</h2>
+<h2>Users</h2>
 
 
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayName("Логин")
+            @Html.DisplayName("Login")
         </th>          
         <th></th>
     </tr>
@@ -21,13 +21,13 @@
             @Html.DisplayFor(modelItem => item.UserName)
         </td>        
         <td>            
-            @Html.ActionLink("Подробнее", "DetailsUser", new { id = item.Id }) |
-            @Html.ActionLink("Удалить", "DeleteUser", new { id = item.Id })
+            @Html.ActionLink("Details", "DetailsUser", new { id = item.Id }) |
+            @Html.ActionLink("Delete", "DeleteUser", new { id = item.Id })
         </td>
     </tr>
 }
 </table>
 
 <div>
-    @Html.ActionLink("Назад", "Index")
+    @Html.ActionLink("Back", "Index")
 </div>

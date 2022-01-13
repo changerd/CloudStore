@@ -2,31 +2,31 @@
 @using CloudStore.Models
 
 @{
-    ViewBag.Title = "DetailsProduct";
+    ViewBag.Title = "Details Product";
 }
 
-<h2>Подробнне о товаре</h2>
+<h2>Product details</h2>
 
 <div>
 
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayName("Название")
+            @Html.DisplayName("Name")
         </dt>
 
         <dd>
             @Html.DisplayFor(model => model.ProductName)
         </dd>
         <dt>
-            @Html.DisplayName("Производитель")
+            @Html.DisplayName("Manufacturer")
         </dt>
 
         <dd>
             @Html.DisplayFor(model => model.Manufacturer.ManufacturerName)
         </dd>
         <dt>
-            @Html.DisplayName("Категории")
+            @Html.DisplayName("Category")
         </dt>
         <dd>
             <ul>
@@ -37,7 +37,7 @@
             </ul>
         </dd>
         <dt>
-            @Html.DisplayName("Фото")
+            @Html.DisplayName("Photo")
         </dt>
 
         @if (Model.Photo != null)
@@ -48,7 +48,7 @@
         }
 
         <dt>
-            @Html.DisplayName("Описание")
+            @Html.DisplayName("Description")
         </dt>
 
         <dd>
@@ -56,20 +56,20 @@
         </dd>
 
         <dt>
-            @Html.DisplayName("Цена")
+            @Html.DisplayName("Price")
         </dt>
 
         <dd>
             @Html.DisplayFor(model => model.Cost)
         </dd>
         <dt>
-            @Html.DisplayName("Статус")
+            @Html.DisplayName("Status")
         </dt>
         <dd>
             @Html.DisplayFor(model => model.StatusProduct.StatusProductName)
         </dd>
         <dt>
-            @Html.DisplayName("Количество на складе")
+            @Html.DisplayName("In stock count")
         </dt>
 
         <dd>
@@ -78,6 +78,6 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Редактировать", "EditProduct", new { id = Model.Id }) |
-    @Html.ActionLink("Назад", "GetProduct")
+    @Html.ActionLink("Edit", "EditProduct", new { id = Model.Id }) |
+    @Html.ActionLink("Back", "GetProduct")
 </p>

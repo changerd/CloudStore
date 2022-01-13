@@ -1,16 +1,16 @@
 ﻿@model CloudStore.Models.Manufacturer
 
 @{
-    ViewBag.Title = "Удаление производителя";
+    ViewBag.Title = "Manufacturer deleting";
 }
 
-<h1>Вы точно хотите удалить производителя: <b>@Model.ManufacturerName</b>?</h1>
+<h1>Are you sure you want to delete manufacturer: <b>@Model.ManufacturerName</b>?</h1>
 
 @using (Html.BeginForm())
 {
     <div class="form-group">
-        <input type="submit" value="Удалить" class="btn btn-danger" />
-        <a class="btn btn-default" href="@Url.Action("GetManufacturer", "Admin")">Назад</a>
+        <input type="submit" value="Delete" class="btn btn-danger" />
+        <a class="btn btn-default" href="@Url.Action("GetManufacturer", "Admin")">Back</a>
     </div>
 }
 

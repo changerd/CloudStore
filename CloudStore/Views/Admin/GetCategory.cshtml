@@ -2,21 +2,21 @@
 @using CloudStore.Models
 
 @{
-    ViewBag.Title = "Категории товаров";
+    ViewBag.Title = "Product categories";
 }
 
-<h2>Категории товаров</h2>
+<h2>Product categories</h2>
 
 <p>
-    @Html.ActionLink("Создать", "CreateCategory")
+    @Html.ActionLink("Create", "CreateCategory")
 </p>
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayName("Название")
+            @Html.DisplayName("Name")
         </th>
         <th>
-            @Html.DisplayName("Родительская категория")
+            @Html.DisplayName("Parent category")
         </th>
         <th></th>
     </tr>
@@ -30,8 +30,8 @@
             @Html.DisplayFor(modelItem => item.ParentCategory.CategoryName)
         </td>
         <td>
-            @Html.ActionLink("Редактировать", "EditCategory", new { id=item.Id }) |            
-            @Html.ActionLink("Удалить", "DeleteCategory", new { id=item.Id })
+            @Html.ActionLink("Edit", "EditCategory", new { id=item.Id }) |            
+            @Html.ActionLink("Delete", "DeleteCategory", new { id=item.Id })
         </td>
     </tr>
 }
@@ -39,5 +39,5 @@
 </table>
 
 <div>
-    @Html.ActionLink("Назад", "Index")
+    @Html.ActionLink("Back", "Index")
 </div>

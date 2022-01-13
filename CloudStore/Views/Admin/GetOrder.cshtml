@@ -1,10 +1,10 @@
 ﻿@model IEnumerable<CloudStore.Models.Order>
 
 @{
-    ViewBag.Title = "Заказы";
+    ViewBag.Title = "Orders";
 }
 
-<h2>Заказы</h2>
+<h2>Orders</h2>
 
 <div class="row panel">
     <div class="col-md-2">
@@ -21,22 +21,22 @@
         <table class="table">
             <tr>
                 <th>
-                    @Html.DisplayName("Номер заказа")
+                    @Html.DisplayName("Order number")
                 </th>
                 <th>
-                    @Html.DisplayName("Логин клиента")
+                    @Html.DisplayName("Client login")
                 </th>
                 <th>
-                    @Html.DisplayName("Имя клиента")
+                    @Html.DisplayName("Client name")
                 </th>
                 <th>
-                    @Html.DisplayName("Статус")
+                    @Html.DisplayName("Status")
                 </th>
                 <th>
-                    @Html.DisplayName("Цена")
+                    @Html.DisplayName("Price")
                 </th>
                 <th>
-                    @Html.DisplayName("Дата")
+                    @Html.DisplayName("Date")
                 </th>
                 <th></th>
             </tr>
@@ -63,9 +63,9 @@
                         @Html.DisplayFor(modelItem => item.Date)
                     </td>
                     <td>
-                        @Html.ActionLink("Редактировать", "EditOrder", new { id = item.Id }) |
-                        @Html.ActionLink("Подробнее", "DetailsOrder", new { id = item.Id }) |
-                        @Html.ActionLink("Удалить", "DeleteOrder", new { id = item.Id })
+                        @Html.ActionLink("Edit", "EditOrder", new { id = item.Id }) |
+                        @Html.ActionLink("Details", "DetailsOrder", new { id = item.Id }) |
+                        @Html.ActionLink("Delete", "DeleteOrder", new { id = item.Id })
                     </td>
                 </tr>
             }

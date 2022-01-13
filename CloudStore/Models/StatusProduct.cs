@@ -10,7 +10,7 @@ namespace CloudStore.Models
     {
         public int Id { get; set; }
         [Required]
-        [Display(Name = "Название статуса продукта")]
+        [Display(Name = "Status Product Name")]
         public string StatusProductName { get; set; }
         public ICollection<Product> Products { get; set; }
         public StatusProduct()

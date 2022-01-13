@@ -1,10 +1,10 @@
 ﻿@model CloudStore.Models.PaymentMethod
 
 @{
-    ViewBag.Title = "Создание способа оплаты заказа";
+    ViewBag.Title = "Create payment method";
 }
 
-<h2>Создать способ оплаты заказа</h2>
+<h2>Create payment method</h2>
 
 
 @using (Html.BeginForm()) 
@@ -16,7 +16,7 @@
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
-            @Html.Label("Название", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.Label("Name", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.PaymentMethodName, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.PaymentMethodName, "", new { @class = "text-danger" })
@@ -25,14 +25,14 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10 my-2">
-                <input type="submit" value="Создать" class="btn btn-default" />
+                <input type="submit" value="Create" class="btn btn-default" />
             </div>
         </div>
     </div>
 }
 
 <div>
-    @Html.ActionLink("Назад", "GetPaymentMethod")
+    @Html.ActionLink("Back", "GetPaymentMethod")
 </div>
 
 @section Scripts {

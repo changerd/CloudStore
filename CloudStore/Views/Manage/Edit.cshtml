@@ -1,10 +1,10 @@
 ﻿@model CloudStore.Models.ApplicationUser
 
 @{
-    ViewBag.Title = "Редактирование профиля";
+    ViewBag.Title = "Profile edit";
 }
 
-<h2>Редактировать профиль</h2>
+<h2>Profile edit</h2>
 
 
 @using (Html.BeginForm())
@@ -17,7 +17,7 @@
         @Html.HiddenFor(model => model.Id)
 
         <div class="form-group">
-            @Html.Label("Электронная почта", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.Label("Email", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
@@ -25,7 +25,7 @@
         </div>
 
         <div class="form-group">
-            @Html.Label("ФИО", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.Label("Full name", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.FullName, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.FullName, "", new { @class = "text-danger" })
@@ -33,7 +33,7 @@
         </div>
 
         <div class="form-group">
-            @Html.Label("Дата рождения", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.Label("Birth date", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Birth, new { htmlAttributes = new { @class = "form-control" , type = "date" } })
                 @Html.ValidationMessageFor(model => model.Birth, "", new { @class = "text-danger" })
@@ -41,7 +41,7 @@
         </div>     
 
         <div class="form-group">
-            @Html.Label("Телефон", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.Label("Phone number", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.PhoneNumber, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.PhoneNumber, "", new { @class = "text-danger" })
@@ -49,7 +49,7 @@
         </div>     
         
         <div class="form-group">
-            @Html.Label("Получать новости?", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.Label("Receive news?", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.CheckBoxFor(model => model.GetNews, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.GetNews, "", new { @class = "text-danger" })
@@ -58,14 +58,14 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Сохранить" class="btn btn-default" />
+                <input type="submit" value="Save" class="btn btn-default" />
             </div>
         </div>
     </div>
 }
 
 <div>
-    @Html.ActionLink("Назад", "Index", new { @class = "btn btn-default"})
+    @Html.ActionLink("Back", "Index", new { @class = "btn btn-default"})
 </div>
 
 @section Scripts {

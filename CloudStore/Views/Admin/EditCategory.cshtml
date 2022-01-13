@@ -1,10 +1,10 @@
 ﻿@model CloudStore.Models.Category
 
 @{
-    ViewBag.Title = "Редактирование категории товара";
+    ViewBag.Title = "Category edit";
 }
 
-<h2>Редактировать категорию товара</h2>
+<h2>Category edit</h2>
 
 
 @using (Html.BeginForm())
@@ -18,7 +18,7 @@
         @Html.HiddenFor(model => model.Id)
 
         <div class="form-group">
-            @Html.Label("Название", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.Label("Name", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.CategoryName, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.CategoryName, "", new { @class = "text-danger" })
@@ -26,23 +26,23 @@
         </div>
 
         <div class="form-group">
-            @Html.Label("Родительская категория", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.Label("Parent category", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownListFor(model => model.ParentCategoryId, ViewBag.ParentCategory as SelectList, "Пусто", htmlAttributes: new { @class = "form-control" })
+                @Html.DropDownListFor(model => model.ParentCategoryId, ViewBag.ParentCategory as SelectList, "Empty", htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.ParentCategoryId, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Сохранить" class="btn btn-default" />
+                <input type="submit" value="Save" class="btn btn-default" />
             </div>
         </div>
     </div>
 }
 
 <div>
-    @Html.ActionLink("Назад", "GetCategory")
+    @Html.ActionLink("Back", "GetCategory")
 </div>
 
 @section Scripts {

@@ -10,7 +10,7 @@ namespace CloudStore.Models
     {
         public int Id { get; set; }
         [Required]
-        [Display(Name = "Количество")]
+        [Display(Name = "Count")]
         public int Quantity { get; set; }        
         public int ProductId { get; set; }
         public int CartId { get; set; }
