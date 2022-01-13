@@ -81,7 +81,7 @@ namespace CloudStore.Controllers
         }
         public async Task<ActionResult> DetailOrder(int id)
         {            
-            var order = db.Orders.FindAsync(id);
+            var order = await db.Orders.FindAsync(id);
 
             if (order == null)
             {
