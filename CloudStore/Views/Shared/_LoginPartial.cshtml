@@ -9,17 +9,17 @@
             @if (User.IsInRole("Admin"))
             {
                 <li>
-                    @Html.ActionLink("Панель администратора", "Index", "Admin", new { @class = "nav-link", @href = "Admin" })
+                    @Html.ActionLink("Панель администратора", "Index", "Admin", new { @class = "nav-link", @href = "/Admin/Index" })
                 </li>
             }
             <li>
-                @Html.ActionLink("Здравствуйте, " + User.Identity.GetUserName() + "!", "Index", "Manage", new { @class = "nav-link", @href = "Manage" })
+                @Html.ActionLink("Здравствуйте, " + User.Identity.GetUserName() + "!", "Index", "Manage", new { @class = "nav-link", @href = "/Manage/Index" })
             </li>
             <li>
-                <a href="@Url.Action("Index", "Cart")" class="nav-link"><span class="glyphicon glyphicon-shopping-cart"></span> Корзина <span class="badge bg-primary rounded-pill">@Html.Action("Summary", "Cart")</span></a>
+                <a href="@Url.Action("Index", "Cart")" class="nav-link"><span class="glyphicon glyphicon-shopping-cart"></span> Корзина <span class="badge bg-secondary rounded-pill">@Html.Action("Summary", "Cart")</span></a>
             </li>
             <li>
-                @Html.ActionLink("Выйти", "Logout", "Account", new { @class = "nav-link", @href = "Account/Logout" })
+                @Html.ActionLink("Выйти", "Logout", "Account", new { @class = "nav-link", @href = "/Account/Logout" })
             </li>
         </ul>
     }
