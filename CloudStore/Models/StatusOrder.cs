@@ -12,7 +12,7 @@ namespace CloudStore.Models
         [Required]
         [Display(Name = "Название статуса заказа")]
         public string StatusOrderName { get; set; }
-        public ICollection<Order> Orders { get; set; }
+        public virtual ICollection<Order> Orders { get; set; }
         public StatusOrder()
         {
             Orders = new List<Order>();

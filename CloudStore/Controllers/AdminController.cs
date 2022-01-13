@@ -17,8 +17,10 @@ namespace CloudStore.Controllers
     [Authorize(Roles = "Admin")]
     public class AdminController : Controller
     {
+
         StoreContext db = new StoreContext();
-        string SPInStock = "В наличии";
+        const string SPInStock = "В наличии";
+
         public void HierarchyCategory(Product product, Category cat)
         {
             if (cat.ParentCategoryId != null)
@@ -28,6 +30,7 @@ namespace CloudStore.Controllers
                 HierarchyCategory(product, parentcategory);
             }
         }
+
         private ApplicationUserManager UserManager
         {
             get
@@ -35,6 +38,7 @@ namespace CloudStore.Controllers
                 return HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
             }
         }
+
         private ApplicationRoleManager RoleManager
         {
             get
@@ -42,19 +46,24 @@ namespace CloudStore.Controllers
                 return HttpContext.GetOwinContext().GetUserManager<ApplicationRoleManager>();
             }
         }
+
         // GET: Admin
         public ActionResult Index()
         {
             return View();
         }
+
+        #region Roles
         public ActionResult GetRole()
         {
             return View(RoleManager.Roles);
         }
+
         public ActionResult CreateRole()
         {
             return View();
         }
+
         [HttpPost]
         public async Task<ActionResult> CreateRole(CreateRoleModel model)
         {
@@ -75,6 +84,7 @@ namespace CloudStore.Controllers
             }
             return View(model);
         }
+
         public async Task<ActionResult> EditRole(string id)
         {
             ApplicationRole role = await RoleManager.FindByIdAsync(id);
@@ -84,6 +94,7 @@ namespace CloudStore.Controllers
             }
             return RedirectToAction("GetRole");
         }
+
         [HttpPost]
         public async Task<ActionResult> EditRole(EditRoleModel model)
         {
@@ -115,6 +126,7 @@ namespace CloudStore.Controllers
             }
             return View(role);
         }
+
         [HttpPost, ActionName("DeleteRole")]
         public async Task<ActionResult> DeleteRoleConfirmed(string id)
         {
@@ -172,52 +184,67 @@ namespace CloudStore.Controllers
             }
             return View("Error", new string[] { "Роль не найдена" });
         }
+        #endregion
+
+        #region Users
         public ActionResult GetUser()
         {
             return View(UserManager.Users);
         }
-        public ActionResult DetailsUser(string id)
+        public async Task<ActionResult> DetailsUser(string id)
         {
-            var user = db.Users.Find(id);
+            var user = await UserManager.FindByIdAsync(id);
+
             if (user == null)
             {
                 return HttpNotFound();
             }
+
             return View(user);
         }
+
         public async Task<ActionResult> DeleteUser(string id)
         {
             ApplicationUser user = await UserManager.FindByIdAsync(id);
+
             if (user == null)
             {
                 return HttpNotFound();
             }
+
             return View(user);
         }
+
         [HttpPost, ActionName("DeleteUser")]
         public async Task<ActionResult> DeleteUserConfirmed(string id)
         {
             ApplicationUser user = await UserManager.FindByIdAsync(id);
             Cart query = db.Carts.Where(c => String.Equals(c.UserId, id)).FirstOrDefault();
+            
             if (user == null)
             {
                 return HttpNotFound();
             }
+
             db.Carts.Remove(query);
             await db.SaveChangesAsync();
             IdentityResult result = await UserManager.DeleteAsync(user);
             return RedirectToAction("GetUser");
-
         }
-        public ActionResult GetManufacturer()
+        #endregion
+
+        #region Manufacturers
+        public async Task<ActionResult> GetManufacturer()
         {
-            List<Manufacturer> manufacturer = db.Manufacturers.ToList();
+            List<Manufacturer> manufacturer = await db.Manufacturers.ToListAsync();
             return View(manufacturer);
         }
+
         public ActionResult CreateManufacturer()
         {
             return View();
         }
+
         [HttpPost]
         public async Task<ActionResult> CreateManufacturer(Manufacturer manufacturer)
         {
@@ -234,15 +261,17 @@ namespace CloudStore.Controllers
             }
             return View(manufacturer);
         }
-        public ActionResult EditManufacturer(int id)
+
+        public async Task<ActionResult> EditManufacturer(int id)
         {
-            Manufacturer manu = db.Manufacturers.Find(id);
+            Manufacturer manu = await db.Manufacturers.FindAsync(id);
             if (manu != null)
             {
                 return View(manu);
             }
             return HttpNotFound();
         }
+
         [HttpPost]
         public async Task<ActionResult> EditManufacturer(Manufacturer manu)
         {
@@ -250,19 +279,21 @@ namespace CloudStore.Controllers
             await db.SaveChangesAsync();
             return RedirectToAction("GetManufacturer");
         }
-        public ActionResult DeleteManufacturer(int id)
+
+        public async Task<ActionResult> DeleteManufacturer(int id)
         {
-            Manufacturer manu = db.Manufacturers.Find(id);
+            Manufacturer manu = await db.Manufacturers.FindAsync(id);
             if (manu == null)
             {
                 return HttpNotFound();
             }
             return View(manu);
         }
+
         [HttpPost, ActionName("DeleteManufacturer")]
         public async Task<ActionResult> DeleteManufacturerConfirmed(int id)
         {
-            Manufacturer manu = db.Manufacturers.Find(id);
+            Manufacturer manu = await db.Manufacturers.FindAsync(id);
             if (manu == null)
             {
                 return HttpNotFound();
@@ -271,15 +302,20 @@ namespace CloudStore.Controllers
             await db.SaveChangesAsync();
             return RedirectToAction("GetManufacturer");
         }
-        public ActionResult GetStatusProduct()
+        #endregion
+
+        #region Status Products
+        public async Task<ActionResult> GetStatusProduct()
         {
-            List<StatusProduct> status = db.StatusProducts.ToList();
+            List<StatusProduct> status = await db.StatusProducts.ToListAsync();
             return View(status);
         }
+
         public ActionResult CreateStatusProduct()
         {
             return View();
         }
+
         [HttpPost]
         public async Task<ActionResult> CreateStatusProduct(StatusProduct status)
         {
@@ -287,19 +323,20 @@ namespace CloudStore.Controllers
             await db.SaveChangesAsync();
             return RedirectToAction("GetStatusProduct");
         }
-        public ActionResult DeleteStatusProduct(int id)
+        public async Task<ActionResult> DeleteStatusProduct(int id)
         {
-            StatusProduct status = db.StatusProducts.Find(id);
+            StatusProduct status = await db.StatusProducts.FindAsync(id);
             if (status == null)
             {
                 return HttpNotFound();
             }
             return View(status);
         }
+
         [HttpPost, ActionName("DeleteStatusProduct")]
         public async Task<ActionResult> DeleteStatusProductConfirmed(int id)
         {
-            StatusProduct status = db.StatusProducts.Find(id);
+            StatusProduct status = await db.StatusProducts.FindAsync(id);
             if (status == null)
             {
                 return HttpNotFound();
@@ -308,21 +345,26 @@ namespace CloudStore.Controllers
             await db.SaveChangesAsync();
             return RedirectToAction("GetStatusProduct");
         }
-        public ActionResult GetCategory()
+        #endregion
+
+        #region Categories
+        public async Task<ActionResult> GetCategory()
         {
-            List<Category> category = db.Categories.ToList();
+            List<Category> category = await db.Categories.ToListAsync();
             return View(category);
         }
-        public ActionResult CreateCategory()
+
+        public async Task<ActionResult> CreateCategory()
         {
-            SelectList parentcategory = new SelectList(db.Categories, "Id", "CategoryName");
+            SelectList parentcategory = new SelectList(await db.Categories.ToListAsync(), "Id", "CategoryName");
             ViewBag.ParentCategory = parentcategory;
             return View();
         }
+
         [HttpPost]
         public async Task<ActionResult> CreateCategory(Category category)
         {
-            var cat = db.Categories.Any(c => string.Compare(c.CategoryName, category.CategoryName) == 0);
+            var cat = await db.Categories.AnyAsync(c => string.Compare(c.CategoryName, category.CategoryName) == 0);
             if (cat)
             {
                 ModelState.AddModelError("CategoryName", "Такая категория уже существует");
@@ -333,19 +375,23 @@ namespace CloudStore.Controllers
                 await db.SaveChangesAsync();
                 return RedirectToAction("GetCategory");
             }
-            return CreateCategory();
+            return await CreateCategory();
         }
-        public ActionResult EditCategory(int id)
+
+        public async Task<ActionResult> EditCategory(int id)
         {
-            SelectList parentcategory = new SelectList(db.Categories, "Id", "CategoryName");
+            SelectList parentcategory = new SelectList(await db.Categories.ToListAsync(), "Id", "CategoryName");
             ViewBag.ParentCategory = parentcategory;
-            Category category = db.Categories.Find(id);
-            if (category != null)
+            Category category = await db.Categories.FindAsync(id);
+            
+            if (category == null)
             {
-                return View(category);
+                return HttpNotFound();
             }
-            return HttpNotFound();
+
+            return View(category);            
         }
+
         [HttpPost]
         public async Task<ActionResult> EditCategory(Category category)
         {
@@ -353,19 +399,21 @@ namespace CloudStore.Controllers
             await db.SaveChangesAsync();
             return RedirectToAction("GetCategory");
         }
-        public ActionResult DeleteCategory(int id)
+
+        public async Task<ActionResult> DeleteCategory(int id)
         {
-            Category category = db.Categories.Find(id);
+            Category category = await db.Categories.FindAsync(id);
             if (category == null)
             {
                 return HttpNotFound();
             }
             return View(category);
         }
+
         [HttpPost, ActionName("DeleteCategory")]
         public async Task<ActionResult> DeleteCategoryConfirmed(int id)
         {
-            Category category = db.Categories.Find(id);
+            Category category = await db.Categories.FindAsync(id);
             if (category == null)
             {
                 return HttpNotFound();
@@ -374,21 +422,26 @@ namespace CloudStore.Controllers
             await db.SaveChangesAsync();
             return RedirectToAction("GetCategory");
         }
-        public ActionResult GetProduct()
+        #endregion
+
+        #region Products
+        public async Task<ActionResult> GetProduct()
         {
-            List<Product> product = db.Products.Include(c => c.Manufacturer).Include(c => c.StatusProduct).ToList();
+            List<Product> product = await db.Products.ToListAsync();
             return View(product);
         }
-        public ActionResult CreateProduct(Product product)
+
+        public async Task<ActionResult> CreateProduct(Product product)
         {
-            List<Category> category = db.Categories.ToList();
-            SelectList manufacturer = new SelectList(db.Manufacturers, "Id", "ManufacturerName");
-            SelectList statusproduct = new SelectList(db.StatusProducts, "Id", "StatusProductName");
+            List<Category> category = await db.Categories.ToListAsync();
+            SelectList manufacturer = new SelectList(await db.Manufacturers.ToListAsync(), "Id", "ManufacturerName");
+            SelectList statusproduct = new SelectList(await db.StatusProducts.ToListAsync(), "Id", "StatusProductName");
             ViewBag.Category = category;            
             ViewBag.Manufacturer = manufacturer;
             ViewBag.StatusProduct = statusproduct;            
             return View(product);
         }
+
         [HttpPost]
         public async Task<ActionResult> CreateProduct(Product product, int[] selectedCategory, HttpPostedFileBase uploadImage)
         {
@@ -401,10 +454,12 @@ namespace CloudStore.Controllers
                 }
                 product.Photo = imageData;
             }
+
             if (product.Photo == null)
             {
                 ModelState.AddModelError("Photo", "Для товара не выбрана фотография.");
             }
+
             if (selectedCategory != null)
             {
                 foreach (var c in db.Categories.Where(co => selectedCategory.Contains(co.Id)))
@@ -417,51 +472,59 @@ namespace CloudStore.Controllers
             {
                 ModelState.AddModelError("Categories", "Для товара не выбрана категория.");
             }
+
             if (ModelState.IsValid)
             {
                 db.Products.Add(product);
                 await db.SaveChangesAsync();
                 return RedirectToAction("GetProduct");
             }
-            return CreateProduct(product);
+
+            return await CreateProduct(product);
         }
-        public ActionResult DetailsProduct(int id)
-        {
-            var productt = db.Products.Include(c => c.Manufacturer).Include(c => c.StatusProduct).Include(c => c.Categories).ToList();
-            var product = productt.Find(i => i.Id == id);
+
+        public async Task<ActionResult> DetailsProduct(int id)
+        {            
+            var product = await db.Products.FindAsync(id);
+
             if (product == null)
             {
                 return HttpNotFound();
             }
+
             return View(product);
         }
-        public ActionResult EditProduct(int id)
+
+        public async Task<ActionResult> EditProduct(int id)
         {
-            Product product = db.Products.Find(id);
-            //var productt = db.Products.Include(c => c.Manufacturer).Include(c => c.StatusProduct).Include(c => c.Categories).ToList();
-            //var product = productt.Find(i => i.Id == id);
-            List<Category> category = db.Categories.ToList();
-            SelectList manufacturer = new SelectList(db.Manufacturers, "Id", "ManufacturerName");
-            SelectList statusproduct = new SelectList(db.StatusProducts, "Id", "StatusProductName");
+            Product product = await db.Products.FindAsync(id);            
+            List<Category> category = await db.Categories.ToListAsync();
+            SelectList manufacturer = new SelectList(await db.Manufacturers.ToListAsync(), "Id", "ManufacturerName");
+            SelectList statusproduct = new SelectList(await db.StatusProducts.ToListAsync(), "Id", "StatusProductName");
+            
             ViewBag.Category = category;
             ViewBag.Manufacturer = manufacturer;
             ViewBag.StatusProduct = statusproduct;
+            
             if (product == null)
             {
                 return HttpNotFound();
             }
+
             return View(product);
         }
+
         [HttpPost]
         public async Task<ActionResult> EditProduct(Product product, int[] selectedCategory, HttpPostedFileBase uploadImage)
         {
-            Product newProduct = db.Products.Find(product.Id);
+            Product newProduct = await db.Products.FindAsync(product.Id);
             newProduct.ProductName = product.ProductName;
             newProduct.ManufacturerId = product.ManufacturerId;
             newProduct.Description = product.Description;
             newProduct.Cost = product.Cost;
             newProduct.StatusProductId = product.StatusProductId;
             newProduct.Stock = product.Stock;
+            
             if (uploadImage != null)
             {
                 byte[] imageData = null;
@@ -472,6 +535,7 @@ namespace CloudStore.Controllers
 
                 newProduct.Photo = imageData;
             }
+
             if (selectedCategory != null)
             {
                 foreach (var c in db.Categories.Where(co => selectedCategory.Contains(co.Id)))
@@ -479,10 +543,13 @@ namespace CloudStore.Controllers
                     newProduct.Categories.Add(c);
                 }
             }
-            var stp = db.StatusProducts.FirstOrDefault(s => String.Equals(s.StatusProductName, SPInStock));            
+
+            var stp = await db.StatusProducts.FirstOrDefaultAsync(s => string.Equals(s.StatusProductName, SPInStock)); 
+            
             if (newProduct.StatusProductId == stp.Id)
             {
-                var requests = db.ProductRequests.Where(p => p.ProductId == newProduct.Id).Include(u => u.User).ToList();
+                var requests = await db.ProductRequests.Where(p => p.ProductId == newProduct.Id).Include(u => u.User).ToListAsync();
+                
                 if (requests != null)
                 {
                     foreach (var r in requests)
@@ -500,40 +567,52 @@ namespace CloudStore.Controllers
                     }
                 }
             }
+
             db.Entry(newProduct).State = EntityState.Modified;
             await db.SaveChangesAsync();
             return RedirectToAction("GetProduct");
         }
-        public ActionResult DeleteProduct(int id)
+
+        public async Task<ActionResult> DeleteProduct(int id)
         {
-            Product product = db.Products.Find(id);
+            Product product = await db.Products.FindAsync(id);
+
             if (product == null)
             {
                 return HttpNotFound();
             }
+
             return View(product);
         }
+
         [HttpPost, ActionName("DeleteProduct")]
         public async Task<ActionResult> DeleteProductConfirmed(int id)
         {
-            Product product = db.Products.Find(id);
+            Product product = await db.Products.FindAsync(id);
+
             if (product == null)
             {
                 return HttpNotFound();
             }
+
             db.Products.Remove(product);
             await db.SaveChangesAsync();
             return RedirectToAction("GetProduct");
         }
-        public ActionResult GetPaymentMethod()
+        #endregion
+
+        #region Payment Methods
+        public async Task<ActionResult> GetPaymentMethod()
         {
-            List<PaymentMethod> pm = db.PaymentMethods.ToList();
+            List<PaymentMethod> pm = await db.PaymentMethods.ToListAsync();
             return View(pm);
         }
+
         public ActionResult CreatePaymentMethod()
         {
             return View();
         }
+
         [HttpPost]
         public async Task<ActionResult> CreatePaymentMethod(PaymentMethod pm)
         {
@@ -541,36 +620,47 @@ namespace CloudStore.Controllers
             await db.SaveChangesAsync();
             return RedirectToAction("GetPaymentMethod");
         }
-        public ActionResult DeletePaymentMethod(int id)
+
+        public async Task<ActionResult> DeletePaymentMethod(int id)
         {
-            PaymentMethod pm = db.PaymentMethods.Find(id);
+            PaymentMethod pm = await db.PaymentMethods.FindAsync(id);
+
             if (pm == null)
             {
                 return HttpNotFound();
             }
+
             return View(pm);
         }
+
         [HttpPost, ActionName("DeletePaymentMethod")]
         public async Task<ActionResult> DeletePaymentMethodConfirmed(int id)
         {
-            PaymentMethod pm = db.PaymentMethods.Find(id);
+            PaymentMethod pm = await db.PaymentMethods.FindAsync(id);
+
             if (pm == null)
             {
                 return HttpNotFound();
             }
+
             db.PaymentMethods.Remove(pm);
             await db.SaveChangesAsync();
             return RedirectToAction("GetPaymentMethod");
         }
-        public ActionResult GetStatusOrder()
+        #endregion
+
+        #region Statuses Order
+        public async Task<ActionResult> GetStatusOrder()
         {
-            List<StatusOrder> status = db.StatusOrders.ToList();
+            List<StatusOrder> status = await db.StatusOrders.ToListAsync();
             return View(status);
         }
+
         public ActionResult CreateStatusOrder()
         {
             return View();
         }
+
         [HttpPost]
         public async Task<ActionResult> CreateStatusOrder(StatusOrder status)
         {
@@ -578,36 +668,47 @@ namespace CloudStore.Controllers
             await db.SaveChangesAsync();
             return RedirectToAction("GetStatusOrder");
         }
-        public ActionResult DeleteStatusOrder(int id)
+
+        public async Task<ActionResult> DeleteStatusOrder(int id)
         {
-            StatusOrder status = db.StatusOrders.Find(id);
+            StatusOrder status = await db.StatusOrders.FindAsync(id);
+
             if (status == null)
             {
                 return HttpNotFound();
             }
+
             return View(status);
         }
+
         [HttpPost, ActionName("DeleteStatusOrder")]
         public async Task<ActionResult> DeleteStatusOrderConfirmed(int id)
         {
-            StatusOrder status = db.StatusOrders.Find(id);
+            StatusOrder status = await db.StatusOrders.FindAsync(id);
+
             if (status == null)
             {
                 return HttpNotFound();
             }
+
             db.StatusOrders.Remove(status);
             await db.SaveChangesAsync();
             return RedirectToAction("GetStatusOrder");
         }
-        public ActionResult GetTypeDelivery()
+        #endregion
+
+        #region Types Dilevery
+        public async Task<ActionResult> GetTypeDelivery()
         {
-            List<TypeDelivery> status = db.TypeDeliveries.ToList();
+            List<TypeDelivery> status = await db.TypeDeliveries.ToListAsync();
             return View(status);
         }
+
         public ActionResult CreateTypeDelivery()
         {
             return View();
         }
+
         [HttpPost]
         public async Task<ActionResult> CreateTypeDelivery(TypeDelivery type)
         {
@@ -615,82 +716,105 @@ namespace CloudStore.Controllers
             await db.SaveChangesAsync();
             return RedirectToAction("GetTypeDelivery");
         }
-        public ActionResult DeleteTypeDelivery(int id)
+
+        public async Task<ActionResult> DeleteTypeDelivery(int id)
         {
-            TypeDelivery type = db.TypeDeliveries.Find(id);
+            TypeDelivery type = await db.TypeDeliveries.FindAsync(id);
+
             if (type == null)
             {
                 return HttpNotFound();
             }
+
             return View(type);
         }
+
         [HttpPost, ActionName("DeleteTypeDelivery")]
         public async Task<ActionResult> DeleteTypeDeliveryConfirmed(int id)
         {
-            TypeDelivery type = db.TypeDeliveries.Find(id);
+            TypeDelivery type = await db.TypeDeliveries.FindAsync(id);
+
             if (type == null)
             {
                 return HttpNotFound();
             }
+
             db.TypeDeliveries.Remove(type);
             await db.SaveChangesAsync();
             return RedirectToAction("GetTypeDelivery");
         }
-        public PartialViewResult SummaryOrders()
+        #endregion
+
+        #region Summary stats
+        public async Task<PartialViewResult> SummaryOrders()
         {
-            var orders = db.Orders.Count();
+            var orders = await db.Orders.CountAsync();
             return PartialView(orders);
         }
-        public PartialViewResult SummarySales()
+
+        public async Task<PartialViewResult> SummarySales()
         {
-            var sales = db.SaleStats.Count();
+            var sales = await db.SaleStats.CountAsync();
             return PartialView(sales);
         }
-        public PartialViewResult SummaryUsers()
+
+        public async Task<PartialViewResult> SummaryUsers()
         {
-            return PartialView(UserManager.Users.Count());
+            return PartialView(await UserManager.Users.CountAsync());
         }
-        public ActionResult GetOrder(int? status, string id)
+        #endregion
+
+        #region Orders
+        public async Task<ActionResult> GetOrder(int? status, string id)
         {
 
-            var order = db.Orders.Include(o => o.StatusOrder).Include(o => o.Cart.User);
+            IQueryable<Order> ordersQuery = db.Orders;
+
             if (status != null && status != 0)
             {
-                order = order.Where(s => s.StatusOrderId == status);
+                ordersQuery = ordersQuery.Where(s => s.StatusOrderId == status);
             }
-            if (id != null)
+
+            if (!string.IsNullOrEmpty(id))
             {
-                order = order.Where(u => u.Cart.UserId == id);
+                ordersQuery = ordersQuery.Where(u => u.Cart.UserId == id);
             }
-            var orders = order.ToList();
-            var statusorders = db.StatusOrders.ToList();
+
+            var orders = await ordersQuery.ToListAsync();
+            var statusorders = await db.StatusOrders.ToListAsync();
             statusorders.Insert(0, new StatusOrder { StatusOrderName = "Все", Id = 0 });
             SelectList so = new SelectList(statusorders, "Id", "StatusOrderName");
             ViewBag.StatusOrder = so;
             return View(orders);
         }
-        public ActionResult DetailsOrder(int id)
-        {
-            var orders = db.Orders.Include(o => o.StatusOrder).Include(o => o.PaymentMethod).Include(o => o.TypeDelivery).Include(o => o.Cart.User).ToList();
-            var order = orders.Find(o => o.Id == id);
+
+        public async Task<ActionResult> DetailsOrder(int id)
+        {            
+            var order = await db.Orders.FindAsync(id);
+
             if (order == null)
             {
                 return HttpNotFound();
             }
+
             return View(order);
         }
-        public ActionResult EditOrder(int id)
+
+        public async Task<ActionResult> EditOrder(int id)
         {
-            SelectList status = new SelectList(db.StatusOrders, "Id", "StatusOrderName");
+            SelectList status = new SelectList(await db.StatusOrders.ToArrayAsync(), "Id", "StatusOrderName");
             ViewBag.StatusOrder = status;
-            var orders = db.Orders.Include(o => o.StatusOrder).Include(o => o.PaymentMethod).Include(o => o.TypeDelivery).Include(o => o.Cart.User).ToList();
-            var order = orders.Find(o => o.Id == id);
+                        
+            var order = await db.Orders.FindAsync(id);
+
             if (order == null)
             {
                 return HttpNotFound();
             }
+
             return View(order);
         }
+
         [HttpPost]
         public async Task<ActionResult> EditOrder(Order order)
         {
@@ -698,54 +822,73 @@ namespace CloudStore.Controllers
             await db.SaveChangesAsync();
             return RedirectToAction("GetOrder");
         }
-        public ActionResult DeleteOrder(int id)
+
+        public async Task<ActionResult> DeleteOrder(int id)
         {
-            Order order = db.Orders.Find(id);
+            Order order = await db.Orders.FindAsync(id);
+
             if (order == null)
             {
                 return HttpNotFound();
             }
+
             return View(order);
         }
+
         [HttpPost, ActionName("DeleteOrder")]
         public async Task<ActionResult> DeleteOrderConfirmed(int id)
         {
-            Order order = db.Orders.Find(id);
+            Order order = await db.Orders.FindAsync(id);
+
             if (order == null)
             {
                 return HttpNotFound();
             }
+
             db.Orders.Remove(order);
             await db.SaveChangesAsync();
             return RedirectToAction("GetOrder");
         }
-        public ActionResult GetSale(int? product, DateTime? firstdate, DateTime? seconddate)
+        #endregion
+
+        #region Sale Stat
+        public async Task<ActionResult> GetSale(int? product, DateTime? firstdate, DateTime? seconddate)
         {
-            var sale = db.SaleStats.Include(s => s.Product).Include(s => s.User);
+            IQueryable<SaleStat> salesQuery = db.SaleStats;
+
             if (firstdate != null)
             {
-                sale = sale.Where(s => s.Date > firstdate);
+                salesQuery = salesQuery.Where(s => s.Date > firstdate);
             }
+
             if (seconddate != null)
             {
-                sale = sale.Where(s => s.Date < seconddate);
+                salesQuery = salesQuery.Where(s => s.Date < seconddate);
             }
+
             if (product != null && product != 0)
             {
-                sale = sale.Where(s => s.ProductId == product);
+                salesQuery = salesQuery.Where(s => s.ProductId == product);
             }
-            var sales = sale.ToList();
-            var products = db.Products.OrderBy(n => n.ProductName).ToList();
+
+            var sales = await salesQuery.ToListAsync();
+
+            var products = await db.Products.OrderBy(n => n.ProductName).ToListAsync();
             products.Insert(0, new Product { ProductName = "Все", Id = 0 });
             SelectList pr = new SelectList(products, "Id", "ProductName");
             ViewBag.Products = pr;
+            
             return View(sales);
         }
-        public ActionResult GetUserStat()
+
+        public async Task<ActionResult> GetUserStat()
         {
-            return View(UserManager.Users);
+            return View(await UserManager.Users.ToListAsync());
         }
-        public FileResult GenerateExcelPrice()
+        #endregion
+
+        #region Excel price
+        public async Task<FileResult> GenerateExcelPrice()
         {
             string Path = AppDomain.CurrentDomain.BaseDirectory + @"Prices\";
             string Name = "Price_" + DateTime.Now.ToShortDateString() + ".xlsx";
@@ -759,7 +902,7 @@ namespace CloudStore.Controllers
             worksheet.Cells[1, "D"] = "Описание";
             worksheet.Cells[1, "E"] = "Цена";
             worksheet.Cells[1, "F"] = "Статус";
-            List<Product> products = db.Products.Include(c => c.Manufacturer).Include(c => c.StatusProduct).ToList();
+            List<Product> products = await db.Products.ToListAsync();
             int row = 1;
             foreach (var p in products)
             {
@@ -774,17 +917,21 @@ namespace CloudStore.Controllers
             worksheet.Range["A1"].AutoFormat(Excel.XlRangeAutoFormat.xlRangeAutoFormatClassic1);
             worksheet.SaveAs(string.Format(FilePath));
             excelApp.Quit();
-            excelApp.Quit();
+            
             return File(FilePath, "application/vnd.ms-excel", Name);
         }
+        #endregion
+
+        #region News
         public ActionResult CreateNews()
         {
             return View();
         }
+
         [HttpPost]
-        public ActionResult CreateNews(News news)
+        public async Task<ActionResult> CreateNews(News news)
         {
-            var users = db.Users.Where(u => u.GetNews == true).ToList();
+            var users = await db.Users.Where(u => u.GetNews == true).ToListAsync();
             foreach (var u in users)
             {
                 WebMail.SmtpServer = "smtp.gmail.com";
@@ -797,5 +944,6 @@ namespace CloudStore.Controllers
             }
             return RedirectToAction("Index");
         }
+        #endregion
     }
 }

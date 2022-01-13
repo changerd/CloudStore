@@ -9,8 +9,8 @@ namespace CloudStore.Models
     {
         public int Id { get; set; }
         public string UserId { get; set; }        
-        public ApplicationUser User { get; set; }
-        public ICollection<Order> Orders { get; set; }
+        public virtual ApplicationUser User { get; set; }
+        public virtual ICollection<Order> Orders { get; set; }
         public virtual ICollection<Line> Lines { get; set; }
         public Cart()
         {

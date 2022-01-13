@@ -1,3 +1,6 @@
-﻿@model CloudStore.Models.Cart
+﻿@model int?
 
-@Model.Lines.Sum(s => s.Quantity)
+@if (Model != null)
+{
+    <div>@Model.ToString()</div>
+}

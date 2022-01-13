@@ -12,7 +12,7 @@ namespace CloudStore.Models
         [Required]
         [Display(Name = "Название способа оплаты")]
         public string PaymentMethodName { get; set; }
-        public ICollection<Order> Orders { get; set; }
+        public virtual ICollection<Order> Orders { get; set; }
         public PaymentMethod()
         {
             Orders = new List<Order>();

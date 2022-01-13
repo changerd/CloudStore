@@ -15,8 +15,8 @@ namespace CloudStore.Models
         public string FullName { get; set; }
         public DateTime? Birth { get; set; }
         public bool GetNews { get; set; }
-        public ICollection<Cart> Carts { get; set; } 
-        public ICollection<SaleStat> SaleStats { get; set; }
+        public virtual ICollection<Cart> Carts { get; set; } 
+        public virtual ICollection<SaleStat> SaleStats { get; set; }
         public virtual ICollection<ProductRequest> ProductRequests { get; set; }
         public ApplicationUser()
         {

@@ -21,9 +21,9 @@ namespace CloudStore.Models
         public int StatusOrderId { get; set; }        
         public int PaymentMethodId { get; set; }
         public int TypeDeliveryId { get; set; }
-        public Cart Cart { get; set; }        
-        public StatusOrder StatusOrder { get; set; }       
-        public PaymentMethod PaymentMethod { get; set; }
-        public TypeDelivery TypeDelivery { get; set; }
+        public virtual Cart Cart { get; set; }        
+        public virtual StatusOrder StatusOrder { get; set; }       
+        public virtual PaymentMethod PaymentMethod { get; set; }
+        public virtual TypeDelivery TypeDelivery { get; set; }
     }
 }

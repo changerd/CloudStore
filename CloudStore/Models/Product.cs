@@ -28,8 +28,8 @@ namespace CloudStore.Models
         [Required]
         [Display(Name = "Статус товара")]
         public int StatusProductId { get; set; }
-        public Manufacturer Manufacturer { get; set; }
-        public StatusProduct StatusProduct { get; set; }        
+        public virtual Manufacturer Manufacturer { get; set; }
+        public virtual StatusProduct StatusProduct { get; set; }        
         public virtual ICollection<Category> Categories { get; set; }
         public virtual ICollection<Line> Lines { get; set; }
         public virtual ICollection<SaleStat> SaleStats { get; set; } 

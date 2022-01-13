@@ -14,27 +14,35 @@ namespace CloudStore.Controllers
     public class CartController : Controller
     {
         StoreContext db = new StoreContext();
-        string SPNotAviable = "Нет в наличии";
-        string SOAccepted = "Принят";
-        public Cart GetCart()
+
+        const string SPNotAviable = "Нет в наличии";
+        const string SOAccepted = "Принят";
+
+        public async Task<Cart> GetCart()
         {
             string user = User.Identity.GetUserId();
-            var cart = db.Carts.FirstOrDefault(c => String.Equals(c.UserId, user));       
+            var cart = await db.Carts.FirstOrDefaultAsync(c => String.Equals(c.UserId, user));       
             return cart;
         }
-        public List<Line> GetLines()
+
+        public async Task<List<Line>> GetLines()
         {
-            int cartid = GetCart().Id;
-            var list = db.Lines.Include(p => p.Product).Where(c => c.CartId == cartid).ToList();
+            Cart cart = await GetCart();
+            int cartid = cart.Id;
+            var list = await db.Lines.Include(p => p.Product).Where(c => c.CartId == cartid).ToListAsync();
             return list;
         }
-        public RedirectToRouteResult AddToCart(int Id, string returnUrl, int quantity)
+
+        public async Task<RedirectToRouteResult> AddToCart(int Id, string returnUrl, int quantity)
         {
             string strerror = null;            
-            Product product = db.Products.FirstOrDefault(p => p.Id == Id);
+            Product product = await db.Products.FirstOrDefaultAsync(p => p.Id == Id);
+            Cart cart = await GetCart();
+            
             if (product != null && product.Stock >= quantity)
             {
-                var sline = db.Lines.Where(p => p.ProductId == product.Id).FirstOrDefault();
+                var sline = await db.Lines.Where(p => p.ProductId == product.Id).FirstOrDefaultAsync();
+                
                 if (sline == null)
                 {
                     Line line = new Line
@@ -42,121 +50,159 @@ namespace CloudStore.Controllers
                         ProductId = product.Id,
                         Quantity = quantity
                     };
-                    GetCart().Lines.Add(line);
+                   
+                    cart.Lines.Add(line);
                 }
                 else
                 {
                     sline.Quantity += quantity;
                 }
+                
                 product.Stock -= quantity;
+                
                 if (product.Stock < 1)
                 {
                     var stp = db.StatusProducts.FirstOrDefault(s => String.Equals(s.StatusProductName, SPNotAviable));
                     product.StatusProductId = stp.Id;
                 }
-                db.Entry(product).State = EntityState.Modified;
-                //GetCart().Products.Add(product);                
-                db.SaveChanges();
+
+                db.Entry(product).State = EntityState.Modified;                
+                               
+                await db.SaveChangesAsync();
             }
             else
             {
                 ModelState.AddModelError("Quantity", "Для добавления недостаточно количества на складе. Доступно: " + product.Stock);
                 strerror = String.Format("Для добавления недостаточно количества на складе. Доступно: {0}", product.Stock);
             }
+
             if (ModelState.IsValid)
             {
                 return RedirectToAction("Index", new { returnUrl });
             }
+
             return RedirectToAction("DetailsItem", "Catalog", new { Id = Id, Err = strerror });
         }
-        public RedirectToRouteResult RemoveFromCart(int Id, string returnUrl)
+
+        public async Task<RedirectToRouteResult> RemoveFromCart(int Id, string returnUrl)
         {
-            Line line = db.Lines.First(p => p.Id == Id);
+            Line line = await db.Lines.FindAsync(Id);
+            
             if (line != null)
             {
-                Product product = db.Products.FirstOrDefault(p => p.Id == line.ProductId);
+                Product product = await db.Products.FindAsync(line.ProductId);
                 product.Stock += line.Quantity;
                 db.Lines.Remove(line);                
                 db.Entry(product).State = EntityState.Modified;
-                db.SaveChanges();
+                await db.SaveChangesAsync();
             }
+
             return RedirectToAction("Index", new { returnUrl });
         }
-        public RedirectResult AddProductRequest(int Id, string returnUrl)
+
+        public async Task<RedirectResult> AddProductRequest(int Id, string returnUrl)
         {
             string userid = User.Identity.GetUserId();
-            string prname = db.Products.Find(Id).ProductName;
+
+            Product product = await db.Products.FindAsync(Id);
+            string prname = product.ProductName;
+
             ProductRequest pr = new ProductRequest { ProductId = Id, UserId = userid };            
             db.ProductRequests.Add(pr);
-            db.SaveChanges();
+            
+            await db.SaveChangesAsync();
+
             TempData["message"] = string.Format("Заявка на {0} успешно принята!", prname);
             return Redirect(returnUrl);
         }
+
         // GET: Cart
-        public ActionResult Index(string returnUrl)
+        public async Task<ActionResult> Index(string returnUrl)
         {            
             return View(new CartIndexViewModel
             {                
-                Cart = GetCart(),
-                Lines = GetLines(),
+                Cart = await GetCart(),
+                Lines = await GetLines(),
                 ReturnUrl = returnUrl
             });
         }
-        public PartialViewResult Summary()
+        public async Task<PartialViewResult> Summary()
         {
-            return PartialView(GetCart());
+            Cart cart = await GetCart();
+            int summary = 0;
+            if (cart != null)
+            {
+                summary = cart.Lines.Sum(s => s.Quantity);
+            }
+
+            return PartialView(summary);
         }
-        public ActionResult Checkout()
+
+        public async Task<ActionResult> Checkout()
         {
-            SelectList paymentmethod = new SelectList(db.PaymentMethods, "Id", "PaymentMethodName");
-            SelectList typedelivery = new SelectList(db.TypeDeliveries, "Id", "TypeDeliveryName");           
-            decimal value = GetLines().Sum(s => s.Product.Cost * s.Quantity);
+            SelectList paymentmethod = new SelectList(await db.PaymentMethods.ToListAsync(), "Id", "PaymentMethodName");
+            SelectList typedelivery = new SelectList(await db.TypeDeliveries.ToListAsync(), "Id", "TypeDeliveryName");
+            
+            var lines = await GetLines();
+            decimal value = lines.Sum(s => s.Product.Cost * s.Quantity);
+           
             ViewBag.Value = value;
             ViewBag.PaymentMethod = paymentmethod;
             ViewBag.TypeDelivery = typedelivery;
+            
             return View();
         }
+
         [HttpPost]
         public async Task<ActionResult> Checkout(Order order)
         {
-            string orderdescription = null;
-            int cartid = GetCart().Id;
-            decimal value = GetLines().Sum(s => s.Product.Cost * s.Quantity);
-            string userid = User.Identity.GetUserId();
-            foreach (var cart in GetLines())
+            string orderdescription = string.Empty;
+
+            Cart cart = await GetCart();
+
+            if (cart.Lines.Count() == 0)
             {
-                orderdescription += String.Format("{0} Цена {1} руб Количество {2} штук. {3} ", cart.Product.ProductName, cart.Product.Cost, cart.Quantity, String.Empty);
-                for (int i = 0; i < cart.Quantity; i++)
+                ModelState.AddModelError("", "Извините, ваша корзина пуста!");
+            }
+
+            int cartid = cart.Id;
+
+            var lines = await GetLines();
+            decimal value = lines.Sum(s => s.Product.Cost * s.Quantity);
+            string userid = User.Identity.GetUserId();
+
+            foreach (var line in lines)
+            {
+                orderdescription += String.Format("{0} Цена {1} руб Количество {2} штук. {3} ", line.Product.ProductName, line.Product.Cost, line.Quantity, String.Empty);
+                for (int i = 0; i < line.Quantity; i++)
                 {
                     SaleStat stat = new SaleStat
                     {
-                        ProductId = cart.Product.Id,
+                        ProductId = line.Product.Id,
                         UserId = userid,
                         Date = DateTime.Now
                     };
                     db.SaleStats.Add(stat);
                 }                
             }
+
             order.Date = DateTime.Now;
             order.CartId = cartid;
             order.Description = orderdescription;
             order.Value = value;
             var storder = db.StatusOrders.FirstOrDefault(s => String.Equals(s.StatusOrderName, SOAccepted));
             order.StatusOrderId = storder.Id;
-            if (GetCart().Lines.Count() == 0)
-            {
-                ModelState.AddModelError("", "Извините, ваша корзина пуста!");
-            }
+            
             if (ModelState.IsValid)
             {
                 db.Orders.Add(order);
-                db.Lines.RemoveRange(GetLines());
+                db.Lines.RemoveRange(lines);
                 await db.SaveChangesAsync();
                 return View("Completed");
             }
             else
             {
-                return View(GetCart());
+                return View(cart);
             }
         }
 

@@ -12,7 +12,7 @@ namespace CloudStore.Models
         [Required]
         [Display(Name = "Название типа заказа")]
         public string TypeDeliveryName { get; set; }
-        public ICollection<Order> Orders { get; set; }
+        public virtual ICollection<Order> Orders { get; set; }
         public TypeDelivery()
         {
             Orders = new List<Order>();

@@ -13,7 +13,7 @@ namespace CloudStore.Models
         [Display (Name = "Название категории")]
         public string CategoryName { get; set; }
         public int? ParentCategoryId { get; set; }
-        public Category ParentCategory { get; set; }
+        public virtual Category ParentCategory { get; set; }
         public virtual ICollection<Category> Categories { get; set; }
         public virtual ICollection<Product> Products { get; set; }
         public Category()

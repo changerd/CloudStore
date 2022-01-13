@@ -21,60 +21,73 @@ namespace CloudStore.Controllers
                 return HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
             }
         }
+        
         StoreContext db = new StoreContext();
+        
         // GET: Menage
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
             string userid = User.Identity.GetUserId();
-            var user = db.Users.Find(userid);
+            var user = await UserManager.FindByIdAsync(userid);
+
             if (user == null)
             {
                 return HttpNotFound();
             }
+
             return View(user);
         }
-        public ActionResult Edit(string id)
+
+        public async Task<ActionResult> Edit(string id)
         {
-            var user = db.Users.Find(id);
+            var user = await UserManager.FindByIdAsync(id);
+
             if (user == null)
             {
                 return HttpNotFound();
             }
+
             return View(user);
         }
+
         [HttpPost]
         public async Task<ActionResult> Edit(ApplicationUser model)
         {
             ApplicationUser user = await UserManager.FindByIdAsync(model.Id);
-            user.Email=model.Email;
+            user.Email = model.Email;
             user.FullName = model.FullName;
             user.Birth = model.Birth;
             user.PhoneNumber = model.PhoneNumber;
             user.GetNews = model.GetNews;
             string reg = ".+\\@.+\\..+";
+
             if (!string.IsNullOrEmpty(user.Email) && !Regex.IsMatch(user.Email, reg))
             {
                 ModelState.AddModelError("Email", "Не корректная электронная почта.");
             }
+
             if (string.IsNullOrEmpty(user.Email) && user.GetNews == true)
             {
                 ModelState.AddModelError("GetNews", "Чтобы получать новости, нужно ввести электронную почту.");
             }
+
             if (ModelState.IsValid)
             {
                 IdentityResult result = await UserManager.UpdateAsync(user);
                 return RedirectToAction("Index");
             }
+
             return View(model);
         }
-        public ActionResult DetailOrder(int id)
-        {
-            var orders = db.Orders.Include(o => o.StatusOrder).Include(o => o.TypeDelivery).Include(o => o.PaymentMethod).ToList();
-            var order = orders.Find(i => i.Id == id);
+        public async Task<ActionResult> DetailOrder(int id)
+        {            
+            var order = db.Orders.FindAsync(id);
+
             if (order == null)
             {
                 return HttpNotFound();
             }
+
             return View(order);
         }
     }

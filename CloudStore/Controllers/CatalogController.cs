@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Data.Entity;
 using Microsoft.AspNet.Identity;
+using System.Threading.Tasks;
 
 namespace CloudStore.Controllers
 {
@@ -13,37 +14,34 @@ namespace CloudStore.Controllers
     {
         StoreContext db = new StoreContext();
         public int pagesize = 5;
+
         // GET: Items
-        public ActionResult Index()
-        {
-            //var product = from p in db.Products where p.Categories.
-            //var productt = db.Products.Include(c => c.Manufacturer).Include(c => c.StatusProduct).Include(c => c.Categories).ToList();
-            //var products = productt.Where(c => c.Categories. == id).ToList();
-            //var products = db.Products.Include(c => c.Categories.Where(p => p.Id == id)).ToList();
-            //return View(products);
-            List<Category> categories = db.Categories.ToList();
+        public async Task<ActionResult> Index()
+        {            
+            List<Category> categories = await db.Categories.ToListAsync();
             return View(categories);
         }
-        public ActionResult Items(int id, int? manufacturer, int page = 1)
+
+        public async Task<ActionResult> Items(int id, int? manufacturer, int page = 1)
         {
-            var category = db.Categories.Find(id);
+            var category = await db.Categories.FindAsync(id);
             string categoryname = category.CategoryName;
+
             ViewBag.CategoryName = categoryname;
             ViewBag.mid = manufacturer;
-            var product = db.Products
-                .Include(c => c.Manufacturer)
-                .Include(c => c.StatusProduct)
-                .Include(c => c.Categories)
-                .Where(c => c.Categories.Any(cc => cc.Id == id));
-                //.Where(c => manufacturer == null || c.Manufacturer.Name == manufacturer)
-                //.ToList();
+
+            IQueryable<Product> productsQuery = db.Products.Where(c => c.Categories.Any(cc => cc.Id == id));
+                
             if (manufacturer != null && manufacturer != 0)
             {
-                product = product.Where(c => c.ManufacturerId == manufacturer);
+                productsQuery = productsQuery.Where(c => c.ManufacturerId == manufacturer);
             }
-            List<Product> products = product.ToList();
-            var manufacturers = db.Manufacturers.Where(m => m.Products.Any(p => p.Categories.Any(c => c.Id == id))).ToList();
+            
+            List<Product> products = await productsQuery.ToListAsync();
+            
+            var manufacturers = await db.Manufacturers.Where(m => m.Products.Any(p => p.Categories.Any(c => c.Id == id))).ToListAsync();
             manufacturers.Insert(0, new Manufacturer { ManufacturerName = "Все", Id = 0 });
+            
             ProductListViewModel model = new ProductListViewModel
             {
                 Products = products.Where(m => manufacturer == null || manufacturer == 0 || m.ManufacturerId == manufacturer).OrderBy(p => p.Id).Skip((page - 1) * pagesize).Take(pagesize),
@@ -51,29 +49,31 @@ namespace CloudStore.Controllers
                 {
                     CurrentPage = page,
                     ItemsPerPage = pagesize,
-                    TotalItems = manufacturer == 0 || manufacturer == null ? products.Count() : db.Products.Where(c => c.Categories.Any(cc => cc.Id == id)).Where(m => m.ManufacturerId == manufacturer).Count()                    
+                    TotalItems = manufacturer == 0 || manufacturer == null ? products.Count() : await db.Products.Where(c => c.Categories.Any(cc => cc.Id == id)).Where(m => m.ManufacturerId == manufacturer).CountAsync()                    
                 },
-                Manufacturers = new SelectList(manufacturers, "Id", "ManufacturerName")
-                
+                Manufacturers = new SelectList(manufacturers, "Id", "ManufacturerName")                
             };
             return View(model);
         }
+
         [HttpGet]
-        public ActionResult SearchResult(string search)
+        public async Task<ActionResult> SearchResult(string search)
         {
             ViewBag.SearchResult = search;
-            var searchresult = db.Products.Where(p=> p.ProductName.Contains(search)).Include(c => c.Manufacturer).Include(c => c.StatusProduct).Include(c => c.Categories).ToList();
+            var searchresult = await db.Products.Where(p=> p.ProductName.Contains(search)).ToListAsync();
             return View(searchresult);            
         }
-        public ActionResult DetailsItem(int id, string err = null)
+
+        public async Task<ActionResult> DetailsItem(int id, string err = null)
         {            
-            var productt = db.Products.Include(c => c.Manufacturer).Include(c => c.StatusProduct).Include(c => c.Categories).ToList();
-            var product = productt.Find(i => i.Id == id);
+            var product = await db.Products.FindAsync(id);
             ViewBag.Err = err;
+
             if (product == null)
             {
                 return HttpNotFound();
             }
+
             return View(product);
         }        
     }

@@ -15,6 +15,7 @@ namespace CloudStore.Controllers
     public class AccountController : Controller
     {
         StoreContext db = new StoreContext();
+
         private ApplicationUserManager UserManager
         {
             get
@@ -22,20 +23,16 @@ namespace CloudStore.Controllers
                 return HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
             }
         }
+
         private IAuthenticationManager AuthenticationManager
         {
             get
             {
                 return HttpContext.GetOwinContext().Authentication;
             }
-        }
-        //private ApplicationRoleManager RoleManager
-        //{
-        //    get
-        //    {
-        //        return HttpContext.GetOwinContext().GetUserManager<ApplicationRoleManager>();
-        //    }
-        //}
+        
+        }        
+
         public ActionResult Register()
         {
             return View();
@@ -50,7 +47,7 @@ namespace CloudStore.Controllers
                 IdentityResult result = await UserManager.CreateAsync(user, model.RegisterPassword);
                 if (result.Succeeded)
                 {
-                    await this.UserManager.AddToRoleAsync(user.Id, "User");
+                    await UserManager.AddToRoleAsync(user.Id, "User");
                     Cart cart = new Cart
                     {
                         UserId = user.Id,
@@ -104,6 +101,7 @@ namespace CloudStore.Controllers
             ViewBag.returnUrl = returnUrl;
             return View(model);        
         }
+
         public ActionResult Logout()
         {
             AuthenticationManager.SignOut();

@@ -12,7 +12,7 @@ namespace CloudStore.Models
         [Required]
         [Display(Name = "Название производителя")]
         public string ManufacturerName { get; set; }
-        public ICollection<Product> Products { get; set; }
+        public virtual ICollection<Product> Products { get; set; }
         public Manufacturer()
         {
             Products = new List<Product>();
