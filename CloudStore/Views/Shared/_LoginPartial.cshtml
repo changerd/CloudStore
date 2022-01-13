@@ -9,17 +9,17 @@
             @if (User.IsInRole("Admin"))
             {
                 <li>
-                    @Html.ActionLink("Панель администратора", "Index", "Admin")
+                    @Html.ActionLink("Панель администратора", "Index", "Admin", new { @class = "nav-link", @href = "Admin" })
                 </li>
             }
             <li>
-                @Html.ActionLink("Здравствуйте, " + User.Identity.GetUserName() + "!", "Index", "Manage")
+                @Html.ActionLink("Здравствуйте, " + User.Identity.GetUserName() + "!", "Index", "Manage", new { @class = "nav-link", @href = "Manage" })
             </li>
             <li>
-                <a href="@Url.Action("Index", "Cart")"><span class="glyphicon glyphicon-shopping-cart"></span> Корзина <span class="badge">@Html.Action("Summary", "Cart")</span></a>
+                <a href="@Url.Action("Index", "Cart")" class="nav-link"><span class="glyphicon glyphicon-shopping-cart"></span> Корзина <span class="badge bg-primary rounded-pill">@Html.Action("Summary", "Cart")</span></a>
             </li>
             <li>
-                @Html.ActionLink("Выйти", "Logout", "Account")
+                @Html.ActionLink("Выйти", "Logout", "Account", new { @class = "nav-link", @href = "Account/Logout" })
             </li>
         </ul>
     }
@@ -27,8 +27,7 @@
 else
 {
     <ul class="nav navbar-nav navbar-right">
-        <li>@Html.ActionLink("Регистрация", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
-        <li>@Html.ActionLink("Вход", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+        <li>@Html.ActionLink("Регистрация", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink", @class = "nav-link" })</li>
+        <li>@Html.ActionLink("Вход", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink", @class = "nav-link" })</li>
     </ul>
 }
-
