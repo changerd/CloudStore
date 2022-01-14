@@ -78,7 +78,7 @@ namespace CloudStore.Models
             db.StatusOrders.Add(so10);
 
             StatusProduct sp1 = new StatusProduct { StatusProductName = "In stock" };
-            StatusProduct sp2 = new StatusProduct { StatusProductName = "Not available" };
+            StatusProduct sp2 = new StatusProduct { StatusProductName = "Not in stock" };
             StatusProduct sp3 = new StatusProduct { StatusProductName = "Out of production" };
             db.StatusProducts.Add(sp1);
             db.StatusProducts.Add(sp2);

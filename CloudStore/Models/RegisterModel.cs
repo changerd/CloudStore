@@ -23,7 +23,7 @@ namespace CloudStore.Models
         public string RegisterPassword { get; set; }
 
         [Required]
-        [Compare("RegisterPassword", ErrorMessage = "Password do not match")]
+        [Compare("RegisterPassword", ErrorMessage = "Password doesn't match")]
         [Display(Name = "Confirm the password")]
         [DataType(DataType.Password)]
         public string RegisterPasswordConfirm { get; set; }

@@ -1,18 +1,18 @@
 ﻿@model CloudStore.Models.TypeDelivery
 
 @{
-    ViewBag.Title = "Type delivery creating";
+    ViewBag.Title = "Create type delivery";
 }
 
-<h2>Type delivery creating</h2>
+<h2>Create type delivery</h2>
 
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
-       
+
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">

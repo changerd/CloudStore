@@ -1,10 +1,10 @@
 ﻿@model CloudStore.Models.Product
 
 @{
-    ViewBag.Title = "Product deleting";
+    ViewBag.Title = "Delete product";
 }
 
-<h1>Are you sure you want to delete product: <b>@Model.ProductName</b>?</h1>
+<h1>Do you want to delete this product: <b>@Model.ProductName</b>?</h1>
 
 @using (Html.BeginForm())
 {

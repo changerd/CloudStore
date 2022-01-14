@@ -9,10 +9,10 @@ namespace CloudStore.Models
     public class News
     {
         [Required]
-        [Display(Name = "News theme")]
+        [Display(Name = "News subject")]
         public string Subject { get; set; }
         [Required]
-        [Display(Name = "News text")]
+        [Display(Name = "News body")]
         public string Body { get; set; }
     }
 }

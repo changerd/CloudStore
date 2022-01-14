@@ -199,10 +199,6 @@
     <Compile Include="Migrations\201810181903204_DataMigration.Designer.cs">
       <DependentUpon>201810181903204_DataMigration.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202201131904109_DataMigration2.cs" />
-    <Compile Include="Migrations\202201131904109_DataMigration2.designer.cs">
-      <DependentUpon>202201131904109_DataMigration2.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Cart.cs" />
     <Compile Include="Models\Line.cs" />
@@ -410,9 +406,6 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201810181903204_DataMigration.resx">
       <DependentUpon>201810181903204_DataMigration.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202201131904109_DataMigration2.resx">
-      <DependentUpon>202201131904109_DataMigration2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
