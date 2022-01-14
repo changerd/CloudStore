@@ -22,7 +22,7 @@
             {
                 <tr>
                     <td>User ID</td>
-                    <td>Add in role</td>
+                    <td>Add to role</td>
                 </tr>
                 foreach (ApplicationUser user in Model.NonMembers)
                 {
@@ -38,12 +38,12 @@
     </div>
 
     <div class="panel panel-default">
-        <div class="panel-heading">Delete to role <b>@Model.Role.Name</b></div>
+        <div class="panel-heading">Delete from role <b>@Model.Role.Name</b></div>
         <table class="table table-striped">
             @if (Model.Members.Count() == 0)
             {
                 <tr>
-                    <td colspan="2">Zero users in role</td>
+                    <td colspan="2">Users doesn't have this role</td>
                 </tr>
             }
             else

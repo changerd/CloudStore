@@ -2,7 +2,7 @@
 
 @{
     //ViewBag.Title = Model.Manufacturer.Name + " " + Model.Name;
-    ViewBag.Title = "Product creating";
+    ViewBag.Title = "Create product";
 }
 
 <br />
@@ -18,16 +18,16 @@
         <p>Производитель: @Model.Manufacturer.ManufacturerName</p>
         <h2>@Model.Cost.ToString("# rub")</h2>
         <h3>@Model.StatusProduct.StatusProductName</h3>
-        @if (Model.StatusProduct.StatusProductName == "Not available" || Model.StatusProduct.StatusProductName == "Out of production")
+        @if (Model.StatusProduct.StatusProductName == "Out of stock" || Model.StatusProduct.StatusProductName == "Out of production")
         {
             <div class="form-group">
-                <button class="btn btn-dark disabled btn-lg btn-block">Add to Shopping Cart</button>
+                <button class="btn btn-dark disabled btn-lg btn-block">Add to Cart</button>
                 @using (Html.BeginForm("AddProductRequest", "Cart"))
                 {
                     <br />                
                     @Html.HiddenFor(x => x.Id)
                     @Html.Hidden("returnUrl", Request.Url.PathAndQuery)                    
-                    <input type="submit" class="btn btn-dark btn-lg btn-block" value="Notify me when a product is in stock" />
+                    <input type="submit" class="btn btn-dark btn-lg btn-block" value="Notify me when a product will in stock" />
                 
                 }
             </div>
@@ -39,7 +39,7 @@
                 <div class="form-group">
                     @Html.HiddenFor(x => x.Id)
                     @Html.Hidden("returnUrl", Request.Url.PathAndQuery)                    
-                    <label for="inputquantity">Amount</label>
+                    <label for="inputquantity">Quantity</label>
                     <input class="form-control" type="number" min="1" value="1" name="quantity" id="inputquantity" />
                     @if (ViewBag.Err != null)
                     {
