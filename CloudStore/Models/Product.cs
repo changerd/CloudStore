@@ -10,23 +10,23 @@ namespace CloudStore.Models
     {
         public int Id { get; set; }
         [Required]
-        [Display(Name = "Название товара")]
+        [Display(Name = "Product Name")]
         public string ProductName { get; set; }        
         public byte[] Photo { get; set; }
         [Required]
-        [Display(Name = "Описание товара")]
+        [Display(Name = "Description")]
         public string Description { get; set; }
         [Required]
-        [Display(Name = "Цена товара")]
+        [Display(Name = "Cost")]
         public decimal Cost { get; set; }
         [Required]
-        [Display(Name = "Количество на складе")]
+        [Display(Name = "Stock")]
         public int Stock { get; set; }
         [Required]
-        [Display(Name = "Производитель товара")]
+        [Display(Name = "Manufacturer")]
         public int ManufacturerId { get; set; }
         [Required]
-        [Display(Name = "Статус товара")]
+        [Display(Name = "Status Product")]
         public int StatusProductId { get; set; }
         public virtual Manufacturer Manufacturer { get; set; }
         public virtual StatusProduct StatusProduct { get; set; }        

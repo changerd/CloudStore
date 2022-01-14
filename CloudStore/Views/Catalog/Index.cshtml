@@ -2,17 +2,17 @@
 @model IEnumerable<Category>
 
 @{
-    ViewBag.Title = "Категории";
+    ViewBag.Title = "Categories";
 }
 
-<h2>Категории</h2>
+<h2>Categories</h2>
 
 <br />
 
 <div class="pull-right">
     <form method="get" action="@Url.Action("SearchResult", "Catalog")">        
         <input type="text" name="search" id="search" />
-        <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span>Поиск</button>
+        <button type="submit" class="btn btn-dark"><span class="glyphicon glyphicon-search"></span>Search</button>
     </form>
 </div>
 
@@ -22,7 +22,7 @@
     {
 
         <li>            
-            @Html.ActionLink(c.CategoryName, "Items", new { id = c.Id }, new { @class = "btn btn-default" })
+            @Html.ActionLink(c.CategoryName, "Items", new { id = c.Id }, new { @class = "btn btn-dark" })
             @if (Model.Count(p => p.ParentCategoryId == c.Id) > 0)
             {
                 @:<ul>
@@ -47,7 +47,7 @@ foreach (var cp in category.Where(p => p.ParentCategoryId == cat.Id))
 
 
         @:<li>
-            @Html.ActionLink(cp.CategoryName, "Items", new { id = cp.Id }, new { @class = "btn btn-default" })
+            @Html.ActionLink(cp.CategoryName, "Items", new { id = cp.Id }, new { @class = "btn btn-dark" })
 
     if (category.Count(p => p.ParentCategoryId == cp.Id) > 0)
     {

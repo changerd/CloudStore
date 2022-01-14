@@ -23,7 +23,7 @@ namespace CloudStore.Infastructure
                     tag.AddCssClass("selected");
                     tag.AddCssClass("btn");
                 }
-                tag.AddCssClass("btn btn-default");
+                tag.AddCssClass("btn btn-dark");
                 result.Append(tag.ToString());
             }
             return MvcHtmlString.Create(result.ToString());

@@ -1,10 +1,10 @@
 ﻿@model IEnumerable<CloudStore.Models.Product>
 
 @{
-    ViewBag.Title = "Результаты поиска";
+    ViewBag.Title = "Search results";
 }
 
-<h2>Результаты поиска: @ViewBag.SearchResult</h2>
+<h2>Search results: @ViewBag.SearchResult</h2>
 
 <hr />
 
@@ -19,7 +19,7 @@
         }
         <h3>
             <strong>@Html.ActionLink(item.Manufacturer.ManufacturerName + " " + item.ProductName, "DetailsItem", new { id = item.Id })</strong>
-            <span class="pull-right label label-default">@item.Cost.ToString("# руб")</span>
+            <span class="pull-right label label-default">@item.Cost.ToString("# $")</span>
         </h3>
         <span class="lead">@item.Description</span>
         <h4><b>@item.StatusProduct.StatusProductName</b></h4>
@@ -27,5 +27,5 @@
 }
 
 <div>
-    @Html.ActionLink("Назад", "Index")
+    @Html.ActionLink("Back", "Index")
 </div>

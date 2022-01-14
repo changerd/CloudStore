@@ -2,10 +2,10 @@
 @model Product
 
 @{
-    ViewBag.Title = "Создание товара";
+    ViewBag.Title = "Create product";
 }
 
-<h2>Создать товар</h2>
+<h2>Create product</h2>
 
 
 @using (Html.BeginForm("CreateProduct", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
@@ -17,7 +17,7 @@
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
-            @Html.Label("Название", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.Label("Name", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.ProductName, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.ProductName, "", new { @class = "text-danger" })
@@ -25,7 +25,7 @@
         </div>
 
         <div class="form-group">
-            @Html.Label("Производитель", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.Label("Manufacturer", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownList("ManufacturerId", ViewBag.Manufacturer as SelectList, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.ManufacturerId, "", new { @class = "text-danger" })
@@ -33,7 +33,7 @@
         </div>
 
         <div class="form-group">
-            @Html.Label("Категории", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.Label("Categories", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @if (Model.Categories != null)
                 {
@@ -56,7 +56,7 @@
         @if (Model.Photo != null)
         {
             <div class="form-group">
-                @Html.Label("Фото", htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.Label("Photo", htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
                     @Html.Raw("<img name=\"uploadImage\" src=\"data:image/jpeg;base64," + Convert.ToBase64String(Model.Photo) + "\" />")
                     @Html.HiddenFor(model => Model.Photo)
@@ -68,7 +68,7 @@
         else
         {
             <div class="form-group">
-                @Html.Label("Фото", htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.Label("Photo", htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
                     <input type="file" name="uploadImage" />
                     @Html.ValidationMessage("Photo", new { @class = "text-danger" })
@@ -78,7 +78,7 @@
         
 
         <div class="form-group">
-            @Html.Label("Описание", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.Label("Description", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.TextAreaFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
@@ -86,7 +86,7 @@
         </div>
 
         <div class="form-group">
-            @Html.Label("Цена", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.Label("Price", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @*@{ Html.EnableClientValidation(false); }*@
                 @Html.EditorFor(model => model.Cost, new { htmlAttributes = new { @class = "form-control" } })
@@ -95,7 +95,7 @@
         </div>
 
         <div class="form-group">
-            @Html.Label("Статус", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.Label("Status", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownList("StatusProductId", ViewBag.StatusProduct as SelectList, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.StatusProductId, "", new { @class = "text-danger" })
@@ -103,7 +103,7 @@
         </div>
 
         <div class="form-group">
-            @Html.Label("Количество на складе", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.Label("In stock quantity", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Stock, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Stock, "", new { @class = "text-danger" })
@@ -111,15 +111,15 @@
         </div>
 
         <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Создать" class="btn btn-default" />
+            <div class="col-md-offset-2 col-md-10 my-2">
+                <input type="submit" value="Create" class="btn btn-dark" />
             </div>
         </div>
     </div>
 }
 
 <div>
-    @Html.ActionLink("Назад", "GetProduct")
+    @Html.ActionLink("Back", "GetProduct")
 </div>
 
 @section Scripts {

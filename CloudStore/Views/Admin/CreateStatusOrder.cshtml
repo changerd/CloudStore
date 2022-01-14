@@ -1,10 +1,10 @@
 ﻿@model CloudStore.Models.StatusOrder
 
 @{
-    ViewBag.Title = "Создание статуса заказа";
+    ViewBag.Title = "Create status order";
 }
 
-<h2>Создать статус заказа</h2>
+<h2>Create status order</h2>
 
 
 @using (Html.BeginForm()) 
@@ -16,7 +16,7 @@
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
-            @Html.Label("Название", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.Label("Name", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.StatusOrderName, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.StatusOrderName, "", new { @class = "text-danger" })
@@ -24,15 +24,15 @@
         </div>
 
         <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Создать" class="btn btn-default" />
+            <div class="col-md-offset-2 col-md-10 my-2">
+                <input type="submit" value="Create" class="btn btn-dark" />
             </div>
         </div>
     </div>
 }
 
 <div>
-    @Html.ActionLink("Назад", "GetStatusOrder")
+    @Html.ActionLink("Back", "GetStatusOrder")
 </div>
 
 @section Scripts {

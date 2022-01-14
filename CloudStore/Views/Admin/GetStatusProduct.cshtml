@@ -1,18 +1,18 @@
 ﻿@model IEnumerable<CloudStore.Models.StatusProduct>
 
 @{
-    ViewBag.Title = "Статусы товара";
+    ViewBag.Title = "Product statuses";
 }
 
-<h2>Статусы товара</h2>
+<h2>Product statuses</h2>
 
 <p>
-    @Html.ActionLink("Создать", "CreateStatusProduct")
+    @Html.ActionLink("Create", "CreateStatusProduct")
 </p>
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayName("Название")
+            @Html.DisplayName("Name")
         </th>
         <th></th>
     </tr>
@@ -23,12 +23,12 @@
             @Html.DisplayFor(modelItem => item.StatusProductName)
         </td>
         <td>            
-            @Html.ActionLink("Удалить", "DeleteStatusProduct", new { id=item.Id })
+            @Html.ActionLink("Delete", "DeleteStatusProduct", new { id=item.Id })
         </td>
     </tr>
 }
 
 </table>
 <div>
-    @Html.ActionLink("Назад", "Index")
+    @Html.ActionLink("Back", "Index")
 </div>

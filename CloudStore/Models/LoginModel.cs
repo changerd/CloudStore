@@ -9,10 +9,10 @@ namespace CloudStore.Models
     public class LoginModel
     {
         [Required]
-        [Display(Name = "Логин")]
+        [Display(Name = "Login")]
         public string Login { get; set; }
         [Required]
-        [Display(Name = "Пароль")]
+        [Display(Name = "Password")]
         [DataType(DataType.Password)]
         public string Password { get; set; }
     }

@@ -1,83 +1,83 @@
 ﻿
 @{
-    ViewBag.Title = "Панель администратора";
+    ViewBag.Title = "Admin panel";
 }
 
-<h2>Панель администратора</h2>
+<h2>Admin panel</h2>
 <hr />
 <div class="row content">
     <div class="col-md-3">
-        <div class="panel panel-default">
-            <div class="panel-heading">Данные о пользователях</div>
-            <div class="panel-body">
+        <div class="card">
+            <div class="card-header">Users data</div>
+            <div class="card-body">
                 <div class="list-group">
-                    @Html.ActionLink("Роли", "GetRole", "Admin", new { @class = "list-group-item" })
-                    @Html.ActionLink("Пользователи", "GetUser", "Admin", new { @class = "list-group-item" })
+                    @Html.ActionLink("Roles", "GetRole", "Admin", new { @class = "list-group-item" })
+                    @Html.ActionLink("Users", "GetUser", "Admin", new { @class = "list-group-item" })
                 </div>
             </div>
         </div>
-        <div class="panel panel-default">
-            <div class="panel-heading">Данные о товарах</div>
-            <div class="panel-body">
+        <div class="card">
+            <div class="card-header">Products data</div>
+            <div class="card-body">
                 <div class="list-group">
-                    @Html.ActionLink("Производители", "GetManufacturer", "Admin", new { @class = "list-group-item" })
-                    @Html.ActionLink("Статусы", "GetStatusProduct", "Admin", new { @class = "list-group-item" })
-                    @Html.ActionLink("Категории", "GetCategory", "Admin", new { @class = "list-group-item" })
-                    @Html.ActionLink("Товары", "GetProduct", "Admin", new { @class = "list-group-item" })
+                    @Html.ActionLink("Manufacturers", "GetManufacturer", "Admin", new { @class = "list-group-item" })
+                    @Html.ActionLink("Statuses", "GetStatusProduct", "Admin", new { @class = "list-group-item" })
+                    @Html.ActionLink("Categories", "GetCategory", "Admin", new { @class = "list-group-item" })
+                    @Html.ActionLink("Products", "GetProduct", "Admin", new { @class = "list-group-item" })
                 </div>
             </div>
         </div>        
-        <div class="panel panel-default">
-            <div class="panel-heading">Данные о заказах</div>
-            <div class="panel-body">
+        <div class="card">
+            <div class="card-header">Orders data</div>
+            <div class="card-body">
                 <div class="list-group">
-                    @Html.ActionLink("Способ оплаты", "GetPaymentMethod", "Admin", new { @class = "list-group-item" })
-                    @Html.ActionLink("Статусы", "GetStatusOrder", "Admin", new { @class = "list-group-item" })
+                    @Html.ActionLink("Payment method", "GetPaymentMethod", "Admin", new { @class = "list-group-item" })
+                    @Html.ActionLink("Statuses", "GetStatusOrder", "Admin", new { @class = "list-group-item" })
                 </div>
             </div>
         </div>
-        <div class="panel panel-default">
-            <div class="panel-heading">Данные о доставках</div>
-            <div class="panel-body">
+        <div class="card">
+            <div class="card-header">Delivery data</div>
+            <div class="card-body">
                 <div class="list-group">
-                    @Html.ActionLink("Типы", "GetTypeDelivery", "Admin", new { @class = "list-group-item" })
+                    @Html.ActionLink("Types", "GetTypeDelivery", "Admin", new { @class = "list-group-item" })
                 </div>
             </div>
         </div>
     </div>
     <div class="col-md-9">
         <div class="container">
-            <h2 class="text-center">Статистика</h2>
+            <h2 class="text-center">Statistics</h2>
             <hr />
             <div class="row">
                 <div class="col-sm-4">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">Заказы</div>
-                        <div class="panel-body">
+                    <div class="card">
+                        <div class="card-header">Orders</div>
+                        <div class="card-body">
                             <h2 class="pull-left"><span class="glyphicon glyphicon-shopping-cart"></span></h2>
                             <h2 class="pull-right">@Html.Action("SummaryOrders", "Admin")</h2>
                         </div>
-                        <div class="panel-footer">@Html.ActionLink("Подробнее", "GetOrder", "Admin")</div>
+                        <div class="card-footer">@Html.ActionLink("Details", "GetOrder", "Admin")</div>
                     </div>
                 </div>
                 <div class="col-sm-4">
                     <div class="panel panel-default">
-                        <div class="panel-heading">Продажи</div>
+                        <div class="panel-heading">Sales</div>
                         <div class="panel-body">
                             <h2 class="pull-left"><span class="glyphicon glyphicon-usd"></span></h2>
                             <h2 class="pull-right">@Html.Action("SummarySales", "Admin")</h2>
                         </div>
-                        <div class="panel-footer">@Html.ActionLink("Подробнее", "GetSale", "Admin")</div>
+                        <div class="card-footer">@Html.ActionLink("Details", "GetSale", "Admin")</div>
                     </div>
                 </div>
                 <div class="col-sm-4">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">Пользователи</div>
-                        <div class="panel-body">
+                    <div class="card">
+                        <div class="card-header">Users</div>
+                        <div class="card-body">
                             <h2 class="pull-left"><span class="glyphicon glyphicon-user"></span></h2>
                             <h2 class="pull-right">@Html.Action("SummaryUsers", "Admin")</h2>
                         </div>
-                        <div class="panel-footer">@Html.ActionLink("Подробнее", "GetUserStat", "Admin")</div>
+                        <div class="card-footer">@Html.ActionLink("Details", "GetUserStat", "Admin")</div>
                     </div>
                 </div>
             </div>
@@ -87,11 +87,11 @@
             <div class="row">
                 <div class="col-sm-6">
                     <div class="form-group">
-                        <a class="btn btn-default btn-lg btn-block" href="@Url.Action("GenerateExcelPrice", "Admin")">Excel-документ с прайсом</a>
+                        <a class="btn btn-dark btn-lg btn-block" href="@Url.Action("GenerateExcelPrice", "Admin")">Excel-document with prices</a>
                     </div>
                 </div>
                 <div class="col-sm-6">
-                    <a class="btn btn-default btn-lg btn-block" href="@Url.Action("CreateNews", "Admin")">Создать новость</a>
+                    <a class="btn btn-dark btn-lg btn-block" href="@Url.Action("CreateNews", "Admin")">Create news</a>
                 </div>                
             </div>
             <hr />

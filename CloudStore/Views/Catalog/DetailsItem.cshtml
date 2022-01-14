@@ -2,7 +2,7 @@
 
 @{
     //ViewBag.Title = Model.Manufacturer.Name + " " + Model.Name;
-    ViewBag.Title = "Создание товара";
+    ViewBag.Title = "Create product";
 }
 
 <br />
@@ -10,24 +10,24 @@
 <div class="row">
     <div class="col-sm-8">
         <div align="center"><img class="thumbnail" src="data:image/jpeg;base64, @Convert.ToBase64String(Model.Photo)" /></div>
-        <h3>Описание:</h3>
+        <h3>Description:</h3>
         <p>@Model.Description</p>        
     </div>
     <div class="col-sm-4">
         <h1>@Model.ProductName</h1>
         <p>Производитель: @Model.Manufacturer.ManufacturerName</p>
-        <h2>@Model.Cost.ToString("# руб")</h2>
+        <h2>@Model.Cost.ToString("# rub")</h2>
         <h3>@Model.StatusProduct.StatusProductName</h3>
-        @if (Model.StatusProduct.StatusProductName == "Нет в наличии" || Model.StatusProduct.StatusProductName == "Снят с производства")
+        @if (Model.StatusProduct.StatusProductName == "Out of stock" || Model.StatusProduct.StatusProductName == "Out of production")
         {
             <div class="form-group">
-                <button class="btn btn-default disabled btn-lg btn-block">Добавить в корзину</button>
+                <button class="btn btn-dark disabled btn-lg btn-block">Add to Cart</button>
                 @using (Html.BeginForm("AddProductRequest", "Cart"))
                 {
                     <br />                
                     @Html.HiddenFor(x => x.Id)
                     @Html.Hidden("returnUrl", Request.Url.PathAndQuery)                    
-                    <input type="submit" class="btn btn-default btn-lg btn-block" value="Оповестить об наличии товара" />
+                    <input type="submit" class="btn btn-dark btn-lg btn-block" value="Notify me when a product will in stock" />
                 
                 }
             </div>
@@ -39,14 +39,14 @@
                 <div class="form-group">
                     @Html.HiddenFor(x => x.Id)
                     @Html.Hidden("returnUrl", Request.Url.PathAndQuery)                    
-                    <label for="inputquantity">Количество</label>
+                    <label for="inputquantity">Quantity</label>
                     <input class="form-control" type="number" min="1" value="1" name="quantity" id="inputquantity" />
                     @if (ViewBag.Err != null)
                     {
                         <div class="text-danger">@ViewBag.Err</div>
                     }
                     <br />
-                    <input type="submit" class="btn btn-default btn-lg btn-block" value="Добавить в корзину" />
+                    <input type="submit" class="btn btn-dark btn-lg btn-block" value="Add to cart" />
                 </div>
             }
         }

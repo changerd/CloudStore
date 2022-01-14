@@ -1,30 +1,30 @@
 ﻿@model IEnumerable<CloudStore.Models.Product>
 
 @{
-    ViewBag.Title = "Товары";
+    ViewBag.Title = "Products";
 }
 
-<h2>Товары</h2>
+<h2>Products</h2>
 
 <p>
-    @Html.ActionLink("Создать новый товар", "CreateProduct")
+    @Html.ActionLink("Create new product", "CreateProduct")
 </p>
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayName("Название")
+            @Html.DisplayName("Name")
         </th>
         <th>
-            @Html.DisplayName("Производитель")
+            @Html.DisplayName("Manufacturer")
         </th>
         <th>
-            @Html.DisplayName("Статус")
+            @Html.DisplayName("Status")
         </th>
         <th>
-            @Html.DisplayName("Цена")
+            @Html.DisplayName("Price")
         </th>
         <th>
-            @Html.DisplayName("На складе")
+            @Html.DisplayName("In stock")
         </th>
         <th></th>
     </tr>
@@ -47,9 +47,9 @@
             @Html.DisplayFor(modelItem => item.Stock)
         </td>
         <td>
-            @Html.ActionLink("Редактировать", "EditProduct", new { id = item.Id }) |
-            @Html.ActionLink("Подробнее", "DetailsProduct", new { id = item.Id }) |
-            @Html.ActionLink("Удалить", "DeleteProduct", new { id = item.Id })
+            @Html.ActionLink("Edit", "EditProduct", new { id = item.Id }) |
+            @Html.ActionLink("Details", "DetailsProduct", new { id = item.Id }) |
+            @Html.ActionLink("Delete", "DeleteProduct", new { id = item.Id })
         </td>
     </tr>
     }

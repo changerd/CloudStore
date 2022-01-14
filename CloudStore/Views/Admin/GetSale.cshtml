@@ -1,22 +1,22 @@
 ﻿@model IEnumerable<CloudStore.Models.SaleStat>
 
 @{
-    ViewBag.Title = "Продажи";
+    ViewBag.Title = "Sales";
 }
 
-<h2>Продажи</h2>
+<h2>Sales</h2>
 
 <div class="row panel">
     <div class="col-md-2">
         <form method="get">
             <div class="form-inline">
-                <label class="control-label">От</label>
+                <label class="control-label">From</label>
                 @Html.Editor("firstdate", new { htmlAttributes = new { @class = "form-control", type = "date" } })
-                <label class="control-label">До</label>
+                <label class="control-label">To</label>
                 @Html.Editor("seconddate", new { htmlAttributes = new { @class = "form-control", type = "date" } })
                 <label class="control-label">Товар</label>
                 <p>@Html.DropDownList("product", ViewBag.Products as SelectList, htmlAttributes: new { @class = "form-control" })</p>
-                <input type="submit" value="Фильтр" class="btn btn-default" />
+                <input type="submit" value="Filter" class="btn btn-dark" />
             </div>
         </form>
     </div>
@@ -24,13 +24,13 @@
         <table class="table">
             <tr>
                 <th>
-                    @Html.DisplayName("Товар")
+                    @Html.DisplayName("Product")
                 </th>
                 <th>
-                    @Html.DisplayName("Клиент")
+                    @Html.DisplayName("User")
                 </th>
                 <th>
-                    @Html.DisplayName("Дата")
+                    @Html.DisplayName("Date")
                 </th>                
             </tr>
 
@@ -54,6 +54,6 @@
 </div>
 
 <div>
-    @Html.ActionLink("Назад", "Index")
+    @Html.ActionLink("Back", "Index")
 </div>
 

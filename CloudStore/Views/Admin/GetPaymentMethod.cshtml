@@ -1,18 +1,18 @@
 ﻿@model IEnumerable<CloudStore.Models.PaymentMethod>
 
 @{
-    ViewBag.Title = "Способы оплаты доставки";
+    ViewBag.Title = "Payment methods";
 }
 
-<h2>Способы оплаты доставки</h2>
+<h2>Payment methods</h2>
 
 <p>
-    @Html.ActionLink("Создать", "CreatePaymentMethod")
+    @Html.ActionLink("Create", "CreatePaymentMethod")
 </p>
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayName("Название")
+            @Html.DisplayName("Name")
         </th>
         <th></th>
     </tr>
@@ -23,7 +23,7 @@
             @Html.DisplayFor(modelItem => item.PaymentMethodName)
         </td>
         <td>                      
-            @Html.ActionLink("Удалить", "DeletePaymentMethod", new { id=item.Id })
+            @Html.ActionLink("Delete", "DeletePaymentMethod", new { id=item.Id })
         </td>
     </tr>
 }
@@ -31,5 +31,5 @@
 </table>
 
 <div>
-    @Html.ActionLink("Назад", "Index")
+    @Html.ActionLink("Back", "Index")
 </div>

@@ -3,21 +3,21 @@
 @using CloudStore.Models
 
 @{
-    ViewBag.Title = "Роли";
+    ViewBag.Title = "Roles";
 }
 
-<h2>Роли</h2>
+<h2>Roles</h2>
 
 <p>
-    @Html.ActionLink("Создать новую роль", "CreateRole")
+    @Html.ActionLink("Create new role", "CreateRole")
 </p>
 <table class="table">
     <tr>
         <th>
-            Название
+            Name
         </th>
         <th>
-            Пользователи
+            Users
         </th>
         <th></th>
     </tr>
@@ -31,9 +31,9 @@
             @string.Join(", ", item.Users.Select(x => Html.GetUserName(x.UserId)))          
         </td>        
         <td>
-            @Html.ActionLink("Присвоить", "GiveRole", new { id = item.Id }) |
-            @Html.ActionLink("Редактировать", "EditRole", new { id=item.Id }) |            
-            @Html.ActionLink("Удалить", "DeleteRole", new { id=item.Id })
+            @Html.ActionLink("Assign", "GiveRole", new { id = item.Id }) |
+            @Html.ActionLink("Edit", "EditRole", new { id=item.Id }) |            
+            @Html.ActionLink("Delete", "DeleteRole", new { id=item.Id })
         </td>
     </tr>
 }
@@ -41,5 +41,5 @@
 </table>
 
 <div>
-    @Html.ActionLink("Назад", "Index")
+    @Html.ActionLink("Back", "Index")
 </div>

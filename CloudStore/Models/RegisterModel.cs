@@ -9,22 +9,22 @@ namespace CloudStore.Models
     public class RegisterModel
     {
         [Required]
-        [Display(Name = "Логин")]
+        [Display(Name = "Login")]
         public string RegisterLogin { get; set; }
 
         [Required]
-        [Display(Name = "Электронная почта")]
+        [Display(Name = "Email")]
         [RegularExpression(".+\\@.+\\..+")]
         public string RegisterEmail { get; set; }    
 
         [Required]
         [DataType(DataType.Password)]
-        [Display(Name = "Пароль")]
+        [Display(Name = "Password")]
         public string RegisterPassword { get; set; }
 
         [Required]
-        [Compare("RegisterPassword", ErrorMessage = "Пароли не совпадают")]
-        [Display(Name = "Подтвердите пароль")]
+        [Compare("RegisterPassword", ErrorMessage = "Password doesn't match")]
+        [Display(Name = "Confirm the password")]
         [DataType(DataType.Password)]
         public string RegisterPasswordConfirm { get; set; }
     }

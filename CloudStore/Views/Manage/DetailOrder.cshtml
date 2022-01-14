@@ -1,16 +1,16 @@
 ﻿@model CloudStore.Models.Order
 
 @{
-    ViewBag.Title = "Данные о заказе";
+    ViewBag.Title = "Order data";
 }
 
-<h2>Данные о заказе</h2>
+<h2>Order data</h2>
 
 <div>    
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayName("Номер заказа")
+            @Html.DisplayName("Order id")
         </dt>
 
         <dd>
@@ -18,7 +18,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayName("Способ оплаты")
+            @Html.DisplayName("Payment method")
         </dt>
 
         <dd>
@@ -26,7 +26,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayName("Статус заказа")
+            @Html.DisplayName("Order status")
         </dt>
 
         <dd>
@@ -34,7 +34,7 @@
         </dd>        
 
         <dt>
-            @Html.DisplayName("Описание")
+            @Html.DisplayName("Description")
         </dt>
 
         <dd>
@@ -42,7 +42,7 @@
         </dd>        
 
         <dt>
-            @Html.DisplayName("Тип доставки")
+            @Html.DisplayName("Delivery type")
         </dt>
 
         <dd>
@@ -50,7 +50,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayName("Дата оформления заказа")
+            @Html.DisplayName("Checkout date")
         </dt>
 
         <dd>
@@ -58,7 +58,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayName("Город")
+            @Html.DisplayName("City")
         </dt>
 
         <dd>
@@ -66,7 +66,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayName("Улица")
+            @Html.DisplayName("Street")
         </dt>
 
         <dd>
@@ -74,7 +74,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayName("Дом")
+            @Html.DisplayName("House")
         </dt>
 
         <dd>
@@ -82,7 +82,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayName("Корпус")
+            @Html.DisplayName("Housing")
         </dt>
 
         <dd>
@@ -90,7 +90,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayName("Квартира")
+            @Html.DisplayName("Flat")
         </dt>
 
         <dd>
@@ -98,7 +98,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayName("Телефон")
+            @Html.DisplayName("Telephone")
         </dt>
 
         <dd>
@@ -106,7 +106,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayName("Сумма заказа")
+            @Html.DisplayName("Total")
         </dt>
 
         <dd>
@@ -116,5 +116,5 @@
     </dl>
 </div>
 <p>    
-    @Html.ActionLink("Назад", "Index", "Home", routeValues: null, htmlAttributes: new { @class = "btn btn-default" })
+    @Html.ActionLink("Назад", "Index", "Home", routeValues: null, htmlAttributes: new { @class = "btn btn-dark" })
 </p>
