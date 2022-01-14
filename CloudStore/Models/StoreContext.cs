@@ -84,7 +84,7 @@ namespace CloudStore.Models
             db.StatusProducts.Add(sp2);
             db.StatusProducts.Add(sp3);
 
-            TypeDelivery td1 = new TypeDelivery { TypeDeliveryName = "Pickup" };
+            TypeDelivery td1 = new TypeDelivery { TypeDeliveryName = "Pick Up" };
             TypeDelivery td2 = new TypeDelivery { TypeDeliveryName = "Courier" };
             TypeDelivery td3 = new TypeDelivery { TypeDeliveryName = "Mail" };
             db.TypeDeliveries.Add(td1);
