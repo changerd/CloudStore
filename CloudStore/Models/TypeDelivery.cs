@@ -10,7 +10,7 @@ namespace CloudStore.Models
     {
         public int Id { get; set; }
         [Required]
-        [Display(Name = "Pick up")]
+        [Display(Name = "Type delivery name")]
         public string TypeDeliveryName { get; set; }
         public ICollection<Order> Orders { get; set; }
         public TypeDelivery()
