@@ -16,7 +16,7 @@
                 @Html.Editor("seconddate", new { htmlAttributes = new { @class = "form-control", type = "date" } })
                 <label class="control-label">Товар</label>
                 <p>@Html.DropDownList("product", ViewBag.Products as SelectList, htmlAttributes: new { @class = "form-control" })</p>
-                <input type="submit" value="Filter" class="btn btn-default" />
+                <input type="submit" value="Filter" class="btn btn-dark" />
             </div>
         </form>
     </div>

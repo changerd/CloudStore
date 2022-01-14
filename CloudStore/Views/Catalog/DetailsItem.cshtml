@@ -21,13 +21,13 @@
         @if (Model.StatusProduct.StatusProductName == "Not available" || Model.StatusProduct.StatusProductName == "Out of production")
         {
             <div class="form-group">
-                <button class="btn btn-default disabled btn-lg btn-block">Add to Shopping Cart</button>
+                <button class="btn btn-dark disabled btn-lg btn-block">Add to Shopping Cart</button>
                 @using (Html.BeginForm("AddProductRequest", "Cart"))
                 {
                     <br />                
                     @Html.HiddenFor(x => x.Id)
                     @Html.Hidden("returnUrl", Request.Url.PathAndQuery)                    
-                    <input type="submit" class="btn btn-default btn-lg btn-block" value="Notify me when a product is in stock" />
+                    <input type="submit" class="btn btn-dark btn-lg btn-block" value="Notify me when a product is in stock" />
                 
                 }
             </div>
@@ -46,7 +46,7 @@
                         <div class="text-danger">@ViewBag.Err</div>
                     }
                     <br />
-                    <input type="submit" class="btn btn-default btn-lg btn-block" value="Add to cart" />
+                    <input type="submit" class="btn btn-dark btn-lg btn-block" value="Add to cart" />
                 </div>
             }
         }

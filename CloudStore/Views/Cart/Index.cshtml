@@ -12,11 +12,11 @@
 
     if (Model.ReturnUrl == null)
     {
-        <a class="btn btn-default" href="@Url.Action("Index", "Home")">Back</a>
+        <a class="btn btn-dark" href="@Url.Action("Index", "Home")">Back</a>
     }
     else
     {
-        <a class="btn btn-default" href="@Model.ReturnUrl">Back</a>
+        <a class="btn btn-dark" href="@Model.ReturnUrl">Back</a>
     }
 }
 else
@@ -65,13 +65,13 @@ else
     <div class="text-center">
         @if (Model.ReturnUrl == null)
         {
-            <a class="btn btn-default" href="@Url.Action("Index", "Home")">Back</a>
+            <a class="btn btn-dark" href="@Url.Action("Index", "Home")">Back</a>
         }
         else
         {
-            <a class="btn btn-default" href="@Model.ReturnUrl">Back</a>
+            <a class="btn btn-dark" href="@Model.ReturnUrl">Back</a>
         }
-        @Html.ActionLink("Checkout", "Checkout", null, new { @class = "btn btn-default" })
+        @Html.ActionLink("Checkout", "Checkout", null, new { @class = "btn btn-dark" })
     </div>
 }
 
